@@ -1,0 +1,4 @@
+# Cloudflare Pages: let phones pick up new profiles and links within minutes.
+/*
+  Cache-Control: public, max-age=300
+  Access-Control-Allow-Origin: *

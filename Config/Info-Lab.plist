@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Lab build only: pairs with the Mac app over the local network to train camera profiles. -->
+	<!-- The name and the local-network reason live here (not in the build settings), so editing the
+	     target in Xcode can't drop them. -->
+	<key>CFBundleDisplayName</key>
+	<string>TV Cal Lab</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>TV Cal Lab connects to the TV Calibrator app on your Mac to train camera profiles.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_tvcal._tcp</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<!-- Lab mode talks plain HTTP to the Mac app on the local network only. -->
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+		<string>still-camera</string>
+	</array>
+	<!-- Launch screen in the app's dark background, so there's no white flash before the intro. -->
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+	</dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+</dict>
+</plist>

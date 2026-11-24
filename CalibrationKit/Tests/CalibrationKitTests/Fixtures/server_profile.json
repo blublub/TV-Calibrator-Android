@@ -1,0 +1,38 @@
+{
+ "camera": {
+  "aperture": 2.8,
+  "format": "4032x3024 grb4",
+  "iso": 32,
+  "lens": "Back Camera"
+ },
+ "format": 1,
+ "matrix": [
+  [
+   0.0111,
+   0.003,
+   0.001
+  ],
+  [
+   0.004,
+   0.02,
+   0.0005
+  ],
+  [
+   0.0001,
+   0.0009,
+   0.03
+  ]
+ ],
+ "model": "iPhone18,1",
+ "name": "iPhone 18 Pro",
+ "stats": {
+  "deAvg": 0.9,
+  "tvs": [
+   "LG C5",
+   "Samsung S95"
+  ],
+  "unseen": 1.4
+ },
+ "trained": "2026-10-22T11:00",
+ "version": 2
+}

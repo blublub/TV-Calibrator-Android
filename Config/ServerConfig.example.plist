@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  The app's server address, kept out of Git. Copy this file to
+  "TV Calibrator/Resources/ServerConfig.plist" and put your worker's address in Server
+  (the one `npx wrangler deploy` prints in push-worker/). See docs/HOSTING.md.
+  Without the file the app still builds and runs, on its built-in profiles and links only.
+-->
+<plist version="1.0">
+<dict>
+	<key>Server</key>
+	<string>https://REPLACE-WITH-YOUR-WORKER.workers.dev/</string>
+</dict>
+</plist>

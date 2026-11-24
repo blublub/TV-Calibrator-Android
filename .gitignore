@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+
+# Xcode's original Git history, set aside before publishing (safe to delete)
+.git-old-xcode-history/
+
+# Xcode
+xcuserdata/
+DerivedData/
+*.xcuserstate
+build/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Python
+__pycache__/
+*.pyc
+.fixture-home/
+
+# Pattern videos are published on YouTube / Cloudflare R2, not in the repo
+*.mp4
+!mac-lab/TV Calibrator.app/Contents/Resources/clips/**/*.mp4
+*.zip
+
+# Apple push keys never belong in the repo
+*.p8
+
+# The server address and the worker's name and storage id stay out of the public repo
+# (copy the .example files; see docs/HOSTING.md)
+TV Calibrator/Resources/ServerConfig.plist
+push-worker/wrangler.toml
+
+# Wrangler's local cache (holds the Cloudflare account id)
+.wrangler/

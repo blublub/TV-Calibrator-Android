@@ -1,0 +1,27 @@
+{
+ "format": 1,
+ "minAppFormat": 1,
+ "updated": "2026-11-13T02:49:25+00:00",
+ "profiles": [
+  {
+   "model": "iPhone16,1",
+   "name": "iPhone 15 Pro",
+   "version": 3,
+   "file": "profiles/iPhone16,1-v3.json",
+   "sha256": "0143f85ef2ad16ebaac934322d251779e003ace94d0ee109d9f439157f357381",
+   "deAvg": 0.8472179979281836,
+   "unseen": null,
+   "tvs": 3
+  },
+  {
+   "model": "iPhone19,2",
+   "name": "iPhone 18 Pro",
+   "version": 4,
+   "file": "profiles/iPhone19,2-v4.json",
+   "sha256": "2f7687d6456f208203c29b9522e7798a2e3e4b303433ab816a9fa0694e9b8019",
+   "deAvg": 0.950222200236419,
+   "unseen": null,
+   "tvs": 3
+  }
+ ]
+}

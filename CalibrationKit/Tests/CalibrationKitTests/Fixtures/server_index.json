@@ -1,0 +1,17 @@
+{
+ "format": 1,
+ "minAppFormat": 1,
+ "updated": "2026-10-30T01:21:37+00:00",
+ "profiles": [
+  {
+   "model": "iPhone18,1",
+   "name": "iPhone 18 Pro",
+   "version": 2,
+   "file": "profiles/iPhone18,1-v2.json",
+   "sha256": "db101609f1fea8d525f2736d5cf09032125316d765ea85f48de61adfaac63ad6",
+   "deAvg": 0.9,
+   "unseen": 1.4,
+   "tvs": 2
+  }
+ ]
+}

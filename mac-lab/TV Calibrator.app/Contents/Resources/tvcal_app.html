@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TV Calibrator · Slidebean</title>
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+/* Slidebean look: neutral grey surfaces (so nothing tints your eye's sense of white), yellow headings
+   and highlights, the pink Slidebean mark, Cera Pro. */
+:root {
+  --surround: #1e1e1e;
+  --panel: #282828;
+  --raised: #333333;
+  --rule: #3e3e3e;
+  --text: #f2f2f2;
+  --muted: #ababab;
+  --faint: #868686;
+  --r: #ff5d52;
+  --g: #43d17a;
+  --b: #4d8eff;
+  --white: #f7f7f7;
+  --yellow: #ffd447;
+  --pink: #ff3366;
+  --neutral: #181818;
+  --warn: #ffb347;
+  --bad: #ff7a6e;
+  --font: "Cera Pro", "CeraPro", "Cera Pro Regular", "Avenir Next", Avenir, -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--surround); color: var(--text); font-family: var(--font);
+  font-size: 15px; line-height: 1.45; font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+.app { display: grid; grid-template-columns: 236px 1fr; min-height: 100vh; }
+
+/* ---------- sidebar */
+aside {
+  border-right: 1px solid var(--rule); padding: 22px 16px; display: flex; flex-direction: column; gap: 22px;
+  position: sticky; top: 0; height: 100vh; overflow: auto;
+}
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; letter-spacing: .01em; }
+.brand img { flex: none; }
+.brand span { display: block; color: var(--yellow); line-height: 1.1; }
+.brand small { display: block; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .04em; }
+.side-group h2 { font-size: 13px; font-weight: 500; color: var(--muted); margin: 0 0 6px 6px; }
+.navbtn {
+  display: flex; justify-content: space-between; align-items: baseline; width: 100%; text-align: left;
+  background: none; border: 0; border-radius: 6px; padding: 7px 8px; color: var(--text);
+}
+.navbtn:hover { background: var(--panel); }
+.navbtn[aria-current="true"] { background: var(--raised); box-shadow: inset 3px 0 0 var(--yellow); }
+.navbtn small { color: var(--muted); font-size: 12px; }
+.addtv { display: flex; gap: 6px; margin-top: 6px; }
+.addtv input {
+  flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px;
+}
+.addtv button { background: var(--raised); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 10px; }
+.side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--muted); }
+.side-foot button { background: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; color: var(--muted); }
+.demo { color: var(--warn); }
+.phone-status { font-size: 13px; color: var(--muted); padding: 0 8px; }
+.phone-status b { color: var(--text); font-weight: 500; }
+.phone-status .code { display: block; font-size: 26px; letter-spacing: .18em; color: var(--text); margin: 4px 0 2px; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--faint); }
+.dot.on { background: var(--white); }
+.srcrow { display: flex; gap: 12px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.srcrow .hint, .hint { color: var(--muted); font-size: 13px; }
+.camcard { border: 1px solid var(--rule); border-radius: 12px; padding: 18px 24px; margin: -14px 0 30px;
+  display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; }
+.camcard h3 { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
+.camcard p { margin: 0; color: var(--muted); max-width: 72ch; }
+.camcard p b { color: var(--text); font-weight: 600; }
+.camact { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.pairs { margin-top: 12px; max-width: 720px; font-size: 14px; }
+.profile { border: 1px solid var(--rule); border-radius: 12px; padding: 18px 22px; }
+/* ---------- training phone profiles */
+.phonelist { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; max-width: 900px; }
+.phonecard { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+.phonecard b { display: block; font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+.phonecard span { color: var(--muted); font-size: 13px; display: block; }
+.phonecard.ready { box-shadow: inset 4px 0 0 var(--g); }
+.steps-list { margin: 0; padding-left: 20px; max-width: 76ch; color: var(--muted); }
+.steps-list li { margin: 0 0 8px; }
+.steps-list b { color: var(--text); font-weight: 600; }
+.trainbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.trainbar select { background: var(--panel); color: var(--text); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; }
+.cmp { font-size: 13px; max-width: 100%; }
+.cmp td small { color: var(--muted); }
+.cmpwrap { overflow-x: auto; }
+.profile h3 .hint { font-weight: 400; margin-left: 8px; }
+.profile table { max-width: 640px; margin: 4px 0 6px; }
+@media (max-width: 900px) { .camcard { grid-template-columns: 1fr; } .camact { justify-content: flex-start; } }
+
+/* ---------- main */
+main { padding: 28px 36px 60px; max-width: 1180px; width: 100%; }
+.tvhead { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-bottom: 22px; }
+.tvhead h1 { font-size: 30px; font-weight: 700; margin: 0; letter-spacing: -.01em; color: var(--yellow); }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.seg button { background: none; border: 0; padding: 5px 14px; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--raised); color: var(--text); }
+.tvhead .opts { display: flex; gap: 14px; color: var(--muted); font-size: 13px; margin-left: auto; align-items: center; }
+.tvhead select, .stage select, .phonebox select { background: var(--panel); color: var(--text); border: 1px solid var(--rule); border-radius: 6px; padding: 3px 6px; }
+.linkbtn { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 0; font-size: 13px; }
+.linkbtn.warn { color: var(--warn); }
+
+/* the run panel is the one emphasised surface */
+.run {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 22px 24px;
+  display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; margin-bottom: 30px;
+}
+.run h2 { margin: 0 0 4px; font-size: 20px; font-weight: 600; }
+.run p { margin: 0; color: var(--muted); max-width: 62ch; }
+.run .big { font-size: 46px; font-weight: 500; line-height: 1; letter-spacing: -.02em; }
+.run .big small { font-size: 16px; color: var(--muted); margin-left: 6px; letter-spacing: 0; }
+.primary {
+  background: var(--yellow); color: #1e1e1e; border: 0; border-radius: 999px; padding: 11px 22px; font-weight: 700;
+  white-space: nowrap;
+}
+.primary:disabled { opacity: .45; cursor: default; }
+.secondary { background: none; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 16px; color: var(--text); white-space: nowrap; }
+.strip { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 3px; }
+.strip i { height: 22px; border-radius: 3px; opacity: .22; position: relative; }
+.strip i.done { opacity: 1; }
+.strip i.now { opacity: 1; outline: 2px solid var(--white); outline-offset: 1px; }
+.strip i.miss { opacity: 1; background-image: repeating-linear-gradient(45deg, transparent 0 4px, rgba(0,0,0,.45) 4px 6px) !important; }
+.errline { color: var(--bad); }
+
+/* ---------- results */
+.sec { margin: 0 0 34px; }
+.sec > h3 { font-size: 17px; font-weight: 700; margin: 0 0 12px; color: var(--yellow); }
+.sec > p.lead { color: var(--muted); margin: -6px 0 12px; max-width: 70ch; }
+.overview { display: grid; grid-template-columns: 300px 1fr; gap: 28px; align-items: center; }
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px 24px; }
+.stat b { display: block; font-size: 28px; font-weight: 500; letter-spacing: -.01em; }
+.stat span { color: var(--muted); font-size: 13px; }
+.stat .delta { font-size: 13px; margin-left: 4px; }
+.good { color: var(--g); }
+.ok { color: var(--muted); }
+.warn { color: var(--warn); }
+.chart { width: 100%; height: auto; display: block; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--muted); margin-top: 6px; flex-wrap: wrap; }
+.legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+.twocol { display: grid; grid-template-columns: minmax(280px, 420px) 1fr; gap: 28px; align-items: start; }
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: 6px 10px; text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+thead th { color: var(--muted); font-weight: 500; font-size: 13px; border-bottom: 1px solid var(--rule); }
+tbody tr + tr td { border-top: 1px solid #353535; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; vertical-align: 0; }
+.warnings { color: var(--warn); font-size: 14px; margin: 10px 0 0; padding-left: 18px; }
+
+/* changes */
+.changes { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+.changes header { padding: 16px 20px; background: var(--raised); }
+.changes header h3 { margin: 0; font-size: 17px; }
+.changes header p { margin: 4px 0 0; color: var(--muted); max-width: 72ch; }
+.changes[data-kind="learn"] header { box-shadow: inset 4px 0 0 var(--warn); }
+.changes[data-kind="undo"] header { box-shadow: inset 4px 0 0 var(--bad); }
+.changes[data-kind="correct"] header { box-shadow: inset 4px 0 0 var(--white); }
+.menu { padding: 14px 20px 6px; }
+.menu h4 { margin: 0 0 6px; font-size: 14px; font-weight: 600; }
+.menu h4 span { color: var(--muted); font-weight: 400; }
+.menu table { max-width: 640px; }
+.menu table th:first-child { width: 34%; }
+.menu td.v { font-weight: 600; font-size: 16px; }
+.menu td.v.zero { color: var(--faint); font-weight: 400; }
+.menu tr.ticked td:not(:last-child) { opacity: .35; text-decoration: line-through; }
+.menu td.tick { width: 44px; text-align: center; }
+.menu input[type=checkbox] { width: 18px; height: 18px; accent-color: #f0f0f0; }
+.cr { color: var(--r); } .cg { color: var(--g); } .cb { color: var(--b); }
+.changes footer { display: flex; gap: 12px; align-items: center; padding: 16px 20px; border-top: 1px solid var(--rule); flex-wrap: wrap; }
+.changes footer span { color: var(--muted); font-size: 13px; }
+.note { color: var(--warn); font-size: 14px; padding: 0 20px 8px; }
+.done-panel { border: 1px solid var(--rule); border-radius: 12px; padding: 18px 20px; }
+.done-panel h3 { margin: 0 0 4px; }
+
+.history td { font-size: 14px; }
+.empty { color: var(--muted); max-width: 60ch; }
+.empty h2 { color: var(--text); font-size: 22px; }
+
+/* live */
+.live { display: grid; grid-template-columns: 360px 1fr; gap: 34px; align-items: center; }
+.bars { display: grid; gap: 12px; }
+.bar { display: grid; grid-template-columns: 60px 1fr 64px; gap: 12px; align-items: center; }
+.bar .track { height: 14px; background: var(--panel); border-radius: 7px; position: relative; overflow: hidden; }
+.bar .track::after { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: var(--white); }
+.bar .fill { position: absolute; top: 0; bottom: 0; border-radius: 7px; }
+.advice { font-size: 18px; margin-top: 18px; }
+
+.check li { margin: 8px 0; }
+.check .okk::before { content: "Pass  "; color: var(--white); font-weight: 600; }
+.check .nok::before { content: "Problem  "; color: var(--bad); font-weight: 600; }
+
+/* ---------- guided flow */
+.stepper { list-style: none; display: flex; gap: 6px; padding: 0; margin: 0 0 22px; flex-wrap: wrap; }
+.stepper button { display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--rule);
+  border-radius: 999px; padding: 6px 14px 6px 6px; color: var(--muted); }
+.stepper .num { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--raised); color: var(--text); font-size: 13px; }
+.stepper button.done { color: var(--text); }
+.stepper button.done .num { background: var(--g); color: #142a1c; font-weight: 700; }
+.stepper button.now { border-color: var(--yellow); color: var(--text); background: var(--raised); }
+.stepper button.now .num { background: var(--yellow); color: #1e1e1e; font-weight: 700; }
+.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: 24px 26px; }
+.stagehead h2 { margin: 0 0 6px; font-size: 26px; font-weight: 700; letter-spacing: -.01em; color: var(--yellow); }
+.stagehead p { margin: 0; color: var(--muted); max-width: 70ch; }
+.stagehead p b { color: var(--text); }
+.where { display: block; margin-top: 8px; font-size: 13px; color: var(--faint); }
+.stagefoot { display: flex; gap: 12px; justify-content: flex-end; margin-top: 22px; flex-wrap: wrap; }
+.two { display: grid; grid-template-columns: 1fr 320px; gap: 26px; margin-top: 20px; align-items: start; }
+.checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.checklist label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.checklist input { width: 18px; height: 18px; margin-top: 2px; accent-color: #f0f0f0; }
+.checklist input:checked + span { color: var(--muted); text-decoration: line-through; }
+.phonebox { border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; }
+.phonebox.ok { box-shadow: inset 4px 0 0 var(--g); }
+.phonebox h3 { margin: 0 0 6px; font-size: 16px; color: var(--yellow); }
+.phonebox p { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+.bigcta { padding: 34px 0 10px; text-align: center; }
+.measuring { padding: 20px 0 4px; display: grid; gap: 12px; }
+.measuring p { margin: 0; }
+.scores { display: flex; gap: 14px; margin: 20px 0 6px; flex-wrap: wrap; }
+.score { background: var(--raised); border-radius: 12px; padding: 14px 20px; min-width: 170px; display: grid; gap: 2px; }
+.score span { color: var(--muted); font-size: 13px; }
+.score b { font-size: 44px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+.score em { font-style: normal; color: var(--muted); font-size: 13px; }
+.score small { color: var(--muted); font-size: 13px; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; align-items: start; }
+.charts .wide { grid-column: 1 / -1; }
+.charts figure svg { max-height: 420px; }
+.charts figure { margin: 0; background: var(--neutral); border: 1px solid #333; border-radius: 12px; padding: 12px; }
+.charts figcaption { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.live2 { display: grid; grid-template-columns: 340px 1fr; gap: 30px; margin-top: 22px; align-items: center; min-height: 300px; }
+.live2 .hero { margin: 0; background: var(--neutral); border: 1px solid #333; border-radius: 14px; padding: 14px; }
+.live2 .hero figcaption { font-size: 12px; color: var(--faint); text-align: center; margin-top: 6px; }
+.bbar { display: grid; grid-template-columns: 90px 1fr 70px; gap: 12px; align-items: center; margin-bottom: 14px; }
+.bbar span { font-weight: 600; }
+.bbar .track { position: relative; height: 18px; background: var(--neutral); border-radius: 9px; overflow: hidden; }
+.bbar .track::after { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: var(--white); }
+.bbar .tol { position: absolute; left: calc(50% - 6%); width: 12%; top: 0; bottom: 0; background: rgba(255,255,255,.07); }
+.bbar .fill { position: absolute; top: 0; bottom: 0; border-radius: 9px; transition: left .4s, width .4s; }
+.bbar b { text-align: right; font-size: 18px; font-weight: 500; }
+.tips { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.tips li { background: var(--raised); border-radius: 10px; padding: 10px 14px; font-size: 15px; }
+.tips li b { color: var(--text); }
+.tips li.ok { color: var(--muted); }
+.tips li.done { background: rgba(255,212,71,.14); color: var(--yellow); font-weight: 700; box-shadow: inset 4px 0 0 var(--yellow); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--surround); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px; color: var(--muted); }
+.chip.on { border-color: var(--yellow); color: var(--text); }
+.chip.done { color: var(--text); }
+.chip .sw { margin: 0; }
+.cktable { margin-top: 18px; max-width: 720px; }
+.finder { margin: 20px 0 0; padding-left: 22px; display: grid; gap: 14px; max-width: 760px; }
+.finder li { color: var(--muted); }
+.finder li.now { color: var(--text); }
+.finder li.done { color: var(--muted); }
+.finder li div { margin-top: 10px; }
+.neutralfig { margin: 16px 0 0; background: var(--neutral); border: 1px solid #333; border-radius: 12px; padding: 12px; }
+.tips li.limit { background: rgba(255,179,71,.12); box-shadow: inset 4px 0 0 var(--warn); }
+.meterline { display: flex; align-items: center; gap: 10px; margin: 14px 0 6px; color: var(--text); }
+.meterline small { color: var(--muted); }
+.meterline .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--g); animation: blink 1.2s infinite; }
+.meterline.stale .dot { background: var(--warn); animation: none; }
+@keyframes blink { 50% { opacity: .25; } }
+.avgline { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+.avgline b { color: var(--text); }
+.nowplay { display: grid; gap: 2px; margin-top: 18px; padding: 14px 18px; border-radius: 12px; background: rgba(255,212,71,.12);
+  box-shadow: inset 4px 0 0 var(--yellow); }
+.nowplay span { font-size: 12px; letter-spacing: .06em; color: var(--yellow); font-weight: 700; }
+.nowplay b { font-size: 20px; }
+.nowplay small { color: var(--muted); }
+.mismatch { background: rgba(255,179,71,.14); border-radius: 12px; padding: 16px 18px; color: var(--text); box-shadow: inset 4px 0 0 var(--warn); grid-column: 1 / -1; }
+.pro-only { display: none; }
+body.pro .pro-only { display: block; }
+.proswitch { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+
+@media (max-width: 900px) { .two, .live2, .charts { grid-template-columns: 1fr; } }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .overview, .twocol, .live { grid-template-columns: 1fr; }
+  main { padding: 22px 18px 50px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .strip i.now { animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { outline-color: rgba(247,247,247,.35); } }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">
+      <img src="data:image/png;base64,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" alt="Slidebean" width="40" height="27">
+      <div><span>TV Calibrator</span><small>by Slidebean</small></div>
+    </div>
+    <div class="side-group">
+      <h2>TVs</h2>
+      <div id="tvlist"></div>
+      <form class="addtv" id="addtv">
+        <input id="newtv" placeholder="Add a TV" aria-label="New TV name" maxlength="40">
+        <button type="submit">Add</button>
+      </form>
+    </div>
+    <div class="side-group" id="phonegroup">
+      <h2>iPhone</h2>
+      <div id="phone" class="phone-status">Checking…</div>
+    </div>
+    <div class="side-group">
+      <h2>Tools</h2>
+      <button class="navbtn" data-view="train">Train phone profiles</button>
+      <button class="navbtn" data-view="profiles">Camera profiles</button>
+      <button class="navbtn" data-view="live">Live meter</button>
+      <div class="pro-only">
+        <button class="navbtn" data-view="check">Check the meter</button>
+      </div>
+    </div>
+    <div class="side-foot">
+      <label class="proswitch"><input type="checkbox" id="pro"> Pro tools</label>
+      <div id="demo"></div>
+      <button id="quit">Quit TV Calibrator</button>
+    </div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// On the iPhone (remote), the page is opened with ?t=<pairing token>; send it with every request.
+const TOKEN = new URLSearchParams(location.search).get("t");
+const api = async (path, body) => {
+  const headers = { "Content-Type": "application/json" };
+  if (TOKEN) headers["X-TVCal-Token"] = TOKEN;
+  const r = await fetch(path, body === undefined ? { headers } : { method: "POST", headers, body: JSON.stringify(body) });
+  return r.json();
+};
+const CH = { R: "var(--r)", G: "var(--g)", B: "var(--b)" };
+const CMS_ORDER = ["RED", "GREEN", "BLUE", "YELLOW", "CYAN", "MAGENTA"];
+const COLOUR_SW = { RED: "#e5463c", GREEN: "#3cc66f", BLUE: "#3f78e8", CYAN: "#3fd0d8", MAGENTA: "#d65bd1", YELLOW: "#e8d84a" };
+const fmt = (v, d = 1) => (v === null || v === undefined || isNaN(v)) ? "–" : Number(v).toFixed(d);
+const deClass = d => d < 1 ? "good" : d < 3 ? "ok" : "warn";
+
+let S = { tvs: [], sim: false, view: "tv", tv: null, hdr: false, data: null, job: null, poll: null, live: null,
+          phone: null, source: localStorage.getItem("tvcal-source") || "video",
+          meter: localStorage.getItem("tvcal-meter") || "hl" };
+
+/* ------------------------------------------------------------------ iPhone status */
+async function loadPhone() {
+  try { S.phone = await api("/api/phone/status"); } catch (e) { return; }
+  const pg = $("#phonegroup");
+  if (pg) pg.style.display = (S.patSource === "video" && !S.pro && !S.phone.connected) ? "none" : "";
+  const p = S.phone, el = $("#phone"); if (!el) return;
+  const many = (p.phones || []).length > 1;
+  if (many) {
+    el.innerHTML = `<span class="dot on"></span><b>${p.phones.length} iPhones</b> connected<br>` +
+      p.phones.map(q => `${esc(q.label)}: ${q.camera ? "camera ready" : "camera off"}`).join("<br>") +
+      `<br>To pair another, enter:<span class="code">${esc(p.code)}</span>This Mac: ${esc(p.ip)}:${esc(p.port)}`;
+  } else if (p.connected) {
+    el.innerHTML = `<span class="dot on"></span><b>${esc(p.device || "iPhone")}</b> connected<br>` +
+      (p.external ? `TV attached${p.ext_name ? ` (${esc(p.ext_name)})` : ""}.` : `Not showing patches on a TV.`) +
+      `<br>${p.camera ? "Camera ready to measure." : "Camera off."}<br>This Mac: ${esc(p.ip)}:${esc(p.port)}`;
+  } else {
+    el.innerHTML = `<span class="dot"></span>${p.paired ? "Paired, not connected." : "No iPhone paired."}
+      <br>To pair, open TV Calibrator on the iPhone and enter:<span class="code">${esc(p.code)}</span>
+      This Mac's address: <b>${esc(p.ip)}:${esc(p.port)}</b>`;
+  }
+  if (S.view === "train") renderTrainPhones();
+  if (S.view === "auto" && S.data && !["starting", "waiting", "measuring"].includes((S.job || {}).phase)) { renderRun(currentPending()); renderCam(); }
+  const ready = !!(p.connected && p.external);
+  if (S.view === "tv" && S.guide && getProg().step === "setup" && S._ready !== ready) { S._ready = ready; renderGuide(); }
+}
+const currentPending = () => { const d = S.data; return d && d.pending && !d.pending.done && d.pending.changes && Object.keys(d.pending.changes).length; };
+setInterval(loadPhone, 2000);
+
+/* ------------------------------------------------------------------ sidebar */
+async function loadTVs() {
+  const r = await api("/api/tvs");
+  S.tvs = r.tvs; S.sim = r.sim; S.pro = r.pro; S.meterSetting = r.meter; S.patSource = r.source || "video";
+  document.body.classList.toggle("pro", !!S.pro); $("#pro").checked = !!S.pro;
+  $("#demo").innerHTML = S.sim ? '<span class="demo">Demo mode: simulated TV and meter</span>' : "";
+  if (!S.tv && S.tvs.length) S.tv = S.tvs[0].name;
+  renderSide();
+}
+function renderSide() {
+  $("#tvlist").innerHTML = S.tvs.length ? S.tvs.map(t =>
+    `<button class="navbtn" data-tv="${esc(t.name)}" aria-current="${S.view === "tv" && S.tv === t.name}">${esc(t.name)}</button>`
+  ).join("") : '<p class="empty" style="margin:4px 8px;font-size:13px">No TVs yet.</p>';
+  document.querySelectorAll("[data-view]").forEach(b => b.setAttribute("aria-current", S.view === b.dataset.view));
+}
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-tv]");
+  if (t) { S.view = "tv"; S.tv = t.dataset.tv; stopLive(); clearInterval(S.poll); renderSide(); loadGuide(); }
+  const v = e.target.closest("[data-view]");
+  if (v) { S.view = v.dataset.view; stopGuideLive(); api("/api/guide/stop", {}); renderSide(); ({ live: showLive, check: showCheck, profiles: showProfiles, train: showTrain })[v.dataset.view](); }
+});
+$("#addtv").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("#newtv").value.trim();
+  if (!name) return;
+  const r = await api("/api/tvs", { name, points: 0, cms: "hsl", brand: "other" });
+  if (r.error) return alert(r.error);
+  $("#newtv").value = ""; S.tv = r.name; S.view = "tv";
+  await loadTVs(); loadGuide();
+});
+$("#pro").onchange = async () => { S.pro = $("#pro").checked; document.body.classList.toggle("pro", S.pro);
+  await api("/api/settings", { pro: S.pro }); if (S.view === "tv") renderGuide(); };
+if (TOKEN) $("#quit").hidden = true;
+$("#quit").addEventListener("click", async () => {
+  await api("/api/quit", {});
+  document.body.innerHTML = '<main style="padding:60px"><h1 style="font-weight:600">TV Calibrator has stopped.</h1><p style="color:#a3a3a3">You can close this tab.</p></main>';
+});
+
+/* ------------------------------------------------------------------ TV view */
+async function loadTV() {
+  if (!S.tv) return renderEmpty();
+  S.data = await api(`/api/tv?name=${encodeURIComponent(S.tv)}&hdr=${S.hdr ? 1 : 0}`);
+  const keep = S.job && S.job.kind === "bridge" && ["done", "error"].includes(S.job.phase) ? S.job : null;
+  S.job = await api("/api/job");
+  if (keep && S.job.phase === "done") S.job = keep;
+  renderTV();
+  if (["starting", "waiting", "measuring"].includes(S.job.phase)) startPoll();
+}
+function renderEmpty() {
+  $("#main").innerHTML = `<div class="empty"><h2>Add your first TV</h2>
+    <p>Type a name in the sidebar, for example “Micro RGB” or “Q60T”. Each TV keeps its own SDR and HDR history,
+    so you can come back to it any time.</p></div>`;
+}
+function renderTV() {
+  const d = S.data;
+  if (d.old) {
+    $("#main").innerHTML = `${head(d)}<div class="run"><div><h2>This TV's history is from an older version</h2>
+      <p>Start it over. The TV's settings can stay as they are; the app works from wherever the TV is now.</p></div>
+      <button class="primary" id="resetold">Start over</button></div>`;
+    bindHead(); $("#resetold").onclick = resetTV; return;
+  }
+  const n = d.rounds.length + 1;
+  const pend = d.pending && !d.pending.done && d.pending.changes && Object.keys(d.pending.changes).length;
+  $("#main").innerHTML = head(d) + `<section class="run" id="run"></section>` +
+    (d.hdr ? "" : `<section class="camcard" id="cam"></section>`) +
+    (d.last ? results(d) : `<div class="empty"><p>No rounds yet. Round 1 measures the TV as it is now. The first two rounds also ask for small test changes, so the app can learn how this TV responds.</p></div>`);
+  bindHead();
+  renderRun(pend);
+  renderCam();
+  bindChanges();
+}
+function head(d) {
+  const st = d.settings || { points: 20, cms: "samsung" };
+  return `<p style="margin:0 0 8px"><button class="linkbtn" onclick="S.view='tv';renderSide();loadGuide()">‹ Back to guided calibration</button></p>
+    <div class="tvhead"><h1>${esc(d.name)} <span class="hint" style="font-size:15px;font-weight:400">automatic rounds</span></h1>
+    <div class="seg" role="group" aria-label="Signal">
+      <button data-hdr="0" aria-pressed="${!S.hdr}">SDR</button><button data-hdr="1" aria-pressed="${S.hdr}">HDR</button></div>
+    <div class="opts">
+      <label>White balance menu <select id="o-points">
+        <option value="20" ${st.points == 20 ? "selected" : ""}>2 + 20 point</option>
+        <option value="11" ${st.points == 11 ? "selected" : ""}>2 + 11 point</option>
+        <option value="0" ${st.points == 0 ? "selected" : ""}>2 point only</option></select></label>
+      <label>Colour menu <select id="o-cms">
+        <option value="samsung" ${st.cms === "samsung" ? "selected" : ""}>Red/Green/Blue sliders</option>
+        <option value="hsl" ${st.cms === "hsl" ? "selected" : ""}>Hue/Saturation/Brightness</option>
+        <option value="off" ${st.cms === "off" ? "selected" : ""}>None</option></select></label>
+      <button class="linkbtn" id="folder" title="The TV's folder: a readable log of every round and change">Open log folder</button>
+      <button class="linkbtn" id="export" title="Saves one file with this TV's full history, to share">Export history</button>
+      <button class="linkbtn" id="reset">Start over</button>
+    </div></div>`;
+}
+function bindHead() {
+  document.querySelectorAll("[data-hdr]").forEach(b => b.onclick = () => { S.hdr = b.dataset.hdr === "1"; loadTV(); });
+  const save = () => api("/api/tv/settings", { name: S.tv, points: +$("#o-points").value, cms: $("#o-cms").value });
+  if ($("#o-points")) { $("#o-points").onchange = save; $("#o-cms").onchange = save; }
+  if ($("#reset")) $("#reset").onclick = resetTV;
+  if ($("#folder")) $("#folder").onclick = async () => { const r = await api("/api/tv/folder", { name: S.tv }); if (TOKEN) alert(r.folder); };
+  if ($("#export")) $("#export").onclick = async () => {
+    const r = await api("/api/tv/export", { name: S.tv });
+    if (r.file) alert(`Saved:\n${r.file}\n\nThe folder is open in Finder - you can drag this file into a chat.`);
+  };
+}
+async function resetTV() {
+  if (!confirm(`Forget all ${S.hdr ? "HDR" : "SDR"} rounds for ${S.tv}? The TV's own settings aren't touched.`)) return;
+  await api("/api/tv/reset", { name: S.tv, hdr: S.hdr }); loadTV();
+}
+
+/* ------------------------------------------------------------------ run panel */
+function renderRun(pending) {
+  const el = $("#run"); if (!el) return;
+  const d = S.data, j = S.job || { phase: "idle" };
+  const mine = j.tv === S.tv && j.hdr === S.hdr && j.kind !== "bridge";
+  const n = d.rounds.length + 1;
+  const len = `${Math.floor(d.video_len / 60)}:${String(d.video_len % 60).padStart(2, "0")}`;
+  if (mine && j.source === "iphone" && ["starting", "waiting"].includes(j.phase)) {
+    el.innerHTML = `<div><h2>Getting the iPhone ready…</h2><p>The first patch goes up on the TV in a moment.</p></div>
+      <div><button class="secondary" id="cancel">Cancel</button></div>`;
+  } else if (mine && ["starting", "waiting"].includes(j.phase)) {
+    const y = j.readings.length ? j.readings[j.readings.length - 1].Y : null;
+    el.innerHTML = `<div><h2>Press play on ${esc(d.video)}</h2>
+      <p>Measuring starts by itself when the meter sees the grey-white-grey flashes, about 22 seconds into the video.</p></div>
+      <div style="text-align:right"><div class="big">${y === null ? "–" : fmt(y, y < 10 ? 2 : 1)}<small>cd/m²</small></div>
+      <div style="margin-top:12px"><button class="secondary" id="cancel">Cancel</button></div></div>
+      ${spark(j.readings)}`;
+  } else if (mine && j.phase === "measuring") {
+    const cur = j.patches[j.index] || {};
+    el.innerHTML = `<div><h2>Measuring ${esc(nice(cur.name))}</h2>
+      <p>${j.patches.filter(p => p.done).length} of ${j.total} patches. ${j.source === "iphone" ? "Keep the meter still and the iPhone app open." : "Keep the meter still and the video playing."}</p></div>
+      <div><button class="secondary" id="cancel">Cancel</button></div>${strip(j)}`;
+  } else if (mine && j.phase === "error") {
+    el.innerHTML = `<div><h2>Couldn't finish the round</h2><p class="errline">${esc(j.error)}</p></div>
+      <button class="primary" id="start">Try again</button>`;
+  } else if (pending) {
+    el.innerHTML = `<div><h2>Round ${n - 1} is measured</h2><p>Make the changes below on the TV, then confirm them so the next round can build on them.</p></div>
+      <button class="primary" disabled>Start round ${n}</button>`;
+  } else {
+    const ph = S.phone || {};
+    const phoneReady = S.sim || (ph.connected && ph.external);
+    const useIphone = S.source === "iphone";
+    const text = useIphone
+      ? (phoneReady ? `Rest the meter on the centre of the screen. The iPhone shows each patch on the TV, so there's no video to play. Takes about a minute.`
+                    : `Open TV Calibrator on the iPhone and connect it to the TV (USB-C to HDMI adapter, or AirPlay screen mirroring).`)
+      : `Rest the meter on the centre of the screen, have <b>${esc(d.video)}</b> (${len}) ready at 0:00, then start and press play.`;
+    const camBridge = camBridgeFor(d);
+    const camOk = !S.hdr && camBridge && (S.sim || ph.camera);
+    const useCam = S.meter === "iphone" && camOk;
+    el.innerHTML = `<div><h2>${n === 1 ? "Measure this TV" : `Start round ${n}`}</h2><p>${text}</p>
+      <div class="srcrow"><span class="hint">Patterns from</span><div class="seg" role="group" aria-label="Pattern source">
+        <button data-src="video" aria-pressed="${!useIphone}">Video file</button>
+        <button data-src="iphone" aria-pressed="${useIphone}">iPhone</button></div>
+        ${useIphone && phoneReady ? '<button class="linkbtn" id="aim">Show white on the TV to aim the meter</button>' : ""}</div>
+      ${S.hdr ? "" : `<div class="srcrow"><span class="hint">Measure with</span><div class="seg" role="group" aria-label="Meter">
+        <button data-meter="hl" aria-pressed="${!useCam}">Display Plus HL</button>
+        <button data-meter="iphone" aria-pressed="${useCam}" ${camOk ? "" : "disabled"}>iPhone camera</button></div>
+        ${camOk ? "" : `<span class="hint">${camBridge ? "Start the camera on the iPhone to use it." : "Train the iPhone camera first (below)."}</span>`}</div>`}</div>
+      <button class="primary" id="start" ${(useIphone && !phoneReady) || (j.kind === "bridge" && ["starting", "waiting", "measuring"].includes(j.phase)) ? "disabled" : ""}>Start round ${n}</button>`;
+    el.querySelectorAll("[data-src]").forEach(b => b.onclick = () => { S.source = b.dataset.src; localStorage.setItem("tvcal-source", S.source); renderRun(false); });
+    el.querySelectorAll("[data-meter]").forEach(b => b.onclick = () => { S.meter = b.dataset.meter; localStorage.setItem("tvcal-meter", S.meter); renderRun(false); });
+    if ($("#aim")) $("#aim").onclick = async () => { await api("/api/phone/show", { what: "white" }); $("#aim").textContent = "White is on the TV - it goes back to black when the round starts"; };
+  }
+  if ($("#start")) $("#start").onclick = startRound;
+  if ($("#cancel")) $("#cancel").onclick = () => api("/api/round/cancel", {});
+}
+function meterLine(j) {
+  const rs = (j.readings || []).filter(r => r.Y != null);
+  const last = rs[rs.length - 1];
+  if (j.phase === "starting") return `<p class="meterline"><i class="dot"></i>Connecting to the meter…</p>`;
+  if (!last) return `<p class="meterline"><i class="dot"></i>Waiting for the first reading from the meter…</p>`;
+  const age = Date.now() / 1000 - last.t;
+  return `<p class="meterline ${age > 12 ? "stale" : ""}"><i class="dot"></i>Meter: <b>${fmt(last.Y, last.Y < 10 ? 2 : 1)} cd/m²</b>
+    <small>${age > 12 ? `no new reading for ${Math.round(age)} s` : `${rs.length} readings so far`}</small></p>`;
+}
+function measuringPanel(j, fileId) {
+  if (j.phase === "waiting" || j.phase === "starting")
+    return `<div class="measuring">${playBanner(fileId)}${meterLine(j)}
+      <p>${j.phase === "starting" ? "Getting ready…" : "Waiting for the video's grey-white-grey flashes. Play the file from the very start."}</p>
+      <button class="linkbtn" id="m-cancel">Cancel</button></div>`;
+  const cur = j.patches[j.index] || {};
+  return `<div class="measuring">${meterLine(j)}<p>Measuring <b>${esc(nice(cur.name || ""))}</b> · ${j.patches.filter(p => p.done).length} of ${j.patches.length}</p>${strip(j)}
+    <button class="linkbtn" id="m-cancel">Cancel</button></div>`;
+}
+function bindCancel() { const b = $("#m-cancel"); if (b) b.onclick = () => api("/api/round/cancel", {}); }
+function strip(j) {
+  return `<div class="strip" style="--n:${j.patches.length}" aria-hidden="true">${j.patches.map((p, i) => {
+    let bg;
+    if (p.kind === "colour") bg = COLOUR_SW[p.id];
+    else { const m = p.id.match(/G(\d+)/); const lv = m ? +m[1] / 100 : 1; const v = Math.round(255 * Math.pow(S.hdr ? lv * 1.2 : lv, 1 / 1.2)); bg = `rgb(${v},${v},${v})`; }
+    const cls = p.done ? (p.Y === null ? "done miss" : "done") : (i === j.index ? "now" : "");
+    return `<i class="${cls}" style="background:${bg}" title="${esc(nice(p.name))}"></i>`;
+  }).join("")}</div>`;
+}
+function spark(rs) {
+  const ys = rs.filter(r => r.Y !== null).map(r => Math.max(r.Y, 0.01));
+  if (ys.length < 2) return "";
+  const lg = ys.map(y => Math.log10(y)), mn = Math.min(...lg, -1), mx = Math.max(...lg, 2.7);
+  const pts = lg.map((v, i) => `${(i / (lg.length - 1)) * 600},${44 - (v - mn) / (mx - mn) * 40}`).join(" ");
+  return `<svg class="chart" viewBox="0 0 600 48" style="grid-column:1/-1;height:48px" aria-hidden="true">
+    <polyline points="${pts}" fill="none" stroke="#a3a3a3" stroke-width="1.5"/></svg>`;
+}
+async function startRound() {
+  const source = S.source === "iphone" ? "iphone" : "video";
+  const camOk = !S.hdr && camBridgeFor(S.data) && (S.sim || (S.phone || {}).camera);
+  const meter = S.meter === "iphone" && camOk ? "iphone" : "hl";
+  const r = await api("/api/round/start", { name: S.tv, hdr: S.hdr, source, meter });
+  if (r.error) return alert(r.error === "old" ? "Start this TV over first." : r.error);
+  S.job = { phase: "starting", tv: S.tv, hdr: S.hdr, readings: [], patches: [], index: -1, source };
+  renderRun(false); startPoll();
+}
+function startPoll() {
+  clearInterval(S.poll);
+  S.poll = setInterval(async () => {
+    S.job = await api("/api/job");
+    if (["done", "cancelled", "error", "idle"].includes(S.job.phase)) {
+      clearInterval(S.poll);
+      const bridge = S.job.kind === "bridge";
+      if (!bridge && (S.job.phase === "done" || S.job.phase === "cancelled")) { S.job.phase = "idle"; }
+      if (bridge && S.job.phase === "cancelled") S.job = { phase: "idle" };
+      if (S.view === "tv") loadTV();
+      if (S.view === "train") renderTrain();
+    } else if (S.view === "tv") { renderRun(false); renderCam(); }
+    else if (S.view === "train") renderTrain();
+  }, 500);
+}
+
+/* ------------------------------------------------------------------ iPhone camera (teaching it per TV) */
+function camBridgeFor(d) { return d && d.camera ? d.camera : null; }
+function renderCam() {
+  const el = $("#cam"); if (!el || !S.data) return;
+  if (!S.pro) { el.style.display = "none"; return; } el.style.display = "";
+  const d = S.data, j = S.job || {}, ph = S.phone || {};
+  const b = camBridgeFor(d);
+  const running = j.kind === "bridge" && j.tv === S.tv && ["starting", "waiting", "measuring"].includes(j.phase);
+  const justDone = j.kind === "bridge" && j.tv === S.tv && ["done", "error"].includes(j.phase);
+  const camReady = S.sim || ph.camera;
+  let body;
+  if (running) {
+    body = `<div><h3>${j.check ? "Checking the iPhone camera against the meter…" : "Training the iPhone camera…"}</h3>
+      <p>${j.source === "iphone" ? "The iPhone shows each patch; the meter and the camera measure it together." :
+        `Play <b>calibration_SDR_Rec709.mp4</b> (the one with 30-second patches) from the start. Each new patch is measured by both.`}</p>
+      ${pairsTable(j.pairs)}</div>
+      <div class="camact">${j.source === "iphone" ? "" : `<button class="secondary" id="bfinish" ${j.pairs.length >= 6 ? "" : "disabled"}>Finish now</button>`}
+      <button class="secondary" id="bcancel">Cancel</button></div>`;
+  } else if (justDone && j.phase === "done" && j.check && j.result) {
+    const R = j.result;
+    const verdict = R.de_avg < 2 ? "The profile is good on this TV." : R.de_avg < 4 ? "Usable for white balance; check colours with the meter." : "Too far off: train the profile on this TV.";
+    body = `<div><h3>Profile check on ${esc(S.tv)}</h3>
+      <p>The iPhone read within <b class="${deClass(R.de_avg)}">dE ${fmt(R.de_avg)}</b> of the Display Plus HL on average
+      (worst ${fmt(R.de_max)}, ${R.n} patches${R.grey_avg != null ? `; greys ${fmt(R.grey_avg)}` : ""}${R.colour_avg != null ? `, colours ${fmt(R.colour_avg)}` : ""}). ${verdict}
+      The profile wasn't changed.</p>
+      ${R.settings && R.settings.length ? `<p class="errline">The camera ran with different settings than the profile was trained with: ${R.settings.map(esc).join("; ")}.</p>` : ""}
+      ${pairsTable(j.pairs)}</div>
+      <div class="camact"><button class="secondary" id="bcheck">Check again</button>
+      <button class="secondary" id="bstart">Train on this TV</button></div>`;
+  } else if (justDone && j.phase === "error") {
+    body = `<div><h3>${j.check ? "Couldn't check the camera" : "Couldn't train the camera"}</h3><p class="errline">${esc(j.error)}</p></div>
+      <div class="camact"><button class="secondary" id="bstart">Try again</button></div>`;
+  } else if (b) {
+    const here = b.this_tv;
+    const accuracy = here
+      ? `On ${esc(S.tv)} it reads within <b class="${deClass(here.de_avg)}">dE ${fmt(here.de_avg)}</b> of the Display Plus HL on average (worst ${fmt(here.de_max)}).`
+      : (b.unseen != null
+          ? `It hasn't been trained on ${esc(S.tv)}. On TVs it hasn't seen, it's typically within about <b class="${deClass(b.unseen)}">dE ${fmt(b.unseen)}</b>. Training it here as well makes it more accurate everywhere.`
+          : `It hasn't been trained on ${esc(S.tv)}, and with only one TV in the profile there's no estimate yet for new TVs. Training it here too fixes that.`);
+    const verdict = here ? (here.de_avg < 2 ? " Good enough to calibrate with." : here.de_avg < 4 ? " Usable for white balance; check colours with the meter." : " Too far off to calibrate with.") : "";
+    body = `<div><h3>iPhone camera: ${esc(b.name)}</h3>
+      <p>Profile trained on ${b.tvs.length} TV${b.tvs.length === 1 ? "" : "s"} (${b.tvs.map(esc).join(", ")}). ${accuracy}${verdict}</p>
+      ${justDone ? pairsTable(j.pairs) : ""}</div>
+      <div class="camact"><button class="primary" id="bcheck" ${camReady ? "" : "disabled"}>Check the profile on this TV</button>
+      <button class="secondary" id="bstart" ${camReady ? "" : "disabled"}>${here ? "Train again on this TV" : "Train on this TV too"}</button></div>`;
+  } else {
+    body = `<div><h3>iPhone camera</h3>
+      <p>The iPhone learns to measure from the Display Plus HL: both measure the same patches once, about a minute.
+      The result is a profile for this iPhone model that works on any TV, and gets better with each TV you train it on.
+      Put the meter and the phone's camera on the centre of the screen and start the camera in the iPhone app.</p></div>
+      <div class="camact"><button class="primary" id="bstart" ${camReady ? "" : "disabled"}>Train the iPhone camera</button>
+      ${camReady ? "" : '<span class="hint">Start the camera in the iPhone app first.</span>'}</div>`;
+  }
+  el.innerHTML = body;
+  if ($("#bstart")) $("#bstart").onclick = async () => {
+    const r = await api("/api/bridge/start", { name: S.tv });
+    if (r.error) return alert(r.error);
+    S.job = { kind: "bridge", tv: S.tv, phase: "starting", pairs: [] }; renderCam(); startPoll();
+  };
+  if ($("#bcheck")) $("#bcheck").onclick = async () => {
+    const r = await api("/api/bridge/start", { name: S.tv, check: true });
+    if (r.error) return alert(r.error);
+    S.job = { kind: "bridge", check: true, tv: S.tv, phase: "starting", pairs: [] }; renderCam(); startPoll();
+  };
+  if ($("#bcancel")) $("#bcancel").onclick = () => api("/api/round/cancel", {});
+  if ($("#bfinish")) $("#bfinish").onclick = () => api("/api/bridge/finish", {});
+}
+function pairsTable(pairs) {
+  if (!pairs || !pairs.length) return '<p class="hint">Waiting for the first patch…</p>';
+  return `<table class="pairs"><thead><tr><th>Patch</th><th>cd/m²</th><th>x, y</th><th>Camera vs meter</th></tr></thead><tbody>
+    ${pairs.map(p => `<tr><td>${esc(nice(p.name))}</td><td>${fmt(p.Y, 1)}</td><td>${fmt(p.x, 4)}, ${fmt(p.y, 4)}</td>
+      <td class="${p.de == null ? "" : deClass(p.de)}">${p.de == null ? "measured" : "dE " + fmt(p.de, 2)}${p.uneven > 0.05 ? ' <span class="warn">(patch not even in the camera\'s box)</span>' : ""}</td></tr>`).join("")}
+    </tbody></table>`;
+}
+
+/* ------------------------------------------------------------------ results */
+function results(d) {
+  const L = d.last, P = d.prev;
+  const delta = (a, b) => (a == null || b == null) ? "" :
+    `<span class="delta ${a <= b ? "good" : "warn"}">${a <= b ? "▼" : "▲"} ${fmt(Math.abs(a - b))}</span>`;
+  const rn = d.rounds.length;
+  let html = `<section class="sec"><h3>Round ${rn} results</h3>
+    <div class="overview">${target(L)}
+    <div><div class="stats">
+      <div class="stat"><b class="${deClass(L.grey_avg)}">${fmt(L.grey_avg)}${delta(L.grey_avg, P && P.grey_avg)}</b><span>Greyscale error (average dE)</span></div>
+      <div class="stat"><b class="${deClass(L.colour_avg)}">${fmt(L.colour_avg)}${delta(L.colour_avg, P && P.colour_avg)}</b><span>Colour error (average dE)</span></div>
+      ${d.hdr ? (L.pq_track == null ? "" : `<div class="stat"><b class="${Math.abs(L.pq_track) > 10 ? "warn" : ""}">${L.pq_track > 0 ? "+" : ""}${fmt(L.pq_track, 0)}%</b><span>Brightness vs HDR target (below 300 cd/m²)</span></div>`)
+               : `<div class="stat"><b>${fmt(L.gamma, 2)}</b><span>Gamma (target 2.40)</span></div>`}
+      <div class="stat"><b>${fmt(L.white_Y, 0)}</b><span>White, cd/m²</span></div>
+      ${L.drift != null ? `<div class="stat"><b class="${Math.abs(L.drift) > 3 ? "warn" : ""}">${L.drift > 0 ? "+" : ""}${fmt(L.drift)}%</b><span>Brightness change, start to end</span></div>` : ""}
+    </div>
+    <p class="lead" style="margin-top:14px">dE under 1 is invisible, under 3 is good. The target shows where each grey step's white point sits around D65; the brighter the dot, the brighter the step.</p>
+    ${d.hdr && L.pq_track != null && Math.abs(L.pq_track) > 10 ? `<p class="lead warn" style="margin-top:8px">The TV shows HDR ${L.pq_track > 0 ? "brighter" : "darker"} than the HDR standard asks for. That isn't a white-balance problem: check the HDR picture mode (Filmmaker or Cinema), turn off dynamic tone mapping (LG: Dynamic Tone Mapping; Samsung: HDR Tone Mapping set to Static; Sony: HDR Tone Mapping off), set ST.2084 / HDR brightness to its default, and turn off Contrast Enhancer or any HDR+ boost. Dynamic tone mapping changes the picture from moment to moment, so corrections can't hold while it's on. The colour scores below include this brightness error.</p>` : ""}
+    ${L.warnings.length ? `<ul class="warnings">${L.warnings.map(w => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}
+    </div></div></section>`;
+  html += changesPanel(d);
+  html += `<section class="sec"><h3>Greyscale</h3><p class="lead">Red, green and blue in each grey step. On target, all three sit on the white line at 100.${P ? " The faint lines are the previous round." : ""}</p>
+    ${greyChart(L, P, d.hdr)}
+    <div class="legend"><span><i style="background:var(--r)"></i>Red</span><span><i style="background:var(--g)"></i>Green</span><span><i style="background:var(--b)"></i>Blue</span><span><i style="background:var(--white);height:2px"></i>Target</span></div></section>`;
+  html += `<section class="sec"><h3>Colours</h3><p class="lead">Rings are the ${d.hdr ? "P3" : "Rec.709"} targets; dots are what the TV shows, with a line showing which way each one is off.</p>
+    <div class="twocol">${gamutChart(L)}<table><thead><tr><th>Colour</th><th>dE</th><th>Saturation</th><th>Hue</th><th>Brightness</th></tr></thead><tbody>
+    ${L.colours.map(c => `<tr><td><span class="sw" style="background:${COLOUR_SW[c.name]}"></span>${cap(c.name)}</td>
+      <td class="${deClass(c.de)}">${fmt(c.de, 2)}</td><td>${sign(c.sat)}%</td><td>${sign(c.hue)}°</td><td>${sign(c.lum)}%</td></tr>`).join("")}
+    </tbody></table></div></section>`;
+  html += historyTable(d);
+  return html;
+}
+const cap = s => s.charAt(0) + s.slice(1).toLowerCase();
+const nice = s => { const t = String(s || "").toLowerCase().replace(/\bpq\b/g, "PQ").replace(/\bp3\b/g, "P3"); return t.charAt(0).toUpperCase() + t.slice(1); };
+const sign = v => (v > 0 ? "+" : "") + fmt(v);
+
+function target(L) {
+  // u'v' offsets from D65, scaled so the outer ring is ~0.012 (about dE 6 at white)
+  const W = 280, c = W / 2, sc = 110 / 0.012, d65 = L.d65_uv;
+  const pt = uv => [c + (uv[0] - d65[0]) * sc, c - (uv[1] - d65[1]) * sc];
+  const maxY = Math.max(...L.greys.map(g => g.Y), 1);
+  const dots = L.greys.filter(g => !g.clipped && (S.hdr || g.level >= 0.099)).map(g => {
+    const [x, y] = pt(g.uv); const a = 0.25 + 0.75 * Math.sqrt(g.Y / maxY);
+    return `<circle cx="${clamp(x, 6, W - 6)}" cy="${clamp(y, 6, W - 6)}" r="${2.5 + 3 * Math.sqrt(g.Y / maxY)}" fill="rgba(247,247,247,${a.toFixed(2)})"><title>${esc(nice(g.name))}: dE ${fmt(g.de, 2)}</title></circle>`;
+  }).join("");
+  // channel directions: where pure red/green/blue would pull white
+  const dir = (xy) => { const u = upvp(xy); const dx = u[0] - d65[0], dy = u[1] - d65[1]; const m = Math.hypot(dx, dy); return [c + dx / m * 128, c - dy / m * 128]; };
+  const arms = [["R", [0.64, 0.33]], ["G", [0.3, 0.6]], ["B", [0.15, 0.06]]].map(([k, xy]) => {
+    const [x, y] = dir(xy); return `<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="${CH[k]}" stroke-opacity=".35" stroke-width="1.5"/>
+      <text x="${x}" y="${y}" fill="${CH[k]}" font-size="12" text-anchor="${x > c + 40 ? "end" : x < c - 40 ? "start" : "middle"}" dy="${y > c ? 14 : -6}">${{ R: "redder", G: "greener", B: "bluer" }[k]}</text>`;
+  }).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${W}" role="img" aria-label="White point of each grey step around D65">
+    <circle cx="${c}" cy="${c}" r="${0.0045 * sc}" fill="none" stroke="#5a5a5a"/>
+    <circle cx="${c}" cy="${c}" r="${0.012 * sc}" fill="none" stroke="#424242"/>
+    ${arms}
+    <circle cx="${c}" cy="${c}" r="3" fill="none" stroke="var(--white)"/>
+    ${dots}
+    <text x="${c + 6}" y="${c - 0.0045 * sc - 4}" fill="#8a8a8a" font-size="11">dE ≈ 2</text>
+  </svg>`;
+}
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const upvp = ([x, y]) => { const d = -2 * x + 12 * y + 3; return [4 * x / d, 9 * y / d]; };
+
+function greyChart(L, P, hdr) {
+  const W = 760, H = 270, padL = 46, padR = 14, padT = 14, padB = 34;
+  const gs = L.greys.filter(g => !g.clipped && (hdr || g.level >= 0.099));
+  if (!gs.length) return "";
+  const all = gs.flatMap(g => g.bal.map(v => v * 100)).concat(P ? P.greys.filter(g => hdr || g.level >= 0.099).flatMap(g => g.bal.map(v => v * 100)) : []);
+  const span = clamp(Math.max(6, ...all.map(v => Math.abs(v - 100))) + 2, 6, 45);
+  const lv = gs.map(g => g.level), x0 = Math.min(...lv), x1 = Math.max(...lv);
+  const X = v => padL + (v - x0) / ((x1 - x0) || 1) * (W - padL - padR);
+  const Y = v => padT + (1 - (clamp(v, 100 - span, 100 + span) - (100 - span)) / (2 * span)) * (H - padT - padB);
+  const line = (arr, k, op, wid) => {
+    const pts = arr.filter(g => !g.clipped && (hdr || g.level >= 0.099)).map(g => `${X(g.level)},${Y(g.bal[k] * 100)}`).join(" ");
+    return `<polyline points="${pts}" fill="none" stroke="${CH["RGB"[k]]}" stroke-opacity="${op}" stroke-width="${wid}" stroke-linejoin="round"/>`;
+  };
+  const ticks = [];
+  const step = span > 20 ? 10 : span > 10 ? 5 : 2;
+  for (let v = Math.ceil((100 - span) / step) * step; v <= 100 + span; v += step)
+    ticks.push(`<line x1="${padL}" x2="${W - padR}" y1="${Y(v)}" y2="${Y(v)}" stroke="${v === 100 ? "var(--white)" : "#383838"}" stroke-width="${v === 100 ? 1.5 : 1}"/>
+      <text x="${padL - 8}" y="${Y(v) + 4}" fill="#8a8a8a" font-size="11" text-anchor="end">${v}</text>`);
+  const xl = gs.map(g => `<text x="${X(g.level)}" y="${H - 12}" fill="#8a8a8a" font-size="11" text-anchor="middle">${Math.round(g.level * 100)}</text>`).join("");
+  const band = `<rect x="${padL}" width="${W - padL - padR}" y="${Y(102)}" height="${Y(98) - Y(102)}" fill="#ffffff" fill-opacity=".05"/>`;
+  const dots = gs.map(g => [0, 1, 2].map(k => `<circle cx="${X(g.level)}" cy="${Y(g.bal[k] * 100)}" r="2.6" fill="${CH["RGB"[k]]}"><title>${esc(nice(g.name))}: ${"RGB"[k]} ${fmt(g.bal[k] * 100)}</title></circle>`).join("")).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Red, green and blue balance across the greyscale">
+    ${band}${ticks.join("")}${xl}
+    <text x="${W - padR}" y="${H - 0}" fill="#6f6f6f" font-size="11" text-anchor="end">${hdr ? "PQ signal %" : "signal %"}</text>
+    ${P ? [0, 1, 2].map(k => line(P.greys, k, .25, 1.5)).join("") : ""}
+    ${[0, 1, 2].map(k => line(gs, k, 1, 2.2)).join("")}${dots}</svg>`;
+}
+
+function gamutChart(L) {
+  const W = 420, H = 380, u0 = 0.06, u1 = 0.56, v0 = 0.12, v1 = 0.6;
+  const X = u => 20 + (u - u0) / (u1 - u0) * (W - 40), Y = v => 10 + (1 - (v - v0) / (v1 - v0)) * (H - 30);
+  const order = ["RED", "YELLOW", "GREEN", "CYAN", "BLUE", "MAGENTA"];
+  const by = Object.fromEntries(L.colours.map(c => [c.name, c]));
+  const tri = ["RED", "GREEN", "BLUE"].filter(n => by[n]).map(n => `${X(by[n].tuv[0])},${Y(by[n].tuv[1])}`).join(" ");
+  const pts = order.filter(n => by[n]).map(n => {
+    const c = by[n], [tx, ty] = [X(c.tuv[0]), Y(c.tuv[1])], [mx, my] = [X(c.uv[0]), Y(c.uv[1])];
+    return `<circle cx="${tx}" cy="${ty}" r="9" fill="none" stroke="#8a8a8a"/>
+      <line x1="${tx}" y1="${ty}" x2="${mx}" y2="${my}" stroke="${COLOUR_SW[n]}" stroke-width="2"/>
+      <circle cx="${mx}" cy="${my}" r="5" fill="${COLOUR_SW[n]}"><title>${cap(n)}: dE ${fmt(c.de, 2)}</title></circle>`;
+  }).join("");
+  const w = L.d65_uv;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Measured colours against their targets">
+    <polygon points="${tri}" fill="#ffffff" fill-opacity=".03" stroke="#5a5a5a" stroke-dasharray="4 4"/>
+    <circle cx="${X(w[0])}" cy="${Y(w[1])}" r="3" fill="var(--white)"/>${pts}</svg>`;
+}
+
+function changesPanel(d) {
+  const p = d.pending;
+  if (!p) return "";
+  if (p.done) return `<section class="sec"><div class="done-panel"><h3>${esc(p.message)}</h3>
+    <p class="lead" style="margin:4px 0 0">You can run another round any time to check it, for example after the TV has warmed up.</p></div></section>`;
+  const ch = p.changes || {};
+  const keys = Object.keys(ch);
+  if (!keys.length) return p.message ? `<section class="sec"><div class="changes" data-kind="undo"><header><h3>Round not kept</h3><p>${esc(p.message)}</p></header></div></section>` : "";
+  const kind = p.banner || "correct";
+  const cell = (v, C) => `<td class="v ${v ? "c" + C.toLowerCase() : "zero"}">${v ? (v > 0 ? "+" : "") + v : "·"}</td>`;
+  const row = (label, vals, id) => `<tr data-row="${id}"><td>${label}</td>${["R", "G", "B"].map(C => cell(vals[C] || 0, C)).join("")}
+    <td class="tick"><input type="checkbox" aria-label="Done: ${esc(label)}"></td></tr>`;
+  const thead = first => `<thead><tr><th>${first}</th><th class="cr">Red</th><th class="cg">Green</th><th class="cb">Blue</th><th class="tick">Done</th></tr></thead>`;
+  let menus = "";
+  const two = { offset: {}, gain: {} };
+  keys.filter(k => /^(gain|offset):/.test(k)).forEach(k => { const [t, C] = k.split(":"); two[t][C] = ch[k]; });
+  if (Object.keys(two.offset).length || Object.keys(two.gain).length)
+    menus += `<div class="menu"><h4>White Balance <span>› 2 Point</span></h4><table>${thead("Setting")}<tbody>
+      ${Object.keys(two.offset).length ? row("Offset", two.offset, "o") : ""}${Object.keys(two.gain).length ? row("Gain", two.gain, "g") : ""}</tbody></table></div>`;
+  const p20 = {};
+  keys.filter(k => k.startsWith("p20:")).forEach(k => { const [, C, lv] = k.split(":"); (p20[lv] = p20[lv] || {})[C] = ch[k]; });
+  const pts = (d.settings || {}).points;
+  if (Object.keys(p20).length)
+    menus += `<div class="menu"><h4>White Balance <span>› ${pts == 20 ? "20 Point" : "Multipoint"}</span></h4><table>${thead("Interval")}<tbody>
+      ${Object.keys(p20).map(Number).sort((a, b) => a - b).map(lv => row(pts == 20 ? `${lv / 5} <span style="color:var(--muted)">(${lv}%)</span>` : `${lv}%`, p20[lv], "p" + lv)).join("")}</tbody></table></div>`;
+  const cms = {};
+  keys.filter(k => k.startsWith("cms:")).forEach(k => { const [, col, C] = k.split(":"); (cms[col] = cms[col] || {})[C] = ch[k]; });
+  if (Object.keys(cms).length)
+    menus += `<div class="menu"><h4>Color Space <span>› Custom</span></h4><table>${thead("Colour")}<tbody>
+      ${CMS_ORDER.filter(c => cms[c]).map(c => row(`<span class="sw" style="background:${COLOUR_SW[c]}"></span>${cap(c)}`, cms[c], "c" + c)).join("")}</tbody></table></div>`;
+  const hsl = {};
+  keys.filter(k => k.startsWith("hsl:")).forEach(k => { const [, col, ax] = k.split(":"); (hsl[col] = hsl[col] || {})[ax] = ch[k]; });
+  if (Object.keys(hsl).length) {
+    const hcell = v => `<td class="v ${v ? "" : "zero"}">${v ? (v > 0 ? "+" : "") + v : "·"}</td>`;
+    menus += `<div class="menu"><h4>Color Management System <span>› per colour</span></h4><table>
+      <thead><tr><th>Colour</th><th>Hue</th><th>Saturation</th><th>Brightness</th><th class="tick">Done</th></tr></thead><tbody>
+      ${CMS_ORDER.filter(c => hsl[c]).map(c => `<tr data-row="h${c}"><td><span class="sw" style="background:${COLOUR_SW[c]}"></span>${cap(c)}</td>
+        ${hcell(hsl[c].hue)}${hcell(hsl[c].sat)}${hcell(hsl[c].lum)}<td class="tick"><input type="checkbox" aria-label="Done: ${cap(c)}"></td></tr>`).join("")}
+      </tbody></table><p class="hint" style="margin:6px 0 0">Brightness may be called Luminance on your TV.</p></div>`;
+  }
+  const n = keys.filter(k => ch[k]).length;
+  return `<section class="sec"><div class="changes" data-kind="${kind}">
+    <header><h3>${esc(p.title)}</h3>${p.message ? `<p>${esc(p.message)}</p>` : ""}
+      <p>Clicks from the TV's current values: +3 means three clicks up. Tick each row as you go.</p></header>
+    ${menus}${(p.notes || []).map(t => `<p class="note">${esc(t)}</p>`).join("")}
+    <footer><button class="primary" id="confirm">I've made these changes</button>
+      <button class="secondary" id="skip">Skip, don't record</button><span id="tickcount">0 of ${n} done</span></footer>
+  </div></section>`;
+}
+function bindChanges() {
+  const box = $(".changes"); if (!box) return;
+  const total = box.querySelectorAll("td.v:not(.zero)").length;
+  box.addEventListener("change", () => {
+    let done = 0;
+    box.querySelectorAll("tr[data-row]").forEach(tr => {
+      const on = tr.querySelector("input").checked; tr.classList.toggle("ticked", on);
+      if (on) done += tr.querySelectorAll("td.v:not(.zero)").length;
+    });
+    $("#tickcount").textContent = `${done} of ${total} done`;
+  });
+  $("#confirm").onclick = async () => { await api("/api/round/confirm", { name: S.tv, hdr: S.hdr, ok: true }); loadTV(); };
+  $("#skip").onclick = async () => {
+    if (!confirm("Skip these changes? The next round will treat the TV as unchanged.")) return;
+    await api("/api/round/confirm", { name: S.tv, hdr: S.hdr, ok: false }); loadTV();
+  };
+}
+function historyTable(d) {
+  if (d.rounds.length < 2) return "";
+  const label = k => ({ probe_gain: "Learning 1", probe_offset: "Learning 2", correct: "Corrections", undo: "Undo" }[k] || "Not recorded");
+  return `<section class="sec history"><h3>History</h3><table><thead><tr><th>Round</th><th>When</th><th>Greyscale dE</th><th>Colour dE</th><th>Changes made after it</th></tr></thead><tbody>
+    ${d.rounds.slice().reverse().map(r => `<tr><td>${r.n}</td><td>${esc((r.time || "").replace("T", " ").slice(0, 16))}</td>
+      <td class="${deClass(r.grey)}">${fmt(r.grey, 2)}</td><td class="${deClass(r.colour)}">${fmt(r.colour, 2)}</td>
+      <td>${r.applied ? label(r.kind) : (r.n === d.rounds.length ? "Waiting for you" : "Not recorded")}</td></tr>`).join("")}
+    </tbody></table></section>`;
+}
+
+/* ------------------------------------------------------------------ live meter */
+async function showLive() {
+  clearInterval(S.poll);
+  $("#main").innerHTML = `<div class="tvhead"><h1>Live meter</h1>
+    <div class="seg" role="group" aria-label="Colour targets"><button data-lhdr="0" aria-pressed="${!S.hdr}">Rec.709</button><button data-lhdr="1" aria-pressed="${S.hdr}">P3</button></div></div>
+    <p class="empty" style="margin-top:-8px">Show any white, grey or colour patch and adjust the TV by hand. Readings update about twice a second.</p>
+    <div class="live" id="livebox"><p class="empty">Starting the meter…</p></div>`;
+  document.querySelectorAll("[data-lhdr]").forEach(b => b.onclick = async () => { S.hdr = b.dataset.lhdr === "1"; await api("/api/live/stop", {}); showLive(); });
+  await api("/api/live/start", { hdr: S.hdr });
+  clearInterval(S.live);
+  S.live = setInterval(async () => { const r = await api("/api/live"); if (r.data) renderLive(r.data); }, 500);
+}
+function stopLive() { clearInterval(S.live); S.live = null; api("/api/live/stop", {}); }
+function renderLive(d) {
+  const box = $("#livebox"); if (!box) return;
+  if (d.kind === "white") {
+    const W = 340, c = W / 2, sc = 140 / 0.012;
+    const x = clamp(c + (d.uv[0] - d.d65_uv[0]) * sc, 8, W - 8), y = clamp(c - (d.uv[1] - d.d65_uv[1]) * sc, 8, W - 8);
+    const bar = (k, v) => { const off = clamp((v - 1) * 500, -50, 50); return `<div class="bar"><span style="color:${CH[k]}">${{ R: "Red", G: "Green", B: "Blue" }[k]}</span>
+      <div class="track"><div class="fill" style="background:${CH[k]};left:${off < 0 ? 50 + off : 50}%;width:${Math.abs(off)}%"></div></div><span>${fmt(v * 100)}</span></div>`; };
+    box.innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${W}" role="img" aria-label="White point against D65">
+      <circle cx="${c}" cy="${c}" r="${0.0045 * sc}" fill="none" stroke="#5a5a5a"/><circle cx="${c}" cy="${c}" r="${0.012 * sc}" fill="none" stroke="#424242"/>
+      <circle cx="${c}" cy="${c}" r="3" fill="none" stroke="var(--white)"/><circle cx="${x}" cy="${y}" r="9" fill="var(--white)"/></svg>
+      <div><div class="stats" style="margin-bottom:22px">
+        <div class="stat"><b>${fmt(d.Y, d.Y < 10 ? 2 : 1)}</b><span>cd/m²</span></div>
+        <div class="stat"><b class="${deClass(d.de)}">${fmt(d.de, 2)}</b><span>White-point dE</span></div>
+        <div class="stat" style="grid-column: span 2"><b style="font-size:22px">${fmt(d.x, 4)}, ${fmt(d.y, 4)}</b><span>x, y (D65 is 0.3127, 0.3290)</span></div></div>
+        <div class="bars">${bar("R", d.bal[0])}${bar("G", d.bal[1])}${bar("B", d.bal[2])}</div>
+        <p class="advice">${esc(d.advice)}</p></div>`;
+  } else {
+    box.innerHTML = `<div class="stat"><b style="font-size:46px"><span class="sw" style="width:22px;height:22px;background:${COLOUR_SW[d.name]}"></span>${cap(d.name)}</b><span>Detected colour</span></div>
+      <div class="stats"><div class="stat"><b>${fmt(d.Y, 1)}</b><span>cd/m²</span></div>
+      <div class="stat"><b>${sign(d.sat)}%</b><span>Saturation vs target</span></div>
+      <div class="stat"><b>${sign(d.hue)}°</b><span>Hue vs target</span></div>
+      <div class="stat" style="grid-column: span 2"><b style="font-size:22px">${fmt(d.x, 4)}, ${fmt(d.y, 4)}</b><span>x, y</span></div></div>`;
+  }
+}
+
+/* ------------------------------------------------------------------ train phone profiles (several phones at once) */
+async function showTrain() {
+  clearInterval(S.poll); stopLive();
+  if (!S.trainTV || !S.tvs.some(t => t.name === S.trainTV)) S.trainTV = (S.tvs[0] || {}).name || "";
+  S._tkey = null;
+  $("#main").innerHTML = `<div class="tvhead"><h1>Train phone profiles</h1></div>
+    <p class="empty" style="margin-top:-8px;max-width:76ch">Each iPhone model needs a camera profile: what its camera sees,
+    matched to what the Display Plus HL measures. Every connected iPhone trains at the same time, on the same patches,
+    so you can also compare how the phones see the same colours. Train on two or more TVs (an OLED and an LCD) so the
+    profiles work on TVs they haven't seen.</p>
+    <section class="sec"><h3>iPhones</h3><div id="tphones"></div></section>
+    <section class="sec"><h3>Set up</h3><ol class="steps-list">
+      <li><b>On each iPhone:</b> install the <b>TV Calibrator Lab</b> build from Xcode. In the app, open Lab mode, pair with
+        the code in the sidebar, then <b>Start the camera</b> and <b>measure the darkness</b> (lens covered).</li>
+      <li><b>The meter:</b> plug the Display Plus HL into this Mac and rest it on the centre of the TV.</li>
+      <li><b>The phones:</b> on stands, 15–30 cm from the screen, each aimed at a different spot of the big centre patch,
+        around the meter but not at it. The phone's yellow box must sit fully inside the patch.</li>
+      <li><b>The TV:</b> its most accurate SDR picture mode (Filmmaker, Cinema or Expert), with energy saving, dynamic
+        contrast and auto brightness off. A dark room.</li>
+    </ol></section>
+    <section class="sec"><h3>Measure</h3><div id="trun"></div></section>`;
+  renderTrainPhones();
+  S.job = await api("/api/job");
+  renderTrain();
+  if (["starting", "waiting", "measuring"].includes(S.job.phase)) startPoll();
+}
+function renderTrainPhones() {
+  const el = $("#tphones"); if (!el) return;
+  const p = S.phone || {}, list = p.phones || [];
+  el.innerHTML = (list.length ? `<div class="phonelist">${list.map(q => `
+      <div class="phonecard ${q.camera ? "ready" : ""}"><b>${esc(q.label)}</b><span>${esc(q.model)}</span>
+      <span>${q.camera ? "Camera ready" : "Camera off: start it in Lab mode"}</span>
+      <span>${q.profile ? `Profile: ${q.profile.tvs.length} TV${q.profile.tvs.length === 1 ? "" : "s"} (${q.profile.tvs.map(esc).join(", ")})` : "No profile yet"}</span></div>`).join("")}</div>`
+    : `<p class="hint">No iPhone connected${S.sim ? " (the demo uses a pretend one)" : ""}.</p>`) +
+    `<p class="hint" style="margin-top:10px">To add a phone, open Lab mode in TV Cal Lab and enter the code <b>${esc(p.code || "")}</b>
+     (this Mac: ${esc(p.ip || "")}:${esc(p.port || "")}).</p>`;
+  // the Measure section depends on which cameras are ready; redraw it only when that changes
+  const key = list.map(q => q.key + (q.camera ? "1" : "0")).join();
+  if (key !== S._tkey) { S._tkey = key; if (!["starting", "waiting", "measuring"].includes((S.job || {}).phase)) renderTrain(); }
+}
+const PANEL_NAMES = { woled: "OLED", qdoled: "QD-OLED", qdlcd: "Quantum dot LED / mini-LED", lcd: "LED (LCD)",
+  rgbled: "Micro RGB / RGB mini-LED", plasma: "Plasma" };
+function tvPanel() { const t = S.tvs.find(t => t.name === S.trainTV); return t ? t.panel || "" : ""; }
+function renderTrain() {
+  const el = $("#trun"); if (!el) return;
+  const j = S.job || {}, list = (S.phone || {}).phones || [];
+  const mine = j.kind === "bridge";
+  const running = mine && ["starting", "waiting", "measuring"].includes(j.phase);
+  const ready = list.filter(q => q.camera).length || S.sim;
+  if (running) {
+    el.innerHTML = `<p>${j.check ? "Checking" : "Training"} on <b>${esc(j.tv)}</b> with ${j.phones.map(q => esc(q.label)).join(", ")}.</p>
+      <p class="hint">${j.source === "iphone" ? "The iPhone shows each patch on the TV; the meter and the cameras measure it together." :
+        `Play <b>Lab - Camera training (${j.signal === "hdr10" ? "HDR10" : "SDR"})</b> on the TV from the start${j.signal === "hdr10" ? " (the TV should show its HDR badge)" : ""}. Every new patch is measured by the meter and all the
+        phones at once. It finishes by itself about 45 seconds after the video ends.`}
+        ${j.phase === "waiting" && !j.pairs.length ? " Waiting for the first patch…" : ""}</p>
+      <p class="hint">Meter now: ${(j.readings || []).length ? `<b>${fmt(j.readings[j.readings.length - 1].Y, 2)} cd/m²</b>` : "<b>no reading yet</b> (is the Display Plus HL plugged in?)"}
+        · ${esc(j.note || "")}</p>
+      <div class="cmpwrap">${trainTable(j, false)}</div>${skipsNote(j)}
+      <div class="trainbar" style="margin-top:12px">${j.source === "iphone" ? "" : `<button class="secondary" id="tfinish" ${j.pairs.length >= 6 ? "" : "disabled"}>Finish now</button>`}
+      <button class="secondary" id="tcancel">Cancel</button></div>`;
+  } else {
+    const tvs = S.tvs.map(t => `<option ${t.name === S.trainTV ? "selected" : ""}>${esc(t.name)}</option>`).join("");
+    let out = "";
+    if (mine && j.phase === "error") out = `<p class="errline">${esc(j.error)}</p>`;
+    if (mine && j.phase === "done" && j.result && j.result.phones) out = trainResults(j);
+    el.innerHTML = `<div class="trainbar">
+        ${tvs ? `<label class="hint">TV <select id="ttv">${tvs}</select></label>
+          <label class="hint">Screen <select id="tpanel"><option value="">Choose…</option>${Object.entries(PANEL_NAMES).map(([k, v]) =>
+            `<option value="${k}" ${tvPanel() === k ? "selected" : ""}>${esc(v)}</option>`).join("")}</select></label>
+          <label class="hint">Video <select id="tsig"><option value="sdr" ${S.trainSig !== "hdr10" ? "selected" : ""}>SDR</option>
+          <option value="hdr10" ${S.trainSig === "hdr10" ? "selected" : ""}>HDR10</option></select></label>` : '<span class="hint">Add the TV in the sidebar first (any name, e.g. “LG C5”).</span>'}
+        <button class="primary" id="tstart" ${tvs && ready && tvPanel() ? "" : "disabled"}>Train the profiles</button>
+        <button class="secondary" id="tcheck" ${tvs && ready && tvPanel() ? "" : "disabled"}>Check the profiles only</button>
+        ${!ready ? '<span class="hint">Start the camera on at least one iPhone.</span>' : !tvPanel() ? '<span class="hint">Choose what kind of screen this TV is.</span>' : ""}</div>
+      <p class="hint" style="max-width:76ch">Each kind of screen gets its own conversion in every phone's profile: screens make white
+        from different mixes of light, and a camera isn't a perfect colorimeter.</p>
+      <p class="hint" style="max-width:76ch">Train adds this TV to each phone's profile. Check measures the same way but only scores
+        each phone's existing profile against the meter, without changing it.</p>${out}`;
+  }
+  if ($("#ttv")) $("#ttv").onchange = e => { S.trainTV = e.target.value; renderTrain(); };
+  if ($("#tpanel")) $("#tpanel").onchange = async e => {
+    await api("/api/tv/panel", { name: ($("#ttv") || {}).value || S.trainTV, panel: e.target.value });
+    await loadTVs(); renderTrain();
+  };
+  if ($("#tsig")) $("#tsig").onchange = e => { S.trainSig = e.target.value; };
+  const start = async check => {
+    const name = ($("#ttv") || {}).value || S.trainTV;
+    const signal = ($("#tsig") || {}).value || "sdr";
+    const r = await api("/api/bridge/start", { name, check, signal });
+    if (r.error) return alert(r.error);
+    S.job = { kind: "bridge", check, signal, tv: name, phase: "starting", pairs: [], phones: [] }; renderTrain(); startPoll();
+  };
+  if ($("#tstart")) $("#tstart").onclick = () => start(false);
+  if ($("#tcheck")) $("#tcheck").onclick = () => start(true);
+  if ($("#tcancel")) $("#tcancel").onclick = () => api("/api/round/cancel", {});
+  if ($("#tfinish")) $("#tfinish").onclick = () => api("/api/bridge/finish", {});
+}
+function trainTable(j, final) {
+  if (!j.pairs || !j.pairs.length) return "";
+  const ph = j.phones || [];
+  const head = ph.map(q => `<th>${esc(q.label)}${final ? "<br><small>x, y · dE</small>" : ""}</th>`).join("");
+  const cell = (row, q) => {
+    const e = (row.phones || {})[q.key];
+    if (q.skip) return "<td><small>no profile</small></td>";
+    if (!e) return "<td>–</td>";
+    if (!e.ok) return `<td class="warn" title="${esc(e.error)}">missed</td>`;
+    const uneven = e.uneven > 0.05 ? ' <span class="warn" title="The patch isn\'t even in this phone\'s box">(uneven)</span>' : "";
+    if (e.de == null) return `<td>✓${uneven}</td>`;
+    return `<td>${final && e.x != null ? `<small>${fmt(e.x, 4)}, ${fmt(e.y, 4)}</small> · ` : ""}<span class="${deClass(e.de)}">${fmt(e.de, 2)}</span>${uneven}</td>`;
+  };
+  return `<table class="cmp"><thead><tr><th>Patch</th><th>Meter cd/m²</th><th>Meter x, y</th>${head}</tr></thead><tbody>
+    ${j.pairs.map(r => `<tr><td>${esc(nice(r.name))}</td><td>${fmt(r.Y, 1)}</td><td>${fmt(r.x, 4)}, ${fmt(r.y, 4)}</td>${ph.map(q => cell(r, q)).join("")}</tr>`).join("")}
+    </tbody></table>`;
+}
+function trainResults(j) {
+  const R = j.result;
+  const cards = R.phones.map(r => {
+    if (r.error) return `<div class="phonecard"><b>${esc(r.label)}</b><span class="errline">${esc(r.error)}</span></div>`;
+    const prof = r.profile || {};
+    const verdict = r.de_avg < 2 ? "Good enough to calibrate with." : r.de_avg < 4 ? "Usable for white balance; check colours with the meter." : "Too far off.";
+    return `<div class="phonecard ${r.de_avg < 2 ? "ready" : ""}"><b>${esc(r.label)}</b>
+      <span>${R.check ? "Existing profile on" : "On"} ${esc(j.tv)}: <b class="${deClass(r.de_avg)}" style="display:inline;font-size:14px">dE ${fmt(r.de_avg)}</b> average, worst ${fmt(r.de_max)} (${r.n} patches)</span>
+      <span>Greys ${fmt(r.grey_avg)} · colours ${fmt(r.colour_avg)}. ${verdict}</span>
+      ${!R.check ? Object.values(prof.panels || {}).map(p => `<span>${esc(p.label)}: dE ${fmt(p.de_avg)} on ${p.tvs.length} TV${p.tvs.length === 1 ? "" : "s"}${p.unseen != null ? `, about ${fmt(p.unseen)} on one it hasn't seen` : ""}</span>`).join("") : ""}
+      ${r.settings && r.settings.length ? `<span class="errline">Camera settings differ from the profile: ${r.settings.map(esc).join("; ")}</span>` : ""}</div>`;
+  }).join("");
+  return `<h3 style="margin:24px 0 10px;font-size:16px">${R.check ? "Profile check" : "Trained"} on ${esc(j.tv)}${j.signal === "hdr10" ? " (HDR10)" : ""}</h3>
+    <div class="phonelist">${cards}</div>
+    <p class="hint" style="margin-top:14px;max-width:76ch">Below: each patch as the meter measured it, and as each phone reads it through its
+      ${R.check ? "existing" : "updated"} profile. ${R.file ? `All the raw readings are saved in <b>${esc(R.file)}</b>.` : ""}
+      To publish a profile: Camera profiles, then Export.</p>
+    <div class="cmpwrap">${trainTable(j, true)}</div>${skipsNote(j)}`;
+}
+function skipsNote(j) {
+  const k = j.skips || [];
+  if (!k.length) return "";
+  return `<p class="hint" style="margin-top:10px;max-width:76ch">${k.length} attempt${k.length === 1 ? "" : "s"} didn't count:
+    ${k.slice(-6).map(x => `${fmt(x.Y, 1)} cd/m² at ${fmt(x.t, 0)} s (${esc(x.why)})`).join("; ")}.</p>`;
+}
+
+/* ------------------------------------------------------------------ camera profiles */
+async function showProfiles() {
+  clearInterval(S.poll); stopLive();
+  const r = await api("/api/profiles");
+  const cards = r.profiles.map(p => `
+    <section class="sec profile" data-model="${esc(p.model)}">
+      <h3>${esc(p.name)} <span class="hint">${esc(p.model)}${p.model === r.current ? " · the paired iPhone" : ""}</span></h3>
+      ${p.camera ? `<p class="hint" style="margin:-4px 0 8px">Trained with: ${esc(p.camera.lens || "back camera")}, ISO ${esc(p.camera.iso)}, RAW ${esc(p.camera.format || "")}</p>` : ""}
+      <p class="lead">Average on the TVs it was trained on: <b class="${deClass(p.de_avg)}">dE ${fmt(p.de_avg)}</b>, with one conversion per kind of screen.
+        ${Object.values(p.panels || {}).map(q => `<br>${esc(q.label)}: dE ${fmt(q.de_avg)} on ${q.tvs.map(esc).join(", ")}${q.unseen != null ? `; about ${fmt(q.unseen)} on one it hasn't seen` : ""}`).join("")}</p>
+      <table><thead><tr><th>Trained on</th><th>When</th><th>Patches</th><th></th></tr></thead><tbody>
+        ${p.sessions.map((x, i) => `<tr><td>${esc(x.tv)}</td><td>${esc((x.date || "").replace("T", " "))}</td><td>${x.n}</td>
+          <td><button class="linkbtn" data-del="${i}">Remove</button></td></tr>`).join("")}
+      </tbody></table>
+      <div class="srcrow"><button class="secondary" data-act="rename">Rename</button><button class="secondary" data-act="export">Export profile</button></div>
+    </section>`).join("");
+  $("#main").innerHTML = `<div class="tvhead"><h1>Camera profiles</h1></div>
+    <p class="empty" style="margin-top:-8px">One profile per iPhone model. It converts that camera's readings into the meter's,
+    and works on any TV. Every TV you train it on is added to the same profile, which makes it more accurate on TVs it has never seen,
+    since different TV technologies (quantum dot, OLED, Micro RGB) fool cameras in different ways.</p>
+    ${cards || '<p class="empty">No profiles yet. Train them on the Train phone profiles page.</p>'}
+    <section class="sec"><h3>Import a profile</h3><p class="lead">For example one exported on another Mac. Training sessions are merged into the profile for that iPhone model.</p>
+      <input type="file" id="pimport" accept=".json,application/json"></section>`;
+  document.querySelectorAll(".profile").forEach(card => {
+    const model = card.dataset.model;
+    card.querySelectorAll("[data-del]").forEach(b => b.onclick = async () => {
+      if (!confirm("Remove this training session from the profile?")) return;
+      await api("/api/profiles/delete_session", { model, index: +b.dataset.del }); showProfiles();
+    });
+    card.querySelector('[data-act="rename"]').onclick = async () => {
+      const name = prompt("Name for this iPhone profile, e.g. iPhone 18 Pro", card.querySelector("h3").firstChild.textContent.trim());
+      if (name !== null) { await api("/api/profiles/rename", { model, name }); showProfiles(); }
+    };
+    card.querySelector('[data-act="export"]').onclick = async () => {
+      const x = await api("/api/profiles/export", { model });
+      if (x.file) alert(`Saved:\n${x.file}`);
+    };
+  });
+  $("#pimport").onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    try {
+      const x = await api("/api/profiles/import", { profile: JSON.parse(await f.text()) });
+      alert(x.error || `Imported ${x.added} training session${x.added === 1 ? "" : "s"}.`); showProfiles();
+    } catch (err) { alert("Couldn't read that file."); }
+  };
+}
+
+/* ================================================================== guided calibration (main view) */
+const MODES = [["sdr", "SDR"], ["hdr10", "HDR10"], ["hdr10p", "HDR10+"], ["dv", "Dolby Vision"]];
+const modeBadge = () => ({ dv: "Dolby Vision", hdr10p: "HDR10+" })[S.mode] || "HDR";
+const STEPS = [
+  ["setup", "Set up"], ["before", "Before"], ["bright", "Bright end"], ["dark", "Dark end"],
+  ["check", "Check"], ["colours", "Colours"], ["after", "After"]];
+const BRANDS = [["lg", "LG"], ["samsung", "Samsung"], ["sony", "Sony"], ["tcl", "TCL"], ["other", "Other"]];
+const BRAND = {
+  lg: { gain: "Gain", offset: "Offset", wb: "Picture › Advanced Settings › Colour › White Balance (set it to 2 Point)",
+        cms: "Picture › Advanced Settings › Colour › Colour Management System", cmsType: "hsl",
+        setup: { sdr: ["Picture mode: Filmmaker Mode", "Energy Saving and AI Brightness: off", "Gamma: BT.1886, Colour Temperature: Warm 50"],
+                 hdr10: ["Picture mode: Filmmaker Mode (or Cinema)", "Dynamic Tone Mapping: Off", "Energy Saving and AI Brightness: off"],
+                 dv: ["Picture mode: Dolby Vision Filmmaker Mode (or Cinema Home)", "Energy Saving and AI Brightness: off"] } },
+  samsung: { gain: "Gain", offset: "Offset", wb: "Picture › Expert Settings › White Balance (2 Point)",
+        cms: "Picture › Expert Settings › Color Space Settings › Custom", cmsType: "samsung",
+        setup: { sdr: ["Picture mode: Filmmaker Mode (or Movie)", "Colour Tone: Warm2, Gamma: BT.1886", "Energy saving, Adaptive Brightness and Contrast Enhancer: off",
+                       "If the readings wobble: turn off Brightness Optimization / Eco settings, and try Local Dimming on Low or Standard"],
+                 hdr10: ["Picture mode: Filmmaker Mode (or Movie)", "HDR Tone Mapping: Static if offered, Contrast Enhancer: off", "ST.2084: 0",
+                       "If the readings wobble: turn off Brightness Optimization / Eco settings, and try Local Dimming on Low or Standard"],
+                 dv: ["Samsung TVs don't support Dolby Vision - use HDR10 instead."] } },
+  sony: { gain: "Gain", offset: "Bias", wb: "Picture › Advanced settings › Colour › White balance",
+        cms: "Picture › Advanced settings › Colour › Advanced colour adjustment", cmsType: "hsl",
+        setup: { sdr: ["Picture mode: Professional (or Custom)", "Colour temperature: Expert 1", "Light sensor, Live colour and Advanced contrast enhancer: off"],
+                 hdr10: ["Picture mode: Professional (or Custom)", "HDR tone mapping: Off, Advanced contrast enhancer: off"],
+                 dv: ["Picture mode: Dolby Vision Dark (or Professional)", "Light sensor: off"] } },
+  tcl: { gain: "Gain", offset: "Offset", wb: "Picture › Advanced (or Expert) settings › White balance",
+        cms: "Picture › Advanced settings › Colour tuner", cmsType: "hsl",
+        setup: { sdr: ["Picture mode: Filmmaker Mode (or Movie)", "Colour temperature: Warm", "Dynamic contrast, Eco mode and Light sensor: off"],
+                 hdr10: ["Picture mode: Filmmaker Mode (or HDR Movie)", "Dynamic contrast and any dynamic tone mapping: off"],
+                 dv: ["Picture mode: Dolby Vision Dark (or Movie)", "Dynamic contrast: off"] } },
+  other: { gain: "Gain", offset: "Offset", wb: "the White Balance menu (often under Picture › Advanced or Expert settings)",
+        cms: "the colour management menu", cmsType: "hsl",
+        setup: { sdr: ["Picture mode: Filmmaker Mode, Movie or Cinema", "Colour temperature: Warm", "Energy saving, light sensors and contrast boosters: off"],
+                 hdr10: ["Picture mode: Filmmaker Mode, Movie or Cinema", "Dynamic tone mapping and contrast boosters: off"],
+                 dv: ["Picture mode: Dolby Vision Dark / Cinema / Filmmaker", "Light sensors and contrast boosters: off"] } } };
+const COLOUR_NAMES = { RED: "Red", GREEN: "Green", BLUE: "Blue", CYAN: "Cyan", MAGENTA: "Magenta", YELLOW: "Yellow" };
+S.mode = localStorage.getItem("tvcal-mode") || "sdr";
+const progKey = () => `tvcal-prog:${S.tv}:${S.mode}`;
+const getProg = () => { try { return JSON.parse(localStorage.getItem(progKey())) || { step: "setup", done: [], colours: [] }; } catch (e) { return { step: "setup", done: [], colours: [] }; } };
+const setProg = p => localStorage.setItem(progKey(), JSON.stringify(p));
+const tvCfg = () => (S.guide && S.guide.settings) || {};
+const brandOf = () => BRAND[tvCfg().brand] || BRAND.other;
+
+async function loadGuide() {
+  stopGuideLive();
+  if (!S.tv) return renderEmpty();
+  S.hdr = S.mode !== "sdr";
+  S.guide = await api(`/api/guide?name=${encodeURIComponent(S.tv)}&mode=${S.mode}`);
+  renderGuide();
+}
+function stopGuideLive() { clearInterval(S.gpoll); S.gpoll = null; }
+function lastSession() { const ss = (S.guide && S.guide.sessions) || []; return ss[ss.length - 1]; }
+
+function renderGuide() {
+  const g = S.guide, prog = getProg(), cfg = tvCfg();
+  const stepIdx = STEPS.findIndex(s => s[0] === prog.step);
+  $("#main").innerHTML = `
+    <div class="tvhead"><h1>${esc(g.name)}</h1>
+      <div class="seg" role="group" aria-label="Signal">${MODES.map(([m, l]) => `<button data-mode="${m}" aria-pressed="${S.mode === m}">${l}</button>`).join("")}</div>
+      <div class="opts">
+        <label>Brand <select id="g-brand">${BRANDS.map(([v, l]) => `<option value="${v}" ${cfg.brand === v ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+        <label>Colour menu <select id="g-cms">
+          <option value="hsl" ${cfg.cms === "hsl" ? "selected" : ""}>Hue / Saturation / Brightness</option>
+          <option value="samsung" ${cfg.cms === "samsung" ? "selected" : ""}>Red / Green / Blue sliders</option>
+          <option value="off" ${cfg.cms === "off" ? "selected" : ""}>None</option></select></label>
+        ${S.pro ? '<button class="linkbtn" id="g-auto" title="Automatic rounds with the calibrator, from a video file or the iPhone">Automatic rounds (calibrator + video)</button>' : ""}
+        <button class="linkbtn" id="folder">Open log folder</button>
+      </div></div>
+    <ol class="stepper">${STEPS.map(([id, label], i) => `<li><button data-step="${id}" class="${prog.done.includes(id) ? "done" : ""} ${id === prog.step ? "now" : ""}">
+      <span class="num">${prog.done.includes(id) ? "✓" : i + 1}</span>${label}</button></li>`).join("")}</ol>
+    <section class="stage" id="stage"></section>`;
+  document.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { S.mode = b.dataset.mode; localStorage.setItem("tvcal-mode", S.mode); api("/api/guide/stop", {}); loadGuide(); });
+  document.querySelectorAll("[data-step]").forEach(b => b.onclick = () => goStep(b.dataset.step));
+  $("#g-brand").onchange = async () => {
+    const brand = $("#g-brand").value;
+    await api("/api/tv/settings", { name: S.tv, brand, cms: (BRAND[brand] || BRAND.other).cmsType }); loadGuide(); };
+  $("#g-cms").onchange = async () => { stopGuideLive(); await api("/api/tv/settings", { name: S.tv, cms: $("#g-cms").value }); loadGuide(); };
+  if ($("#g-auto")) $("#g-auto").onclick = () => { stopGuideLive(); api("/api/guide/stop", {}); S.view = "auto"; S.hdr = S.mode !== "sdr"; loadTV(); };
+  $("#folder").onclick = () => api("/api/tv/folder", { name: S.tv });
+  ({ setup: stepSetup, before: () => stepMeasure("before"), bright: () => stepWB("gain"), dark: () => stepWB("offset"),
+     check: stepCheck, colours: stepColours, after: () => stepMeasure("after"), fine: stepFine })[prog.step]();
+}
+function goStep(id, markDone) {
+  const p = getProg();
+  if (markDone && !p.done.includes(markDone)) p.done.push(markDone);
+  p.step = id; setProg(p);
+  stopGuideLive();
+  if (!["bright", "dark", "colours", "fine"].includes(id)) api("/api/guide/stop", {});
+  renderGuide();
+}
+const nextOf = id => (STEPS[STEPS.findIndex(s => s[0] === id) + 1] || [])[0];
+const videoMode = () => (S.patSource || "video") === "video";
+const phoneReady = () => videoMode() || S.sim || (S.phone && S.phone.connected && S.phone.external);
+const fileFor = pid => (S.guide.files || {})[pid];
+const playBanner = pid => videoMode() && fileFor(pid)
+  ? `<div class="nowplay"><span>Play on the TV</span><b>${esc(fileFor(pid))}</b><small>from the “${esc(S.guide.folder)}” folder of the pattern videos</small></div>` : "";
+
+/* ---------- 1. set up */
+function stepSetup() {
+  const b = brandOf(), ph = S.phone || {}, ready = phoneReady();
+  const items = (b.setup[S.mode] || (S.mode === "hdr10p" ? (b.setup.hdr10p_extra || ["Picture mode: Filmmaker Mode (or Movie)", "HDR10+ Mode (or HDR10+ Adaptive / Dynamic): the plain, non-adaptive setting", "Light sensors and contrast boosters: off"]) : [])).concat([
+    "Turn off any room lights you can, and let the TV warm up for 20-30 minutes",
+    "Rest the meter flat on the centre of the screen. It stays there the whole time: every pattern appears in the same spot"]);
+  if (S.mode !== "sdr" && videoMode()) items.push(`When you play the first ${modeBadge()} file, check the TV shows its ${modeBadge()} badge`);
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>Get the TV ready</h2><p>A few settings make sure we calibrate the picture mode you'll actually watch in. Names vary a little between models.</p></div>
+    <div class="two">
+      <ul class="checklist">${items.map((t, i) => `<li><label><input type="checkbox" data-ck="${i}"> <span>${esc(t)}</span></label></li>`).join("")}</ul>
+      <div class="phonebox ${ready ? "ok" : ""}">
+        <div class="seg" role="group" aria-label="Patterns from" style="margin-bottom:12px">
+          <button data-src="video" aria-pressed="${videoMode()}">Pattern videos</button>
+          <button data-src="iphone" aria-pressed="${!videoMode()}">iPhone</button></div>
+        ${videoMode() ? `<h3>Pattern videos on a USB stick</h3>
+          <p>Copy the <b>TV Calibrator patterns</b> folder to a USB stick and plug it into the TV. You'll play files from its
+          <b>${esc(S.guide.folder)}</b> folder; the app tells you which one at each step.</p>`
+        : `<h3>${ready ? "iPhone connected to the TV" : "Connect the iPhone to the TV"}</h3>
+          <p>${ready ? `The iPhone puts each pattern on the TV for you.${S.mode !== "sdr" ? ` Check the TV shows its <b>${S.mode === "hdr10p" ? "HDR" : modeBadge()}</b> badge when the test pattern appears${S.mode === "hdr10p" ? " (the iPhone can only send HDR10; use the pattern videos for HDR10+)" : ""}.` : ""}`
+                     : (ph.connected ? "Open TV Calibrator on the iPhone, then connect it with a USB-C to HDMI adapter or AirPlay (Control Centre › Screen Mirroring)." :
+                                       "Open TV Calibrator on the iPhone and pair it (the code is in the sidebar).")}</p>
+          <button class="secondary" id="testpat" ${ready ? "" : "disabled"}>Show a test pattern</button>`}
+        ${S.pro ? `<label class="hint" style="display:block;margin-top:14px">Measure with (pro)
+          <select id="g-meter"><option value="hl" ${S.meterSetting !== "iphone" ? "selected" : ""}>Display Plus HL</option>
+          <option value="iphone" ${S.meterSetting === "iphone" ? "selected" : ""}>iPhone camera</option></select></label>` : ""}
+      </div></div>
+    <div class="stagefoot"><button class="primary" id="go" ${ready ? "" : "disabled"}>Start: measure the TV as it is</button></div>`;
+  document.querySelectorAll("#stage [data-src]").forEach(b => b.onclick = async () => {
+    S.patSource = b.dataset.src; await api("/api/settings", { source: S.patSource }); loadGuide(); });
+  if ($("#testpat")) $("#testpat").onclick = async () => { const r = await api("/api/guide/show", { name: S.tv, mode: S.mode, patch: S.guide.plan.gain });
+    if (r.error) alert(r.error); else $("#testpat").textContent = "Pattern is on the TV"; };
+  $("#go").onclick = () => goStep("before", "setup");
+  if ($("#g-meter")) $("#g-meter").onchange = async () => { S.meterSetting = $("#g-meter").value; await api("/api/settings", { meter: S.meterSetting }); };
+}
+
+/* ---------- 2 + 7. before / after check */
+function stepMeasure(which) {
+  const sess = lastSession();
+  const have = which === "before" ? (sess && sess.before && !sess.after ? sess.before : null) : (sess && sess.after);
+  const before = sess && sess.before;
+  const title = which === "before" ? "How the TV looks right now" : "How it looks after calibration";
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>${title}</h2>
+      <p>${which === "before" ? `A one-minute check: five greys and six colours. ${videoMode() ? "Click Measure, then play the quick-check video from the start." : "The iPhone shows each one; keep the meter where it is."}` :
+          "The same one-minute check as at the start, so you can compare."}</p></div>
+    <div id="mbody"></div>`;
+  if (have) return showResult(which, have, which === "after" ? before : null);
+  $("#mbody").innerHTML = `<div class="bigcta"><button class="primary" id="m-go" ${phoneReady() ? "" : "disabled"}>Measure (about a minute)</button>
+    ${phoneReady() ? "" : '<p class="hint">Connect the iPhone to the TV first (step 1).</p>'}
+    ${videoMode() ? `<p class="hint" style="margin-top:14px">Then play <b>${esc(fileFor("QUICK"))}</b> on the TV.</p>` : ""}</div>`;
+  if ($("#m-go")) $("#m-go").onclick = async () => {
+    const r = await api("/api/guide/measure", { name: S.tv, mode: S.mode, which });
+    if (r.error) return alert(r.error);
+    pollMeasure(which);
+  };
+}
+function pollMeasure(which) {
+  stopGuideLive();
+  S.gpoll = setInterval(async () => {
+    const j = await api("/api/job");
+    if (["done", "error", "cancelled"].includes(j.phase)) {
+      stopGuideLive();
+      if (j.phase === "error") { $("#mbody").innerHTML = `<p class="errline">${esc(j.error)}</p>`; return; }
+      S.guide = await api(`/api/guide?name=${encodeURIComponent(S.tv)}&mode=${S.mode}`);
+      const sess = lastSession();
+      showResult(which, which === "before" ? sess.before : sess.after, which === "after" ? sess.before : null);
+      return;
+    }
+    $("#mbody").innerHTML = measuringPanel(j, "QUICK");
+    bindCancel();
+  }, 500);
+}
+function scoreWord(de) { return de == null ? "" : de < 1 ? "Excellent" : de < 2 ? "Very good" : de < 3 ? "Good" : de < 5 ? "Noticeably off" : "Clearly off"; }
+function showResult(which, L, B) {
+  const big = (label, a, b) => `<div class="score"><span>${label}</span>
+      <b class="${deClass(a)}">${fmt(a)}</b>${b != null ? `<em>was ${fmt(b)}</em>` : ""}<small>${scoreWord(a)}</small></div>`;
+  const next = which === "before"
+    ? `<button class="primary" id="m-next">Next: fix the white balance</button>`
+    : `<button class="primary" id="m-new">Start a new session</button> <button class="secondary" id="m-export">Export history</button>`;
+  $("#mbody").innerHTML = `
+    <div class="scores">${big("Greyscale (dE)", L.grey_avg, B && B.grey_avg)}${big("Colours (dE)", L.colour_avg, B && B.colour_avg)}
+      ${S.mode === "sdr" ? `<div class="score"><span>Gamma</span><b>${fmt(L.gamma, 2)}</b><small>target 2.40</small></div>`
+                         : (L.pq_track != null ? `<div class="score"><span>Brightness vs HDR target</span><b class="${Math.abs(L.pq_track) > 10 ? "warn" : ""}">${L.pq_track > 0 ? "+" : ""}${fmt(L.pq_track, 0)}%</b><small>${Math.abs(L.pq_track) > 10 ? "check tone mapping (step 1)" : "on track"}</small></div>` : "")}
+    </div>
+    <p class="lead">dE is how far off a colour is: under 1 is invisible, under 2 very good, under 3 good.</p>
+    ${L.warnings && L.warnings.length ? `<ul class="warnings">${L.warnings.map(w => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}
+    <div class="charts">
+      <figure class="wide"><figcaption>Red, green and blue in each grey: on target they all sit on the white line${B ? " (faint lines: before)" : ""}</figcaption>${greyChart(L, B, S.mode !== "sdr")}
+        <div class="legend"><span><i style="background:var(--r)"></i>Red</span><span><i style="background:var(--g)"></i>Green</span><span><i style="background:var(--b)"></i>Blue</span><span><i style="background:var(--white);height:2px"></i>Target</span></div></figure>
+      <figure><figcaption>White point of each grey: inside the inner circle is dE under 2</figcaption>${target(L)}</figure>
+      <figure><figcaption>Colours: rings are the targets, dots are the TV</figcaption>${gamutChart(L)}</figure>
+    </div>
+    <div class="stagefoot">${next}</div>`;
+  if ($("#m-next")) $("#m-next").onclick = () => goStep("bright", "before");
+  if ($("#m-new")) $("#m-new").onclick = () => { setProg({ step: "before", done: ["setup"], colours: [] }); renderGuide(); };
+  if ($("#m-export")) $("#m-export").onclick = () => api("/api/tv/export", { name: S.tv });
+  if (which === "after") {
+    const p = getProg(); if (!p.done.includes("after")) { p.done.push("after"); setProg(p); }
+    const lim = (p.limits || []).filter(x => COLOUR_NAMES[x]).map(x => COLOUR_NAMES[x]);
+    if (lim.length) $(".scores").insertAdjacentHTML("afterend", `<p class="hint">${lim.join(", ")}: as close as this TV gets (its controls were at their limit).</p>`);
+  }
+}
+
+/* ---------- 3, 4 + fine-tune: live white balance */
+function stepWB(kind, pid, title) {
+  const plan = S.guide.plan, b = brandOf();
+  pid = pid || plan[kind === "gain" ? "gain" : "offset"];
+  const control = kind === "gain" ? b.gain : kind === "offset" ? b.offset : "multipoint (20-point)";
+  const sug = kind === "fine" && S.guide.finder && S.guide.finder.suggest ? S.guide.finder.suggest[pid] : null;
+  const where = kind === "fine" ? `${b.wb.replace("(set it to 2 Point)", "")} › 10 or 20 Point: ${sug ? `use the TV's ${sug}% control (measured)` : `start with the control nearest ${pct(pid)}`}` : b.wb;
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>${title || (kind === "gain" ? "Bright end: the Gain controls" : "Dark end: the Offset controls")}</h2>
+      <p>${kind === "gain" ? "The TV shows a bright white. Adjust Red and Blue <b>Gain</b> until both bars sit on the line. Leave Green alone." :
+          kind === "offset" ? `The TV shows a dark grey. Adjust Red and Blue <b>${b.offset}</b> the same way.` :
+          (sug ? `Fine-tune one grey at a time. For this grey, adjust your TV's <b>${sug}%</b> control.` : `Fine-tune one grey at a time.`)}
+      <span class="where">Where: ${esc(where)}</span></p></div>
+    ${playBanner(pid)}
+    <div class="live2" id="live"><p class="hint">${videoMode() ? "Start the file above on the TV; the readings appear as soon as the meter sees it." : "Putting the pattern on the TV…"}</p></div>
+    <div class="stagefoot"><button class="secondary" id="wb-skip">Skip</button><button class="secondary" id="wb-limit" title="The controls are at their limit, or it's as close as this TV gets">Can't get closer - mark done</button><button class="primary" id="wb-next" disabled>Waiting for the meter…</button></div>`;
+  const next = kind === "gain" ? "dark" : kind === "offset" ? "check" : "check";
+  $("#wb-skip").onclick = () => goStep(next);
+  $("#wb-next").onclick = () => goStep(next, kind === "gain" ? "bright" : kind === "offset" ? "dark" : null);
+  $("#wb-limit").onclick = () => { const q = getProg(); q.limits = q.limits || []; if (!q.limits.includes(kind)) q.limits.push(kind); setProg(q);
+    goStep(next, kind === "gain" ? "bright" : kind === "offset" ? "dark" : null); };
+  startLive(pid, d => renderWBLive(d, kind, control));
+}
+const pct = pid => (S.guide.names[pid] || pid).replace(/ GREY| WHITE.*/i, "").replace(/\(.*\)/, "").trim().toLowerCase();
+async function startLive(pid, render) {
+  stopGuideLive();
+  const r = await api("/api/guide/show", { name: S.tv, mode: S.mode, patch: pid });
+  if (r.error) { $("#live").innerHTML = `<p class="errline">${esc(r.error)}</p>`; return; }
+  S.gpoll = setInterval(async () => {
+    const d = await api("/api/guide/live");
+    if (d.waiting) { $("#live").innerHTML = `<p class="hint">${d.error ? esc(d.error) : "Reading the meter…"}</p>`; return; }
+    if (d.id !== pid) return;
+    render(d);
+  }, 600);
+}
+function avgLine(d) {
+  const jumpy = d.jitter >= 0.004;
+  return `<p class="avgline">${jumpy ? `This TV's readings wobble about ±${fmt(d.jitter * 100, 1)}%, so the bars show an average. ` : ""}
+    Average of <b>${d.n_avg}</b> reading${d.n_avg > 1 ? "s" : ""}${d.n_avg < d.need ? ` (needs ${d.need} to call it steady)` : ""} · latest ${fmt(d.latest_Y, d.latest_Y < 10 ? 2 : 1)} cd/m²
+    <button class="linkbtn" data-restart title="Use after changing a setting, to see its effect sooner">Restart the average</button></p>`;
+}
+function bindRestart() {
+  document.querySelectorAll("[data-restart]").forEach(b => b.onclick = () => { api("/api/guide/restart", {}); b.textContent = "Restarted"; });
+}
+function balBar(label, v, colour) {
+  const off = clamp(v * 1000, -50, 50);    // ±5% fills the bar
+  return `<div class="bbar"><span style="color:${colour}">${label}</span>
+    <div class="track"><div class="fill" style="background:${colour};left:${off < 0 ? 50 + off : 50}%;width:${Math.abs(off)}%"></div><i class="tol"></i></div>
+    <b class="${Math.abs(v) <= 0.012 ? "good" : ""}">${v > 0 ? "+" : ""}${fmt(v * 100)}%</b></div>`;
+}
+function wbTip(name, e, control) {
+  if (Math.abs(e) <= 0.012) return `<li class="ok">${name} is on target ✓</li>`;
+  const clicks = Math.max(1, Math.min(10, Math.round(Math.abs(e) / 0.008)));
+  return `<li><b>${e > 0 ? "Lower" : "Raise"} ${name} ${control}</b> — ${name.toLowerCase()} is ${fmt(Math.abs(e) * 100, 0)}% ${e > 0 ? "too strong" : "too weak"}. Try about ${clicks} click${clicks > 1 ? "s" : ""}, then watch the bar.</li>`;
+}
+function mismatchBox(d) {
+  return d.mismatch ? `<p class="mismatch">${esc(d.mismatch)} Is <b>${esc(fileFor(d.id) || nice(d.name))}</b> playing, with the meter on the centre?</p>` : "";
+}
+function renderWBLive(d, kind, control) {
+  const live = $("#live"); if (!live) return;
+  if (kind === "fine") {   // the bars haven't moved for a minute: maybe the wrong control
+    const k = `${d.id}`, q = [d.q.R, d.q.B];
+    if (!S.still || S.still.k !== k || Math.abs(q[0] - S.still.q[0]) > 0.006 || Math.abs(q[1] - S.still.q[1]) > 0.006) S.still = { k, q, t: Date.now() };
+    d.stuckFor = (Date.now() - S.still.t) / 1000;
+  }
+  if (d.mismatch) { live.innerHTML = mismatchBox(d); const nb = $("#wb-next"); if (nb) { nb.disabled = true; nb.textContent = "Waiting for the right pattern…"; } return; }
+  live.innerHTML = `
+    <figure class="hero">${liveTarget(d)}<figcaption>The dot is the TV's white; the centre is the target (D65).</figcaption></figure>
+    <div class="side">
+      ${balBar("Red", d.q.R, "var(--r)")}${balBar("Blue", d.q.B, "var(--b)")}
+      <p class="hint" style="margin:-4px 0 6px">Both measured against green, which stays put. dE ${fmt(d.de, 2)}</p>
+      ${avgLine(d)}
+      <ul class="tips">${d.steady ? `<li class="done">On target and steady. Nice work.</li>` : wbTip("Red", d.q.R, control) + wbTip("Blue", d.q.B, control)}
+        ${kind === "fine" && !d.ok && d.stuckFor > 60 ? `<li class="limit">The bars haven't moved for a minute. If you've been adjusting, it may be the wrong control: try the one a step above or below, and when you find it, pick it under “The control that actually moves this grey”.</li>` : ""}</ul>
+    </div>`;
+  bindRestart();
+  const nb = $("#wb-next");
+  if (nb) { nb.disabled = !d.steady; nb.textContent = d.steady ? "Done - next step" : (d.ok ? "Holding steady…" : "Not on target yet"); }
+}
+function liveTarget(d) {
+  const W = 300, c = W / 2, sc = 120 / 0.012;
+  const x = clamp(c + (d.uv[0] - d.d65_uv[0]) * sc, 10, W - 10), y = clamp(c - (d.uv[1] - d.d65_uv[1]) * sc, 10, W - 10);
+  return `<svg class="chart" viewBox="0 0 ${W} ${W}" role="img" aria-label="White point against the target">
+    <circle cx="${c}" cy="${c}" r="${0.0045 * sc}" fill="rgba(255,255,255,.04)" stroke="#6a6a6a"/><circle cx="${c}" cy="${c}" r="${0.012 * sc}" fill="none" stroke="#454545"/>
+    <text x="${c + 0.0045 * sc * 0.72}" y="${c - 0.0045 * sc * 0.72 - 4}" fill="#8a8a8a" font-size="11">dE ≈ 2</text>
+    <line x1="${c - 8}" x2="${c + 8}" y1="${c}" y2="${c}" stroke="var(--white)"/><line y1="${c - 8}" y2="${c + 8}" x1="${c}" x2="${c}" stroke="var(--white)"/>
+    <circle cx="${x}" cy="${y}" r="10" fill="${d.ok ? "var(--g)" : "var(--white)"}" stroke="#262626" stroke-width="2"/></svg>`;
+}
+
+/* ---------- 5. check the whole greyscale (bright, middle, dark), live */
+function stepCheckVideo() {
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>Check the greyscale</h2><p>Play the quick-check video once more: it confirms the bright and dark ends both stuck, and shows the greys in between.</p></div>
+    <div id="mbody"><div class="bigcta"><button class="primary" id="ck-go">Measure (about a minute)</button>
+      <p class="hint" style="margin-top:14px">Then play <b>${esc(fileFor("QUICK"))}</b> on the TV.</p></div></div>
+    <div class="stagefoot"><button class="secondary" id="ck-fine">Fine-tune a grey (optional)</button><button class="primary" id="ck-next">Next: colours</button></div>`;
+  $("#ck-next").onclick = () => goStep("colours", "check");
+  $("#ck-fine").onclick = () => { const p = getProg(); p.step = "fine"; setProg(p); renderGuide(); };
+  $("#ck-go").onclick = async () => {
+    const r = await api("/api/guide/measure", { name: S.tv, mode: S.mode, which: "check" });
+    if (r.error) return alert(r.error);
+    stopGuideLive();
+    S.gpoll = setInterval(async () => {
+      const j = await api("/api/job");
+      if (["done", "error", "cancelled"].includes(j.phase)) {
+        stopGuideLive();
+        if (j.phase !== "done" || !j.result) { $("#mbody").innerHTML = `<p class="errline">${esc(j.error || "Cancelled.")}</p>`; return; }
+        const L = j.result, plan = S.guide.plan;
+        $("#mbody").innerHTML = `<table class="cktable"><thead><tr><th>Grey</th><th>Red</th><th>Blue</th><th>dE</th><th></th></tr></thead><tbody>
+          ${L.greys.filter(g => S.mode !== "sdr" || g.level >= 0.099).map(g => { const qR = g.bal[0] / g.bal[1] - 1, qB = g.bal[2] / g.bal[1] - 1, ok = Math.abs(qR) <= 0.015 && Math.abs(qB) <= 0.015;
+            return `<tr><td>${esc(nice(g.name))}</td><td>${fmt(qR * 100)}%</td><td>${fmt(qB * 100)}%</td><td class="${deClass(g.de)}">${fmt(g.de, 2)}</td>
+            <td>${ok ? "✓ on target" : `<button class="linkbtn warn" data-step="${g.level >= 0.55 ? "bright" : g.level <= 0.4 ? "dark" : "fine"}">${g.level >= 0.55 ? "Off: redo Bright end" : g.level <= 0.4 ? "Off: redo Dark end" : "Off: fine-tune it"}</button>`}</td></tr>`; }).join("")}
+          </tbody></table><figure class="neutralfig">${greyChart(L, null, S.mode !== "sdr")}</figure>`;
+        document.querySelectorAll("#mbody [data-step]").forEach(b => b.onclick = () => goStep(b.dataset.step));
+        return;
+      }
+      $("#mbody").innerHTML = measuringPanel(j, "QUICK");
+      bindCancel();
+    }, 500);
+  };
+}
+async function stepCheck() {
+  if (videoMode()) return stepCheckVideo();
+  const plan = S.guide.plan;
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>Check the greyscale</h2><p>The TV shows three greys in turn: bright, middle and dark. The two ends interact, so this confirms both stuck.</p></div>
+    <div id="ck"></div>
+    <div class="stagefoot"><button class="secondary" id="ck-fine">Fine-tune a grey (optional)</button><button class="primary" id="ck-next">Next: colours</button></div>`;
+  $("#ck-next").onclick = () => goStep("colours", "check");
+  $("#ck-fine").onclick = () => { const p = getProg(); p.step = "fine"; setProg(p); renderGuide(); };
+  const rows = [];
+  for (const pid of plan.check) {
+    rows.push({ pid, d: null }); drawCheck(rows);
+    const r = await api("/api/guide/show", { name: S.tv, mode: S.mode, patch: pid });
+    if (r.error) { $("#ck").innerHTML = `<p class="errline">${esc(r.error)}</p>`; return; }
+    let d = null;
+    for (let i = 0; i < 20 && (!d || d.waiting || d.id !== pid || d.n < 3); i++) { await new Promise(res => setTimeout(res, 600)); d = await api("/api/guide/live"); }
+    rows[rows.length - 1].d = d; drawCheck(rows);
+  }
+  document.querySelectorAll("#ck [data-step]").forEach(b => b.onclick = () => goStep(b.dataset.step));
+  api("/api/guide/stop", {});
+}
+function drawCheck(rows) {
+  const names = S.guide.names;
+  $("#ck").innerHTML = `<table class="cktable"><thead><tr><th>Grey</th><th>Red</th><th>Blue</th><th>dE</th><th></th></tr></thead><tbody>
+    ${rows.map(({ pid, d }) => d && !d.waiting ? `<tr><td>${esc(nice(names[pid]))}</td><td>${fmt(d.q.R * 100)}%</td><td>${fmt(d.q.B * 100)}%</td>
+      <td class="${deClass(d.de)}">${fmt(d.de, 2)}</td><td>${d.ok ? "✓ on target" : `<button class="linkbtn warn" data-step="${pid === S.guide.plan.gain ? "bright" : pid === S.guide.plan.offset ? "dark" : "fine"}">${pid === S.guide.plan.gain ? "Off: redo Bright end" : pid === S.guide.plan.offset ? "Off: redo Dark end" : "Off: fine-tune it"}</button>`}</td></tr>`
+      : `<tr><td>${esc(nice(names[pid]))}</td><td colspan="4" class="hint">measuring…</td></tr>`).join("")}</tbody></table>`;
+}
+function stepFine() {
+  const f = S.guide.finder || {};
+  if (!f.map || !f.map.length) return stepFinder();
+  const fine = S.guide.plan.fine, names = S.guide.names, p = getProg();
+  const cur = p.finePid || fine[0];
+  stepWB("fine", cur, "Fine-tune: one grey at a time");
+  const ov = f.overrides || {}, grid = f.grid || 5, pts = [];
+  for (let v = grid; v <= 100; v += grid) pts.push(v);
+  $(".stagehead").insertAdjacentHTML("beforeend", `<div class="chips">${fine.map(pid => `<button class="chip ${pid === cur ? "on" : ""}" data-fine="${pid}" title="${esc(fileFor(pid) || "")}">${esc(nice(names[pid]))}${f.suggest && f.suggest[pid] ? ` → TV ${f.suggest[pid]}%${ov[pid] ? " ✓" : ""}` : ""}</button>`).join("")}</div>
+    <p class="hint" style="margin-top:10px">
+      <label>The control that actually moves this grey: <select id="ov-pick"><option value="">${ov[cur] ? "use the measured one" : `TV ${f.suggest && f.suggest[cur]}% (measured)`}</option>
+        ${pts.map(v => `<option value="${v}" ${ov[cur] === v ? "selected" : ""}>TV ${v}%${ov[cur] === v ? " (yours)" : ""}</option>`).join("")}</select></label>
+      <span class="hint"> · If you pick one, it's remembered for this TV, and the suggestions for nearby greys adjust to match.</span>
+      <button class="linkbtn" id="refind">Run the point finder again</button></p>`);
+  $("#ov-pick").onchange = async () => {
+    await api("/api/finder/override", { name: S.tv, mode: S.mode, pid: cur, point: +$("#ov-pick").value || null });
+    S.guide = await api(`/api/guide?name=${encodeURIComponent(S.tv)}&mode=${S.mode}`); renderGuide();
+  };
+  document.querySelectorAll("[data-fine]").forEach(b => b.onclick = () => { const q = getProg(); q.finePid = b.dataset.fine; setProg(q); renderGuide(); });
+  $("#refind").onclick = async () => { await api("/api/finder/reset", { name: S.tv, mode: S.mode }); loadGuide(); };
+}
+
+/* ---------- point finder: where does each of the TV's multipoint controls really act? */
+function stepFinder() {
+  const f = S.guide.finder || {}, cfg = tvCfg();
+  const nudgeRows = f.nudges.map(n => `<tr><td>TV ${n.point}% control</td><td class="${n.channel === "R" ? "cr" : "cb"}">${n.channel === "R" ? "Red" : "Blue"}</td><td>+${n.clicks}</td></tr>`).join("");
+  const stage = !f.base ? 1 : 2;
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>Find your TV's controls</h2>
+      <p>TVs label their 10- or 20-point controls on their own scale, so the “40%” control often moves a different grey.
+      This finds out where each one really acts, so fine-tuning goes to the right control first time. About 6 minutes.</p>
+      <label class="hint" style="display:inline-block;margin-top:10px">Your TV's multipoint menu
+        <select id="f-grid"><option value="11" ${finderGrid() === 10 ? "selected" : ""}>10 points (10%, 20% … 100%)</option>
+        <option value="20" ${finderGrid() === 5 ? "selected" : ""}>20 points (5%, 10% … 100%)</option></select></label></div>
+    <ol class="finder">
+      <li class="${stage === 1 ? "now" : "done"}"><b>Measure the greys as they are.</b> Click Measure, then play <b>${esc(f.file)}</b> on the TV.
+        ${stage === 1 ? `<div><button class="primary" id="f-base">Measure (about 2½ minutes)</button></div>` : " ✓"}</li>
+      <li class="${stage === 2 ? "now" : ""}"><b>Nudge four controls</b> in the multipoint menu, exactly as listed:
+        <table class="cktable" style="max-width:420px"><tbody>${nudgeRows}</tbody></table></li>
+      <li class="${stage === 2 ? "now" : ""}"><b>Measure again</b> with the same video. The app compares the two and finds each control.
+        ${stage === 2 ? `<div><button class="primary" id="f-nudged">I've made the four changes - measure</button></div>` : ""}</li>
+    </ol>
+    <div id="fbody"></div>
+    <div class="stagefoot"><button class="secondary" id="f-skip">Skip: fine-tune without it</button></div>`;
+  $("#f-grid").onchange = async () => { await api("/api/tv/settings", { name: S.tv, points: +$("#f-grid").value }); loadGuide(); };
+  const go = async phase => {
+    const r = await api("/api/finder/measure", { name: S.tv, mode: S.mode, phase });
+    if (r.error) return alert(r.error);
+    pollFinder(phase);
+  };
+  if ($("#f-base")) $("#f-base").onclick = () => go("base");
+  if ($("#f-nudged")) $("#f-nudged").onclick = () => go("nudged");
+  $("#f-skip").onclick = () => { S.guide.finder.map = [{ point: 0, level: 0 }]; stepFineManual(); };
+}
+const finderGrid = () => (+(tvCfg().points || 20) === 20 ? 5 : 10);
+function stepFineManual() {
+  const fine = S.guide.plan.fine, names = S.guide.names, p = getProg();
+  const cur = p.finePid || fine[0];
+  stepWB("fine", cur, "Fine-tune: one grey at a time");
+  $(".stagehead").insertAdjacentHTML("beforeend", `<div class="chips">${fine.map(pid => `<button class="chip ${pid === cur ? "on" : ""}" data-fine="${pid}">${esc(nice(names[pid]))}</button>`).join("")}</div>
+    <p class="hint" style="margin-top:10px">If the bars don't move, try the control one step lower or higher.</p>`);
+  document.querySelectorAll("[data-fine]").forEach(b => b.onclick = () => { const q = getProg(); q.finePid = b.dataset.fine; setProg(q); stepFineManual(); });
+}
+function pollFinder(phase) {
+  stopGuideLive();
+  S.gpoll = setInterval(async () => {
+    const j = await api("/api/job");
+    const body = $("#fbody"); if (!body) return stopGuideLive();
+    if (["done", "error", "cancelled"].includes(j.phase)) {
+      stopGuideLive();
+      if (j.phase !== "done") { body.innerHTML = `<p class="errline">${esc(j.error || "Cancelled.")}</p>`; return; }
+      S.guide = await api(`/api/guide?name=${encodeURIComponent(S.tv)}&mode=${S.mode}`);
+      if (phase === "base") return stepFinder();
+      return showFinderResult();
+    }
+    if (j.phase === "waiting" || j.phase === "starting") {
+      const y = j.readings && j.readings.length ? j.readings[j.readings.length - 1].Y : null;
+      body.innerHTML = `<div class="measuring"><div class="nowplay"><span>Play on the TV</span><b>${esc(S.guide.finder.file)}</b><small>from the start</small></div>
+        ${meterLine(j)}<p>Waiting for the video's flashes…</p><button class="linkbtn" id="f-cancel">Cancel</button></div>`;
+    } else {
+      body.innerHTML = `<div class="measuring">${meterLine(j)}<p>Measuring <b>${esc(nice((j.patches[j.index] || {}).name || ""))}</b> · ${j.patches.filter(p => p.done).length} of ${j.patches.length}</p>${strip(j)}<button class="linkbtn" id="f-cancel">Cancel</button></div>`;
+    }
+    if ($("#f-cancel")) $("#f-cancel").onclick = () => api("/api/round/cancel", {});
+  }, 600);
+}
+function showFinderResult() {
+  const f = S.guide.finder;
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>Found them</h2><p>Here's where your TV's controls really act. The fine-tune step will now point you to the right one for each grey.</p></div>
+    <table class="cktable"><thead><tr><th>TV control</th><th>Moves the grey at</th><th>Shift</th></tr></thead><tbody>
+      ${f.map.map(m => `<tr><td>${m.point}%</td><td>${fmt(m.level, 0)}%</td><td class="${Math.abs(m.level - m.point) >= 5 ? "warn" : "good"}">${m.level - m.point > 0 ? "+" : ""}${fmt(m.level - m.point, 0)}</td></tr>`).join("")}
+    </tbody></table>
+    <div class="nowplay" style="margin-top:18px"><span>Now put them back</span><b>Set those four controls back to where they were (−10 each)</b><small>before fine-tuning</small></div>
+    <div class="stagefoot"><button class="primary" id="f-done">I've put them back - fine-tune</button></div>`;
+  $("#f-done").onclick = () => renderGuide();
+}
+
+/* ---------- 6. colours, one at a time, live */
+function stepColours() {
+  const p = getProg(), cols = S.guide.colours, cfg = tvCfg(), b = brandOf();
+  const cur = p.colour || cols[0];
+  const haveWhite = !!lastSession();
+  $("#stage").innerHTML = `
+    <div class="stagehead"><h2>Colours: ${COLOUR_NAMES[cur]}</h2>
+      <p>${cfg.cms === "off" ? "This TV has no colour controls set up here - you can just check the colours, or choose its colour menu type at the top." :
+          cfg.cms === "samsung" ? "Use the colour's own Red, Green and Blue sliders." : "Use the colour's Hue (some TVs call it Tint), Saturation and Brightness (or Luminance) sliders."}
+      <span class="where">Where: ${esc(b.cms)}</span></p>
+      <div class="chips">${cols.map(c => `<button class="chip ${c === cur ? "on" : ""} ${p.colours.includes(c) ? "done" : ""}" data-col="${c}">
+        <i class="sw" style="background:${COLOUR_SW[c]}"></i>${COLOUR_NAMES[c]}${p.colours.includes(c) ? ((p.limits || []).includes(c) ? " · at its limit" : " ✓") : ""}</button>`).join("")}</div></div>
+    ${haveWhite ? "" : '<p class="warn">Run the Before check first, so brightness can be judged against this TV\'s own white.</p>'}
+    ${playBanner(cur)}
+    <div class="live2" id="live"><p class="hint">${videoMode() ? "Start the file above on the TV; the readings appear as soon as the meter sees it." : "Putting the colour on the TV…"}</p></div>
+    <div class="stagefoot"><button class="secondary" id="c-skip">Skip this colour</button>
+      <button class="secondary" id="c-limit" title="The sliders are maxed out and it won't get closer - the panel's limit">Can't get closer - mark done</button>
+      <button class="primary" id="c-next" disabled>Waiting for the meter…</button></div>`;
+  document.querySelectorAll("[data-col]").forEach(btn => btn.onclick = () => { const q = getProg(); q.colour = btn.dataset.col; setProg(q); renderGuide(); });
+  const advance = done => {
+    const q = getProg();
+    if (done && !q.colours.includes(cur)) q.colours.push(cur);
+    const rest = cols.filter(c => !q.colours.includes(c) && c !== cur);
+    if (rest.length) { q.colour = rest[0]; setProg(q); renderGuide(); }
+    else { q.colour = null; setProg(q); goStep("after", "colours"); }
+  };
+  $("#c-skip").onclick = () => advance(false);
+  $("#c-limit").onclick = () => { const q = getProg(); q.limits = q.limits || []; if (!q.limits.includes(cur)) q.limits.push(cur); setProg(q); advance(true); };
+  $("#c-next").onclick = () => advance(true);
+  startLive(cur, d => renderColourLive(d, cur));
+}
+function hslTips(d, name) {
+  const t = [];
+  if (Math.abs(d.hue) >= 2) t.push(`<li><b>Hue / Tint</b> — ${name} leans toward ${COLOUR_NAMES[d.toward] || "a neighbour"}. Move it one click and keep going the way that shrinks the Hue bar.</li>`);
+  if (Math.abs(d.sat) >= 3) t.push(`<li><b>${d.sat > 0 ? "Lower" : "Raise"} Saturation</b> — ${name} is ${fmt(Math.abs(d.sat), 0)}% too ${d.sat > 0 ? "strong" : "weak"}.</li>`);
+  if (d.lum != null && Math.abs(d.lum) >= 5) t.push(`<li><b>${d.lum > 0 ? "Lower" : "Raise"} Brightness</b> (Luminance) — ${fmt(Math.abs(d.lum), 0)}% too ${d.lum > 0 ? "bright" : "dim"}.</li>`);
+  return t;
+}
+function rgbTips(d, name) {
+  if (!d.rgb_hint) return [`<li>Run the Before check first: the Red/Green/Blue hints need this TV's white as a reference.</li>`];
+  const NAMES = ["Red", "Green", "Blue"], oor = d.out_of_reach;
+  const stuck = oor ? oor.channels.map(c => "RGB".indexOf(c)) : [];
+  const order = [0, 1, 2].filter(j => !stuck.includes(j)).sort((a, b) => Math.abs(d.rgb_hint[b]) - Math.abs(d.rgb_hint[a]));
+  const t = order.filter(j => Math.abs(d.rgb_hint[j]) > 0.03).slice(0, 2).map(j =>
+    `<li><b>${d.rgb_hint[j] > 0 ? "Raise" : "Lower"} the ${NAMES[j]} slider</b> for ${name}. A couple of clicks at a time.</li>`);
+  if (oor) t.push(`<li class="limit"><b>Out of reach:</b> to match exactly, ${name} would need ${stuck.map(j => NAMES[j]).join(" and ")} below zero.
+    ${name} sits beyond what this TV's ${[0, 1, 2].filter(j => !stuck.includes(j)).map(j => NAMES[j].toLowerCase()).join(" and ")} can mix as they are now, so that slider stops helping once it reaches zero.
+    The best this colour can get is about <b>dE ${fmt(oor.best_de, 1)}</b>. When you're there, use <b>Can't get closer</b>.</li>`);
+  return t;
+}
+function rangeBar(label, v, span, unit) {
+  if (v == null) return `<div class="bbar"><span>${label}</span><div class="track"></div><b class="hint">–</b></div>`;
+  const off = clamp(v / span * 50, -50, 50);
+  return `<div class="bbar"><span>${label}</span><div class="track"><div class="fill" style="background:var(--white);left:${off < 0 ? 50 + off : 50}%;width:${Math.abs(off)}%"></div></div>
+    <b>${v > 0 ? "+" : ""}${fmt(v)}${unit}</b></div>`;
+}
+function renderColourLive(d, cur) {
+  const live = $("#live"); if (!live) return;
+  if (d.mismatch) { live.innerHTML = mismatchBox(d); const nb = $("#c-next"); if (nb) { nb.disabled = true; nb.textContent = "Waiting for the right pattern…"; } return; }
+  const name = COLOUR_NAMES[cur], cfg = tvCfg(), rgbMenu = cfg.cms === "samsung";
+  const sliderBar = (label, v, colour) => {
+    if (v == null) return `<div class="bbar"><span style="color:${colour}">${label}</span><div class="track"></div><b class="hint">–</b></div>`;
+    const off = clamp(v * 250, -50, 50);    // ±20% fills the bar
+    return `<div class="bbar"><span style="color:${colour}">${label}</span><div class="track"><div class="fill" style="background:${colour};left:${off < 0 ? 50 + off : 50}%;width:${Math.abs(off)}%"></div><i class="tol"></i></div>
+      <b class="${Math.abs(v) <= 0.03 ? "good" : ""}">${Math.abs(v) <= 0.03 ? "OK" : (v > 0 ? "raise" : "lower")}</b></div>`;
+  };
+  const h = (d.rgb_hint || [null, null, null]).map((v, j) => d.out_of_reach && d.out_of_reach.channels.includes("RGB"[j]) ? null : v);
+  const bars = rgbMenu
+    ? `${sliderBar("Red slider", h[0], "var(--r)")}${sliderBar("Green slider", h[1], "var(--g)")}${sliderBar("Blue slider", h[2], "var(--b)")}
+       <p class="hint" style="margin:-4px 0 14px">The bars show which of ${name}'s own sliders to move${d.rgb_approx ? " (estimated: the Before check didn't get all three primaries)" : ""}. dE ${fmt(d.de, 2)}; under 2 is the goal.</p>`
+    : `${rangeBar("Hue / Tint", d.hue, 10, "°")}${rangeBar("Saturation", d.sat, 15, "%")}${rangeBar("Brightness", d.lum, 25, "%")}
+       <p class="hint" style="margin:-4px 0 14px">dE ${fmt(d.de, 2)}; under 2 is the goal.</p>`;
+  const tips = d.steady ? [`<li class="done">${name} is on target. Nice.</li>`] :
+    (cfg.cms === "off" ? [] : cfg.cms === "samsung" ? rgbTips(d, name) : hslTips(d, name));
+  live.innerHTML = `
+    <figure class="hero">${liveGamut(d, cur)}<figcaption>Ring: where ${name} should be. Dot: where it is now.</figcaption></figure>
+    <div class="side">
+      ${bars}${avgLine(d)}
+      <ul class="tips">${tips.join("") || (d.ok ? `<li class="ok">Close enough - holding steady…</li>` : `<li>Nothing to adjust on this TV; just note the numbers.</li>`)}</ul>
+    </div>`;
+  bindRestart();
+  const nb = $("#c-next");
+  if (nb) { nb.disabled = !(d.steady || cfg.cms === "off"); nb.textContent = d.steady ? "Done - next colour" : cfg.cms === "off" ? "Next colour" : "Not on target yet"; }
+}
+function liveGamut(d, cur) {
+  const W = 340, H = 300, u0 = 0.06, u1 = 0.56, v0 = 0.12, v1 = 0.6;
+  const X = u => 16 + (u - u0) / (u1 - u0) * (W - 32), Y = v => 8 + (1 - (v - v0) / (v1 - v0)) * (H - 24);
+  const prim = { RED: [0.64, 0.33], GREEN: [0.3, 0.6], BLUE: [0.15, 0.06] };
+  const p3 = { RED: [0.68, 0.32], GREEN: [0.265, 0.69], BLUE: [0.15, 0.06] };
+  const src = S.mode === "sdr" ? prim : p3;
+  const tri = ["RED", "GREEN", "BLUE"].map(k => { const u = upvp(src[k]); return `${X(u[0])},${Y(u[1])}`; }).join(" ");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${COLOUR_NAMES[cur]} against its target">
+    <polygon points="${tri}" fill="#ffffff" fill-opacity=".03" stroke="#5a5a5a" stroke-dasharray="4 4"/>
+    <circle cx="${X(d.d65_uv[0])}" cy="${Y(d.d65_uv[1])}" r="3" fill="var(--white)"/>
+    <circle cx="${X(d.tuv[0])}" cy="${Y(d.tuv[1])}" r="12" fill="none" stroke="var(--white)" stroke-width="2"/>
+    <line x1="${X(d.tuv[0])}" y1="${Y(d.tuv[1])}" x2="${X(d.uv[0])}" y2="${Y(d.uv[1])}" stroke="${COLOUR_SW[cur]}" stroke-width="2"/>
+    <circle cx="${X(d.uv[0])}" cy="${Y(d.uv[1])}" r="8" fill="${COLOUR_SW[cur]}" stroke="#262626" stroke-width="2"/></svg>`;
+}
+
+/* ------------------------------------------------------------------ meter check */
+function showCheck() {
+  clearInterval(S.poll); stopLive();
+  $("#main").innerHTML = `<div class="tvhead"><h1>Check the meter</h1></div>
+    <p class="empty" style="margin-top:-8px">Rest the meter on a bright part of the TV. This checks ArgyllCMS, finds the meter and takes three readings.</p>
+    <button class="primary" id="runcheck">Run the check</button><ul class="check" id="checkout"></ul>`;
+  $("#runcheck").onclick = async () => {
+    $("#runcheck").disabled = true; $("#checkout").innerHTML = "<li>Checking…</li>";
+    const r = await api("/api/check", {});
+    $("#checkout").innerHTML = r.steps.map(s => `<li class="${s.ok ? "okk" : "nok"}">${esc(s.text)}</li>`).join("");
+    $("#runcheck").disabled = false;
+  };
+}
+
+loadTVs().then(loadGuide); loadPhone();
+</script>
+</body>
+</html>

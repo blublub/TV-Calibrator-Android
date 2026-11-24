@@ -1,0 +1,37 @@
+name: Bug report
+description: Something in the app doesn't work as it should.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: input
+    id: iphone
+    attributes:
+      label: iPhone model and iOS version
+      placeholder: iPhone 18 Pro, iOS 27.1
+    validations:
+      required: true
+  - type: input
+    id: tv
+    attributes:
+      label: TV brand and model
+      placeholder: LG C5 (OLED65C5)
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options: [SDR, HDR10, HDR10+, Dolby Vision, Demo screen, Not sure]
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: Settings in the app shows it.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or anything else

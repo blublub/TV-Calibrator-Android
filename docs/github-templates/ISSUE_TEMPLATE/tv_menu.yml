@@ -1,0 +1,29 @@
+name: TV menu correction
+description: The app's directions don't match your TV's menus.
+labels: [tv-menus]
+body:
+  - type: input
+    id: tv
+    attributes:
+      label: TV brand and exact model
+      placeholder: Samsung QN90D (QN65QN90DAFXZA)
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware or software version, if you know it
+  - type: textarea
+    id: app
+    attributes:
+      label: What the app says
+      description: The step and the menu path or setting name it shows.
+    validations:
+      required: true
+  - type: textarea
+    id: tv-says
+    attributes:
+      label: What your TV actually has
+      description: The real menu path and setting names. A photo of the menu helps.
+    validations:
+      required: true

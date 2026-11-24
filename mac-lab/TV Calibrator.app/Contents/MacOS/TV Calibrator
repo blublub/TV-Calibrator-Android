@@ -1,0 +1,23 @@
+#!/bin/bash
+# Finder-launched apps get a minimal PATH: add Homebrew so ArgyllCMS's spotread is found.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+RES="$(cd "$(dirname "$0")/../Resources" && pwd)"
+mkdir -p "$HOME/tvcal"
+PY="$(command -v python3)"
+if [ -z "$PY" ]; then
+  osascript -e 'display alert "TV Calibrator needs Python 3" message "Open Terminal and run: xcode-select --install"'
+  exit 1
+fi
+# macOS may run a downloaded app from a temporary copy (App Translocation) that vanishes later;
+# run from a stable copy of the app's files instead.
+case "$RES" in
+  */AppTranslocation/*)
+    mkdir -p "$HOME/tvcal/app"
+    rsync -a --delete "$RES/" "$HOME/tvcal/app/" && RES="$HOME/tvcal/app" ;;
+esac
+# keep the log from growing forever
+LOG="$HOME/tvcal/app.log"
+if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 1000000 ]; then
+  tail -n 2000 "$LOG" > "$LOG.tmp" && mv "$LOG.tmp" "$LOG"
+fi
+exec "$PY" "$RES/tvcal_app.py" >> "$HOME/tvcal/app.log" 2>&1

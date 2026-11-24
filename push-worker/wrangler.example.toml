@@ -1,0 +1,32 @@
+# TV Calibrator push worker. Setup: docs/PUSH.md
+# Copy this file to wrangler.toml (which Git ignores, so your worker's name and storage id stay out of
+# the repo) and fill in your own values.
+name = "REPLACE-WITH-YOUR-WORKER-NAME"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# It also publishes the repo's server/ folder (camera profiles, video links) at the same address:
+# /index.json, /patterns.json, /profiles/… are files, everything else goes to src/index.js.
+[assets]
+directory = "../server"
+
+# Every minute: checks the YouTube feed every FEED_MINUTES, and carries on any send in progress.
+[triggers]
+crons = ["* * * * *"]
+
+[vars]
+BUNDLE_ID = "com.slidebean.tvcalibrator"
+# The Slidebean channel (@slidebean).
+CHANNEL_ID = "UC4bq21IPPbpu0Qrsl7LW0sw"
+FEED_MINUTES = "10"
+# Pushes per minute. 40 fits the free plan; on Workers Paid raise it (e.g. 500).
+BATCH = "40"
+PUSH_TITLE = "New on Slidebean"
+
+# A KV namespace for the push tokens: npx wrangler kv namespace create tv-calibrator-push-tokens
+[[kv_namespaces]]
+binding = "TOKENS"
+id = "REPLACE-WITH-YOUR-KV-NAMESPACE-ID"
+
+# Secrets (not in this file): npx wrangler secret put APNS_KEY / APNS_KEY_ID / APNS_TEAM_ID / ADMIN_TOKEN
+# Optional, recommended: YOUTUBE_API_KEY (the public feed has outages; docs/PUSH.md).
