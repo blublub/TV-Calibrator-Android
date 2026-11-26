@@ -41,12 +41,14 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.Analysis
 import io.github.blublub.tvcal.engine.ColourMath
 import io.github.blublub.tvcal.engine.GreyResult
@@ -185,8 +187,9 @@ fun ScoreGaugeRow(
     val hasWas = was?.isFinite() ?: false
     val numbers = if (hasWas) "${fmt(was, 1)} → ${fmt(value, 1)} dE" else "${fmt(value, 1)} dE"
     val word = Score.word(value, kind)
+    val description = stringResource(R.string.report_reading, label, "$word, $numbers")
     Column(
-        modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = "$label: $word, $numbers" },
+        modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = description },
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -214,16 +217,16 @@ private fun GaugeLegend(hasBefore: Boolean) {
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text("Off", style = style, color = Theme.textSecondary)
+        Text(stringResource(R.string.report_gauge_off), style = style, color = Theme.textSecondary)
         Spacer(Modifier.weight(1f))
         if (hasBefore) {
             Box(Modifier.size(7.dp).border(1.2.dp, Color.White.copy(alpha = 0.75f), CircleShape))
-            Text("before", style = style, color = Theme.textSecondary)
+            Text(stringResource(R.string.report_gauge_before), style = style, color = Theme.textSecondary)
             Box(Modifier.padding(start = 6.dp).size(7.dp).background(Color.White, CircleShape))
-            Text("after", style = style, color = Theme.textSecondary)
+            Text(stringResource(R.string.report_gauge_after), style = style, color = Theme.textSecondary)
             Spacer(Modifier.weight(1f))
         }
-        Text("Perfect", style = style, color = Theme.textSecondary)
+        Text(stringResource(R.string.report_gauge_perfect), style = style, color = Theme.textSecondary)
     }
 }
 
@@ -248,14 +251,15 @@ fun ReportHero(
     modifier: Modifier = Modifier,
 ) {
     val colourWas: Double? = if (before == null || before.colours.isEmpty()) null else Analysis.colourAverage(before)
-    val coloursCaption = "${report.colours.count { it.de < 3 }} of ${report.colours.size} colours on target"
+    val coloursCaption = stringResource(R.string.report_colours_on_target,
+        report.colours.count { it.de < 3 }.toString(), report.colours.size.toString())
 
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        ScoreGaugeRow("Greyscale", Analysis.greyAverage(report, hdr),
+        ScoreGaugeRow(stringResource(R.string.report_greyscale), Analysis.greyAverage(report, hdr),
             was = before?.let { Analysis.greyAverage(it, hdr) },
             kind = ScoreKind.grey, margin = margin, animated = animated)
         if (report.colours.isNotEmpty()) {
-            ScoreGaugeRow("Colours", Analysis.colourAverage(report), was = colourWas,
+            ScoreGaugeRow(stringResource(R.string.report_colours), Analysis.colourAverage(report), was = colourWas,
                 kind = ScoreKind.colour, margin = margin, animated = animated)
         }
         GaugeLegend(hasBefore = before != null)
@@ -271,7 +275,7 @@ fun ReportHero(
                         WhiteTarget(heroUV(white), ColourMath.upvp(ColourMath.d65), ok = white.de < 2,
                             modifier = Modifier.widthIn(max = 132.dp).fillMaxWidth(),
                             was = heroBrightest(before)?.let { heroUV(it) })
-                        Text("White point", style = Type.tiny, color = Theme.textSecondary)
+                        Text(stringResource(R.string.report_white_point), style = Type.tiny, color = Theme.textSecondary)
                     }
                 }
                 if (report.colours.isNotEmpty()) {
@@ -288,9 +292,9 @@ fun ReportHero(
             val gamma = Analysis.gamma(report)
             if (gamma != null) {
                 Row(Modifier.semantics(mergeDescendants = true) {}, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text("Gamma", style = Type.small, color = Theme.textSecondary)
+                    Text(stringResource(R.string.report_gamma), style = Type.small, color = Theme.textSecondary)
                     Text(fmt(gamma, 2), style = Type.small.copy(fontFeatureSettings = "tnum"), color = Color.White)
-                    Text("· target 2.40", style = Type.small, color = Theme.textSecondary)
+                    Text(stringResource(R.string.report_dot_target, fmt(2.4, 2)), style = Type.small, color = Theme.textSecondary)
                 }
             }
         }

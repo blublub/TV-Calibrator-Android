@@ -14,6 +14,9 @@ android {
         applicationId = "io.github.blublub.tvcal"
         minSdk = 29
         targetSdk = 36
+
+        // The app ships English (the original) and German.
+        androidResources.localeFilters += listOf("en", "de")
         versionCode = 1
         versionName = "0.1"
     }

@@ -75,10 +75,11 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.Locale
 
 /** "12 Nov 2026" in the user's locale and time zone (Swift's `.abbreviated` / `.long` date). */
 internal fun resultsDate(date: Instant, style: FormatStyle = FormatStyle.MEDIUM): String =
-    DateTimeFormatter.ofLocalizedDate(style).withZone(ZoneId.systemDefault()).format(date)
+    DateTimeFormatter.ofLocalizedDate(style).withLocale(Locale.getDefault()).withZone(ZoneId.systemDefault()).format(date)
 
 /**
  * The results of a calibration (Before vs After): one report panel (the headline, each score on its
@@ -108,13 +109,14 @@ fun ResultsView(
     // The phone's margin of error in dE for this kind of screen: not available on Android (no trained profiles).
     val marginDE: Double? = null
 
-    val headline = run {
-        if (before == null) return@run "Your picture, measured."
+    val headline = stringResource(run {
+        if (before == null) return@run R.string.report_headline_measured
         val now = Analysis.greyAverage(report, hdr)
         val was = Analysis.greyAverage(before, hdr)
-        if (now.isFinite() && was.isFinite() && now > was + 0.3) "Not quite there yet." else "A more natural picture."
-    }
-    val shareTitle = "$tvName · calibration results"
+        if (now.isFinite() && was.isFinite() && now > was + 0.3) R.string.report_headline_not_there
+        else R.string.report_headline_natural
+    })
+    val shareTitle = stringResource(R.string.report_share_title, tvName)
 
     // The shareable summary card (393 x 660), drawn off screen into a layer so it can be saved as an image.
     val cardLayer = rememberGraphicsLayer()
@@ -123,7 +125,7 @@ fun ResultsView(
         // The report: the headline, each score on its gauge, the white point and the colours.
         ReportPanel {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(if (before != null) "BEFORE → AFTER" else "MEASURED",
+                Text(stringResource(if (before != null) R.string.report_before_after_caps else R.string.report_measured_caps),
                     style = Type.badge.copy(letterSpacing = 0.8.sp), color = Theme.accent,
                     modifier = Modifier.alignByBaseline())
                 Spacer(Modifier.weight(1f))
@@ -143,10 +145,10 @@ fun ResultsView(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            ResultsLinkLabel("chart.xyaxis.line", "Grey by grey") { chartsOpen = true }
+            ResultsLinkLabel("chart.xyaxis.line", stringResource(R.string.report_grey_by_grey)) { chartsOpen = true }
             Spacer(Modifier.weight(1f))
             Box {
-                ResultsLinkLabel("square.and.arrow.up", "Share") {
+                ResultsLinkLabel("square.and.arrow.up", stringResource(R.string.report_share)) {
                     scope.launch {
                         val shared = runCatching {
                             val bitmap = cardLayer.toImageBitmap().asAndroidBitmap()
@@ -157,7 +159,7 @@ fun ResultsView(
                             }
                             shareFile(context, file, mime = "image/png")
                         }.isSuccess
-                        if (!shared) shareText(context, resultsShareText(shareTitle, report, before, hdr, date))
+                        if (!shared) shareText(context, resultsShareText(context, shareTitle, report, before, hdr, date))
                     }
                 }
                 // Off screen: laid out at the card's size, recorded into the layer but never drawn.
@@ -200,16 +202,16 @@ private fun ResultsLinkLabel(icon: String, text: String, onClick: () -> Unit) {
 }
 
 /** The results as text, when the image can't be made. */
-private fun resultsShareText(title: String, report: Report, before: Report?, hdr: Boolean, date: Instant): String {
+private fun resultsShareText(context: android.content.Context, title: String, report: Report, before: Report?, hdr: Boolean, date: Instant): String {
     fun line(label: String, now: Double?, was: Double?, kind: ScoreKind): String {
         val w = was?.takeIf { it.isFinite() }
         val numbers = if (w != null) "${fmt(w, 1)} → ${fmt(now, 1)} dE" else "${fmt(now, 1)} dE"
         return "$label: ${Score.word(now, kind)} ($numbers)"
     }
     val lines = mutableListOf(title, resultsDate(date, FormatStyle.LONG))
-    lines += line("Greyscale", Analysis.greyAverage(report, hdr), before?.let { Analysis.greyAverage(it, hdr) }, ScoreKind.grey)
+    lines += line(context.getString(R.string.report_greyscale), Analysis.greyAverage(report, hdr), before?.let { Analysis.greyAverage(it, hdr) }, ScoreKind.grey)
     if (report.colours.isNotEmpty()) {
-        lines += line("Colours", Analysis.colourAverage(report),
+        lines += line(context.getString(R.string.report_colours), Analysis.colourAverage(report),
             before?.takeIf { it.colours.isNotEmpty() }?.let { Analysis.colourAverage(it) }, ScoreKind.colour)
     }
     return lines.joinToString("\n")
@@ -221,7 +223,7 @@ private fun ResultsTitleBar(title: String, onBack: (() -> Unit)?) {
     Box(Modifier.fillMaxWidth().heightIn(min = 52.dp).padding(horizontal = 4.dp), contentAlignment = Alignment.Center) {
         if (onBack != null) {
             IconButton(onClick = onBack, modifier = Modifier.align(Alignment.CenterStart)) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back",
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.report_back),
                     tint = Theme.tealBright)
             }
         }
@@ -246,7 +248,7 @@ fun ResultsChartsView(
 ) {
     ScreenWithBottomAction { pad ->
         Column(Modifier.fillMaxSize().padding(pad)) {
-            ResultsTitleBar("Grey by grey", onDismiss)
+            ResultsTitleBar(stringResource(R.string.report_grey_by_grey), onDismiss)
             Column(
                 Modifier
                     .weight(1f)
@@ -308,15 +310,16 @@ fun ShareSummaryCard(
                 maxLines = 1,
                 autoSize = TextAutoSize.StepBased(minFontSize = 18.sp, maxFontSize = 30.sp),
             )
-            Text((if (before != null) "Before → after · " else "Measured · ") + resultsDate(date, FormatStyle.LONG),
+            Text(stringResource(if (before != null) R.string.report_share_before_after_date else R.string.report_share_measured_date,
+                resultsDate(date, FormatStyle.LONG)),
                 style = Type.captionBrand, color = Theme.textSecondary)
         }
         ReportHero(report, before = before, hdr = hdr, margin = margin, animated = false)
         Spacer(Modifier.weight(1f))
         Row(Modifier.fillMaxWidth()) {
-            Text("based on TV Calibrator by Slidebean", style = Type.tiny, color = Theme.accent, modifier = Modifier.alignByBaseline())
+            Text(stringResource(R.string.report_based_on), style = Type.tiny, color = Theme.accent, modifier = Modifier.alignByBaseline())
             Spacer(Modifier.weight(1f))
-            Text("Measured with phone", style = Type.tiny, color = Theme.textSecondary,
+            Text(stringResource(R.string.report_measured_with_phone), style = Type.tiny, color = Theme.textSecondary,
                 modifier = Modifier.alignByBaseline())
         }
     }

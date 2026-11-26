@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        io.github.blublub.tvcal.ui.L10n.apply()
         enableEdgeToEdge()
         // The meter reads for minutes at a time: keep the screen on while the app is open.
         window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

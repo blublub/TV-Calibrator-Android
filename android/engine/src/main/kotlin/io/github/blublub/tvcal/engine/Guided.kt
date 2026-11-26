@@ -203,15 +203,15 @@ object Guided {
 
     /** Does the reading look like the pattern we asked for? Catches the wrong file playing. */
     fun mismatch(patch: Patch, xyz: Vec3, hdr: Boolean, whiteY: Double?): String? {
-        if (xyz.y <= 0) return "The camera sees black."
+        if (xyz.y <= 0) return EngineTexts.current.seesBlack
         val r = ColourMath.polar(ColourMath.xyzToXY(xyz)).r
         val neutral = patch.kind == PatchKind.white || patch.kind == PatchKind.grey
-        if (neutral && r > 0.05) return "The camera is seeing a colour, not a grey."
-        if (patch.kind == PatchKind.colour && r < 0.03) return "The camera is seeing a grey, not a colour."
+        if (neutral && r > 0.05) return EngineTexts.current.seesColour
+        if (patch.kind == PatchKind.colour && r < 0.03) return EngineTexts.current.seesGrey
         val level = patch.level
         if (whiteY != null && whiteY != 0.0 && neutral && level != null) {
             val exp = if (hdr) ColourMath.pqDecode(level) * whiteY / 100.0 else whiteY * level.pow(2.4)
-            if (exp > 0 && !(0.4 < xyz.y / exp && xyz.y / exp < 2.5)) return "The brightness doesn't match this pattern."
+            if (exp > 0 && !(0.4 < xyz.y / exp && xyz.y / exp < 2.5)) return EngineTexts.current.brightnessMismatch
         }
         return null
     }
@@ -270,9 +270,9 @@ data class LiveAnalysis(
                 val vals = listOf(bal.x, bal.y, bal.z)
                 val mx = vals.indices.maxByOrNull { vals[it] } ?: 0
                 val mn = vals.indices.minByOrNull { vals[it] } ?: 0
-                val names = listOf("Red", "Green", "Blue")
-                out.advice = if (vals[mx] - vals[mn] <= 0.01) "White is on target."
-                else "${names[mx]} is high and ${names[mn]} is low: lower ${names[mx]} or raise ${names[mn]}."
+                val names = List(3) { EngineTexts.current.channel(it) }
+                out.advice = if (vals[mx] - vals[mn] <= 0.01) EngineTexts.current.whiteOnTarget
+                else EngineTexts.current.highLow(names[mx], names[mn])
             } else {
                 val tg = Patterns.colourTargets(hdr)
                 val name = Patterns.colourIDs.minByOrNull { id ->

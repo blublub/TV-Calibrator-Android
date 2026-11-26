@@ -41,6 +41,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
@@ -51,6 +52,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.storage.Brand
 import io.github.blublub.tvcal.storage.ColourMenu
 import io.github.blublub.tvcal.storage.Multipoint
@@ -107,8 +109,8 @@ fun TVSetupFlow(
 
     val pages = listOf(
         WalkPage(
-            symbol = "", title = "Which screen is this?",
-            text = "You can change these details later.",
+            symbol = "", title = stringResource(R.string.home_setup_which_screen),
+            text = stringResource(R.string.home_setup_which_screen_text),
             extra = {
                 NameAndBrand(
                     name = name, onNameChange = { name = it },
@@ -122,13 +124,13 @@ fun TVSetupFlow(
             },
         ),
         WalkPage(
-            symbol = "", title = "What kind of screen is it?",
-            text = "The camera reads each kind differently. The model name or the box usually says.",
+            symbol = "", title = stringResource(R.string.home_setup_kind),
+            text = stringResource(R.string.home_setup_kind_text),
             extra = { PanelChoice(selection = panel, onSelectionChange = { panel = it }) },
         ),
         WalkPage(
-            symbol = "", title = "Its white balance menu",
-            text = "On the TV, open ${brand.whiteBalancePath}",
+            symbol = "", title = stringResource(R.string.home_setup_wb_title),
+            text = stringResource(R.string.home_setup_wb_text, brand.whiteBalancePath),
             extra = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     WalkArtPanel(height = 130.dp) { WhiteBalanceArt(points = multipoint.artPoints) }
@@ -141,8 +143,8 @@ fun TVSetupFlow(
             },
         ),
         WalkPage(
-            symbol = "", title = "Its colour menu",
-            text = "On the TV, open ${brand.colourMenuPath}. Which controls can you see?",
+            symbol = "", title = stringResource(R.string.home_setup_colour_title),
+            text = stringResource(R.string.home_setup_colour_text, brand.colourMenuPath),
             extra = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     WalkArtPanel(height = 130.dp) { ColourMenuArt(menu = colourMenu) }
@@ -157,14 +159,14 @@ fun TVSetupFlow(
     )
 
     SetupSheetHost(
-        title = if (tv == null) "Add a Screen" else "Screen settings",
-        closeLabel = "Cancel",
+        title = stringResource(if (tv == null) R.string.home_add_screen else R.string.home_setup_edit_title),
+        closeLabel = stringResource(R.string.home_cancel),
         onClose = onDismiss,
     ) {
         Walkthrough(
             pages = pages,
-            finishTitle = if (tv == null) "Add this screen" else "Save",
-            section = "Screen details",
+            finishTitle = stringResource(if (tv == null) R.string.home_setup_add_finish else R.string.home_save),
+            section = stringResource(R.string.home_setup_section),
             canAdvance = { i -> i != 0 || trimmedName.isNotEmpty() },
             onFinish = { save() },
         )
@@ -241,9 +243,10 @@ private fun NameAndBrand(
     var nameFocused by remember { mutableStateOf(false) }
     val focus = LocalFocusManager.current
     val fieldShape = RoundedCornerShape(14.dp)
+    val nameLabel = stringResource(R.string.home_setup_name_label)
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Screen name", style = Type.captionBrand, color = Color.White)
+            Text(nameLabel, style = Type.captionBrand, color = Color.White)
             BasicTextField(
                 value = name,
                 onValueChange = onNameChange,
@@ -255,7 +258,7 @@ private fun NameAndBrand(
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusChanged { nameFocused = it.isFocused }
-                    .semantics { contentDescription = "Screen name" },
+                    .semantics { contentDescription = nameLabel },
                 decorationBox = { inner ->
                     Box(
                         Modifier
@@ -267,7 +270,7 @@ private fun NameAndBrand(
                         contentAlignment = Alignment.CenterStart,
                     ) {
                         if (name.isEmpty()) {
-                            Text("e.g. Living room OLED", style = Type.bodyBrand.copy(fontSize = 16.sp),
+                            Text(stringResource(R.string.home_setup_name_hint), style = Type.bodyBrand.copy(fontSize = 16.sp),
                                 color = Theme.textSecondary)
                         }
                         inner()
@@ -275,7 +278,7 @@ private fun NameAndBrand(
                 },
             )
         }
-        Text("Brand", style = Type.captionBrand, color = Color.White)
+        Text(stringResource(R.string.home_setup_brand), style = Type.captionBrand, color = Color.White)
         Column(verticalArrangement = Arrangement.spacedBy(9.dp)) {
             for (row in Brand.entries.chunked(3)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(9.dp)) {
@@ -286,7 +289,7 @@ private fun NameAndBrand(
                 }
             }
         }
-        Text("Choose the name you’ll recognise from the sofa.", style = Type.captionBrand, color = Theme.textSecondary)
+        Text(stringResource(R.string.home_setup_name_tip), style = Type.captionBrand, color = Theme.textSecondary)
     }
 }
 
@@ -386,16 +389,18 @@ fun MultipointChoice(
     known: Boolean,
     onKnownChange: (Boolean) -> Unit,
 ) {
+    @Composable
     fun title(m: Multipoint): String = when (m) {
-        Multipoint.NONE -> "Only 2 points"
-        Multipoint.TEN -> "10 points"
-        Multipoint.TWENTY -> "20 points"
+        Multipoint.NONE -> stringResource(R.string.home_mp_two)
+        Multipoint.TEN -> stringResource(R.string.home_mp_ten)
+        Multipoint.TWENTY -> stringResource(R.string.home_mp_twenty)
     }
 
+    @Composable
     fun detail(m: Multipoint): String = when (m) {
-        Multipoint.NONE -> "Gain and ${brand.offsetName}"
-        Multipoint.TEN -> "10%, 20% … 100%"
-        Multipoint.TWENTY -> "5%, 10% … 100%"
+        Multipoint.NONE -> stringResource(R.string.home_mp_two_detail, brand.offsetName)
+        Multipoint.TEN -> stringResource(R.string.home_mp_ten_detail)
+        Multipoint.TWENTY -> stringResource(R.string.home_mp_twenty_detail)
     }
 
     val art: @Composable () -> Unit = { Icon(symbol("slider.vertical.3"), contentDescription = null) }
@@ -403,7 +408,7 @@ fun MultipointChoice(
         for (m in listOf(Multipoint.NONE, Multipoint.TEN, Multipoint.TWENTY)) {
             ChoiceTile(
                 title = title(m), detail = detail(m),
-                note = if (m == brand.multipoint) "Usual for ${brand.label}" else null,
+                note = if (m == brand.multipoint) stringResource(R.string.home_usual_for, brand.label) else null,
                 selected = known && selection == m,
                 art = art,
                 action = {
@@ -413,7 +418,7 @@ fun MultipointChoice(
             )
         }
         ChoiceTile(
-            title = "Not sure: ask me when we get there", selected = !known, art = art,
+            title = stringResource(R.string.home_mp_not_sure), selected = !known, art = art,
             action = {
                 onKnownChange(false)
                 onSelectionChange(brand.multipoint)
@@ -431,17 +436,18 @@ fun ColourMenuChoice(
     known: Boolean,
     onKnownChange: (Boolean) -> Unit,
 ) {
+    @Composable
     fun title(c: ColourMenu): String = when (c) {
         ColourMenu.HSL -> brand.cmsMenuLabel
-        ColourMenu.RGB_SLIDERS -> "Red / Green / Blue"
-        ColourMenu.OFF -> "No colour menu"
+        ColourMenu.RGB_SLIDERS -> stringResource(R.string.home_cm_rgb)
+        ColourMenu.OFF -> stringResource(R.string.home_cm_off)
     }
 
     val art: @Composable () -> Unit = { Icon(symbol("slider.horizontal.3"), contentDescription = null) }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         for (c in listOf(ColourMenu.HSL, ColourMenu.RGB_SLIDERS, ColourMenu.OFF)) {
             ChoiceTile(
-                title = title(c), note = if (c == brand.colourMenu) "Usual for ${brand.label}" else null,
+                title = title(c), note = if (c == brand.colourMenu) stringResource(R.string.home_usual_for, brand.label) else null,
                 selected = known && selection == c,
                 art = art,
                 action = {
@@ -451,7 +457,7 @@ fun ColourMenuChoice(
             )
         }
         ChoiceTile(
-            title = "Not sure", selected = !known, art = art,
+            title = stringResource(R.string.home_not_sure), selected = !known, art = art,
             action = {
                 onKnownChange(false)
                 onSelectionChange(brand.colourMenu)
@@ -473,12 +479,12 @@ fun MenuQuestionCard(tv: TVRecord, colours: Boolean) {
 
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(
-            if (colours) "First: your TV’s colour menu" else "First: your TV’s white balance menu",
+            stringResource(if (colours) R.string.home_mq_colour_title else R.string.home_mq_wb_title),
             style = Type.stepTitleStyle,
         )
         Text(
-            if (colours) "On the TV, open ${tv.brand.colourMenuPath}. Which sliders does each colour have?"
-            else "On the TV, open ${tv.brand.whiteBalancePath} and look for a 10 or 20 point option. Which does it have?",
+            if (colours) stringResource(R.string.home_mq_colour_text, tv.brand.colourMenuPath)
+            else stringResource(R.string.home_mq_wb_text, tv.brand.whiteBalancePath),
             style = Type.bodyBrand.copy(lineHeight = 22.sp), color = Theme.textSecondary,
         )
         if (colours) {
@@ -494,7 +500,7 @@ fun MenuQuestionCard(tv: TVRecord, colours: Boolean) {
                 known = known, onKnownChange = { known = it },
             )
         }
-        PinnedActionOrInline("Continue", enabled = known) {
+        PinnedActionOrInline(stringResource(R.string.home_continue), enabled = known) {
             val t = if (colours) tv.copy(colourMenu = colourMenu, colourMenuKnown = true)
             else tv.copy(multipoint = multipoint, multipointKnown = true)
             app.update(t)

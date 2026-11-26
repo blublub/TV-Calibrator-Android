@@ -100,6 +100,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.Role
@@ -117,10 +118,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.SignalMode
 import io.github.blublub.tvcal.engine.fixed
 import io.github.blublub.tvcal.engine.signedFixed
 import io.github.blublub.tvcal.storage.colourSwatch
+import io.github.blublub.tvcal.ui.L10n
 
 // The design system, from the Figma file "Calibrator" (pages 02 Components, 03 Colour and type styles).
 // Every screen is built from these tokens and parts. Type is the system font (SF Pro on iOS, the default
@@ -189,10 +192,10 @@ val SignalMode.order: Int get() = SignalMode.entries.indexOf(this) + 1
 
 val SignalMode.blurb: String
     get() = when (this) {
-        SignalMode.SDR -> "Everyday TV. Start here."
-        SignalMode.HDR10 -> "HDR films. After SDR."
-        SignalMode.HDR10P -> "Pattern files on a USB stick. After HDR10."
-        SignalMode.DV -> "Pattern files on a USB stick. After HDR10."
+        SignalMode.SDR -> L10n.tr("Everyday TV. Start here.", "Normales Fernsehen. Fang hier an.")
+        SignalMode.HDR10 -> L10n.tr("HDR films. After SDR.", "HDR-Filme. Nach SDR.")
+        SignalMode.HDR10P, SignalMode.DV ->
+            L10n.tr("Pattern files on a USB stick. After HDR10.", "Testbild-Dateien auf einem USB-Stick. Nach HDR10.")
     }
 
 // MARK: - Type
@@ -244,13 +247,13 @@ object Type {
 /** A number with `digits` decimals ("%.1f"), or "–" when there's none. */
 fun fmt(v: Double?, digits: Int = 1): String {
     if (v == null || !v.isFinite()) return "–"
-    return fixed(v, digits)
+    return io.github.blublub.tvcal.engine.EngineTexts.num(v, digits)
 }
 
 /** A number with its sign ("%+.1f"), or "–" when there's none. */
 fun signed(v: Double?, digits: Int = 1): String {
     if (v == null || !v.isFinite()) return "–"
-    return signedFixed(v, digits)
+    return io.github.blublub.tvcal.engine.EngineTexts.signedNum(v, digits)
 }
 
 /**
@@ -573,10 +576,11 @@ fun TipRow(tone: TipTone, text: String, modifier: Modifier = Modifier) {
 /** Page dots: 6 dp, the current one 8 dp and yellow. */
 @Composable
 fun PageDots(count: Int, index: Int, modifier: Modifier = Modifier) {
+    val description = stringResource(R.string.report_page_of, (index + 1).toString(), count.toString())
     Row(
         modifier
             .fillMaxWidth()
-            .clearAndSetSemantics { contentDescription = "Page ${index + 1} of $count" },
+            .clearAndSetSemantics { contentDescription = description },
         horizontalArrangement = Arrangement.spacedBy(7.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {

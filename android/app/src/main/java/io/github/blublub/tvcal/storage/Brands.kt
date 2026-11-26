@@ -1,9 +1,11 @@
 // Port of TV Calibrator/Storage/Brands.swift (TV Calibrator by Slidebean,
-// https://github.com/slidebean/tv-calibrator, CC BY-NC 4.0). Changed: translated to Kotlin.
+// https://github.com/slidebean/tv-calibrator, CC BY-NC 4.0). Changed: translated to Kotlin, German added.
 package io.github.blublub.tvcal.storage
 
 import io.github.blublub.tvcal.engine.Report
 import io.github.blublub.tvcal.engine.SignalMode
+import io.github.blublub.tvcal.ui.L10n
+import io.github.blublub.tvcal.ui.L10n.tr
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,6 +19,9 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Menu names and setup advice per TV brand. Menu names vary a little between models and years, so
  * the app always says "usually".
+ *
+ * German: the names the TVs show with their menu language set to German. Vizio and Roku TVs are sold
+ * mainly in the US, so their menu names stay English; only the words around them are translated.
  */
 @Serializable
 enum class Brand(val raw: String) {
@@ -48,10 +53,10 @@ enum class Brand(val raw: String) {
             TOSHIBA -> "Toshiba"
             SHARP -> "Sharp"
             ROKU -> "Roku TV"
-            OTHER -> "Other"
+            OTHER -> tr("Other", "Andere")
         }
 
-    /** What the brand calls the bright-end and dark-end white-balance controls. */
+    /** What the brand calls the bright-end and dark-end white-balance controls (the same in German menus). */
     val gainName: String get() = "Gain"
     val offsetName: String
         get() = when (this) {
@@ -60,36 +65,65 @@ enum class Brand(val raw: String) {
             else -> "Offset"
         }
 
+    /** The white balance menu, without LG's "set it to 2 Point" hint (for the multipoint fine-tune step). */
+    val whiteBalanceMenu: String
+        get() = when (this) {
+            LG -> tr("Picture › Advanced Settings › Colour › White Balance",
+                "Bild › Erweiterte Einstellungen › Farbe › Weißabgleich")
+            else -> whiteBalancePath
+        }
+
     val whiteBalancePath: String
         get() = when (this) {
-            LG -> "Picture › Advanced Settings › Colour › White Balance (set it to 2 Point)"
-            SAMSUNG -> "Picture › Expert Settings › White Balance (2 Point)"
-            SONY -> "Picture › Advanced settings › Colour › White balance"
-            TCL -> "Picture › Advanced (or Expert) settings › White balance"
-            HISENSE -> "Picture › Picture Mode Settings › White Balance"
-            PANASONIC -> "Picture › Advanced Settings › White Balance (2p)"
-            PHILIPS -> "Picture › Advanced › Colour › Colour temperature › Custom"
+            LG -> whiteBalanceMenu + tr(" (set it to 2 Point)", " (auf „2 Punkte“ stellen)")
+            SAMSUNG -> tr("Picture › Expert Settings › White Balance (2 Point)",
+                "Bild › Experteneinstellungen › Weißabgleich (2 Punkte)")
+            SONY -> tr("Picture › Advanced settings › Colour › White balance",
+                "Bild & Anzeige › Bild › Erweiterte Einstellungen › Farbe › Weißabgleich")
+            TCL -> tr("Picture › Advanced (or Expert) settings › White balance",
+                "Bild › Erweiterte Einstellungen (oder Experteneinstellungen) › Weißabgleich")
+            HISENSE -> tr("Picture › Picture Mode Settings › White Balance",
+                "Bild › Bildmodus-Einstellungen › Weißabgleich")
+            PANASONIC -> tr("Picture › Advanced Settings › White Balance (2p)",
+                "Bild › Erweiterte Einstellungen › Weißabgleich (2 Punkte)")
+            PHILIPS -> tr("Picture › Advanced › Colour › Colour temperature › Custom",
+                "Bild › Erweitert › Farbe › Farbtemperatur › Benutzerdefiniert")
             VIZIO -> "Picture › Picture Mode Edit › Color Calibration › Color Temperature"
-            TOSHIBA -> "Picture › Advanced settings › White balance"
-            SHARP -> "Picture › Expert settings › White balance"
-            ROKU -> "★ button › Advanced picture settings › Expert settings › White balance"
-            OTHER -> "the White Balance menu (often under Picture › Advanced or Expert settings)"
+            TOSHIBA -> tr("Picture › Advanced settings › White balance",
+                "Bild › Erweiterte Einstellungen › Weißabgleich")
+            SHARP -> tr("Picture › Expert settings › White balance",
+                "Bild › Experteneinstellungen › Weißabgleich")
+            ROKU -> tr("★ button › Advanced picture settings › Expert settings › White balance",
+                "★-Taste › Advanced picture settings › Expert settings › White balance")
+            OTHER -> tr("the White Balance menu (often under Picture › Advanced or Expert settings)",
+                "das Menü „Weißabgleich“ (oft unter Bild › Erweiterte Einstellungen oder Experteneinstellungen)")
         }
 
     val colourMenuPath: String
         get() = when (this) {
-            LG -> "Picture › Advanced Settings › Colour › Colour Management System"
-            SAMSUNG -> "Picture › Expert Settings › Color Space Settings › Custom"
-            SONY -> "Picture › Advanced settings › Colour › Advanced colour adjustment"
-            TCL -> "Picture › Advanced settings › Colour tuner"
-            HISENSE -> "Picture › Picture Mode Settings › Color Tuner"
-            PANASONIC -> "Picture › Advanced Settings › Colour Management"
-            PHILIPS -> "Picture › Advanced › Colour › Colour control"
+            LG -> tr("Picture › Advanced Settings › Colour › Colour Management System",
+                "Bild › Erweiterte Einstellungen › Farbe › Farbmanagementsystem")
+            SAMSUNG -> tr("Picture › Expert Settings › Color Space Settings › Custom",
+                "Bild › Experteneinstellungen › Farbraumeinstellungen › Benutzerdefiniert")
+            SONY -> tr("Picture › Advanced settings › Colour › Advanced colour adjustment",
+                "Bild & Anzeige › Bild › Erweiterte Einstellungen › Farbe › Erweiterte Farbeinstellung")
+            TCL -> tr("Picture › Advanced settings › Colour tuner",
+                "Bild › Erweiterte Einstellungen › Farbabstimmung (Colour Tuner)")
+            HISENSE -> tr("Picture › Picture Mode Settings › Color Tuner",
+                "Bild › Bildmodus-Einstellungen › Farbabstimmung (Color Tuner)")
+            PANASONIC -> tr("Picture › Advanced Settings › Colour Management",
+                "Bild › Erweiterte Einstellungen › Farbmanagement")
+            PHILIPS -> tr("Picture › Advanced › Colour › Colour control",
+                "Bild › Erweitert › Farbe › Farbsteuerung (Colour control)")
             VIZIO -> "Picture › Picture Mode Edit › Color Calibration › Color Tuner"
-            TOSHIBA -> "Picture › Advanced settings › Colour tuner"
-            SHARP -> "Picture › Expert settings › Colour tuner"
-            ROKU -> "★ button › Advanced picture settings › Expert settings › Color tuning"
-            OTHER -> "the colour management menu (often called Colour Tuner, CMS or Colour Space)"
+            TOSHIBA -> tr("Picture › Advanced settings › Colour tuner",
+                "Bild › Erweiterte Einstellungen › Farbabstimmung (Colour Tuner)")
+            SHARP -> tr("Picture › Expert settings › Colour tuner",
+                "Bild › Experteneinstellungen › Farbabstimmung (Colour Tuner)")
+            ROKU -> tr("★ button › Advanced picture settings › Expert settings › Color tuning",
+                "★-Taste › Advanced picture settings › Expert settings › Color tuning")
+            OTHER -> tr("the colour management menu (often called Colour Tuner, CMS or Colour Space)",
+                "das Farbmanagement-Menü (oft „Farbabstimmung“, „Colour Tuner“, „CMS“ oder „Farbraum“ genannt)")
         }
 
     /** The usual colour menu type for the brand (the user confirms it). */
@@ -106,19 +140,24 @@ enum class Brand(val raw: String) {
     /** The calibrated picture mode, per format. */
     fun pictureMode(mode: SignalMode): String = when {
         this == SAMSUNG && mode == SignalMode.DV ->
-            "Samsung TVs don't support Dolby Vision: calibrate HDR10 or HDR10+ instead"
-        this == LG && mode == SignalMode.DV -> "Dolby Vision Filmmaker Mode (or Cinema Home)"
+            tr("Samsung TVs don't support Dolby Vision: calibrate HDR10 or HDR10+ instead",
+                "Samsung-Fernseher unterstützen kein Dolby Vision: Kalibriere stattdessen HDR10 oder HDR10+")
+        this == LG && mode == SignalMode.DV ->
+            tr("Dolby Vision Filmmaker Mode (or Cinema Home)", "Dolby Vision Filmmaker Mode (oder Kino Home)")
         this == SONY && (mode == SignalMode.SDR || mode == SignalMode.HDR10 || mode == SignalMode.HDR10P) ->
-            "Professional (or Custom)"
+            tr("Professional (or Custom)", "Professionell (oder Anwender)")
         this == VIZIO && mode == SignalMode.DV -> "Dolby Vision Dark"
         this == VIZIO -> "Calibrated Dark"
         this == ROKU -> if (mode == SignalMode.DV) "Dolby Vision Dark" else "Movie"
-        this == PANASONIC && mode == SignalMode.DV -> "Dolby Vision Dark (or Dolby Vision Cinema)"
-        this == HISENSE && mode == SignalMode.SDR -> "Filmmaker Mode (or Theater Night)"
-        this == SHARP && mode == SignalMode.SDR -> "Movie (or Filmmaker Mode)"
-        mode == SignalMode.DV -> "Dolby Vision Dark (or Dolby Vision Cinema)"
-        mode == SignalMode.SDR -> "Filmmaker Mode (or Movie / Cinema)"
-        else -> "Filmmaker Mode (or Movie / Cinema)" // HDR10, HDR10+
+        this == PANASONIC && mode == SignalMode.DV ->
+            tr("Dolby Vision Dark (or Dolby Vision Cinema)", "Dolby Vision Dunkel (oder Dolby Vision Kino)")
+        this == HISENSE && mode == SignalMode.SDR ->
+            tr("Filmmaker Mode (or Theater Night)", "Filmmaker Mode (oder Kino Nacht)")
+        this == SHARP && mode == SignalMode.SDR -> tr("Movie (or Filmmaker Mode)", "Film (oder Filmmaker Mode)")
+        mode == SignalMode.DV ->
+            tr("Dolby Vision Dark (or Dolby Vision Cinema)", "Dolby Vision Dunkel (oder Dolby Vision Kino)")
+        mode == SignalMode.SDR -> tr("Filmmaker Mode (or Movie / Cinema)", "Filmmaker Mode (oder Film / Kino)")
+        else -> tr("Filmmaker Mode (or Movie / Cinema)", "Filmmaker Mode (oder Film / Kino)") // HDR10, HDR10+
     }
 
     /** Picture settings to make before measuring (after the picture mode). */
@@ -127,65 +166,88 @@ enum class Brand(val raw: String) {
         val sdr = mode == SignalMode.SDR
         when (this) {
             LG -> {
-                items += "Energy Saving and AI Brightness: Off"
-                if (sdr) items += "Gamma: BT.1886, Colour Temperature: Warm 50"
-                if (mode.isHDR) items += "Dynamic Tone Mapping: Off"
+                items += tr("Energy Saving and AI Brightness: Off", "Energiesparen und KI-Helligkeit: Aus")
+                if (sdr) items += tr("Gamma: BT.1886, Colour Temperature: Warm 50", "Gamma: BT.1886, Farbtemperatur: Warm 50")
+                if (mode.isHDR) items += tr("Dynamic Tone Mapping: Off", "Dynamisches Tone Mapping: Aus")
             }
             SAMSUNG -> {
-                items += "Energy saving, Adaptive Brightness and Contrast Enhancer: Off"
-                if (sdr) items += "Colour Tone: Warm2, Gamma: BT.1886"
-                if (mode.isHDR) items += "HDR Tone Mapping: Static, ST.2084: 0"
-                items += "Readings jumping around? Turn off Brightness Optimisation and set Local Dimming to Low"
+                items += tr("Energy saving, Adaptive Brightness and Contrast Enhancer: Off",
+                    "Energiesparmodus, Adaptive Helligkeit und Kontrastverbesserung: Aus")
+                if (sdr) items += tr("Colour Tone: Warm2, Gamma: BT.1886", "Farbton: Warm2, Gamma: BT.1886")
+                if (mode.isHDR) items += tr("HDR Tone Mapping: Static, ST.2084: 0", "HDR-Tone-Mapping: Statisch, ST.2084: 0")
+                items += tr("Readings jumping around? Turn off Brightness Optimisation and set Local Dimming to Low",
+                    "Springen die Messwerte? Schalte „Helligkeitsoptimierung“ aus und stell „Local Dimming“ auf „Niedrig“")
             }
             SONY -> {
-                items += "Light sensor, Live colour and Advanced contrast enhancer: Off"
-                if (sdr) items += "Colour temperature: Expert 1"
-                if (mode.isHDR) items += "HDR tone mapping: Off"
+                items += tr("Light sensor, Live colour and Advanced contrast enhancer: Off",
+                    "Lichtsensor, Live Colour und Erweiterte Kontrastverbesserung: Aus")
+                if (sdr) items += tr("Colour temperature: Expert 1", "Farbtemperatur: Experte 1")
+                if (mode.isHDR) items += tr("HDR tone mapping: Off", "HDR-Tone-Mapping: Aus")
             }
             TCL, HISENSE, TOSHIBA, SHARP -> {
-                items += "Dynamic contrast, Eco / energy saving and the light sensor: Off"
-                if (sdr) items += "Colour temperature: Warm (or Low)"
-                if (mode.isHDR) items += "Any dynamic tone mapping: Off"
-                if (this == HISENSE || this == TCL) items += "Local dimming: Low or Medium"
+                items += tr("Dynamic contrast, Eco / energy saving and the light sensor: Off",
+                    "Dynamischer Kontrast, Eco / Energiesparen und Lichtsensor: Aus")
+                if (sdr) items += tr("Colour temperature: Warm (or Low)", "Farbtemperatur: Warm (oder Niedrig)")
+                if (mode.isHDR) items += tr("Any dynamic tone mapping: Off", "Jedes dynamische Tone Mapping: Aus")
+                if (this == HISENSE || this == TCL) items += tr("Local dimming: Low or Medium", "Local Dimming: Niedrig oder Mittel")
             }
             PANASONIC -> {
-                items += "Ambient sensor and Dynamic Contrast: Off"
-                if (sdr) items += "Colour Temperature: Warm2"
-                if (mode.isHDR) items += "HDR Brightness Enhancer / Dynamic HDR Effect: Off"
+                items += tr("Ambient sensor and Dynamic Contrast: Off", "Umgebungssensor und Dynamischer Kontrast: Aus")
+                if (sdr) items += tr("Colour Temperature: Warm2", "Farbtemperatur: Warm2")
+                if (mode.isHDR) items += tr("HDR Brightness Enhancer / Dynamic HDR Effect: Off",
+                    "HDR-Helligkeitsverbesserung / Dynamischer HDR-Effekt: Aus")
             }
             PHILIPS -> {
-                items += "Ambilight, the light sensor and Dynamic contrast: Off"
-                if (sdr) items += "Colour temperature: Warm"
-                if (mode.isHDR) items += "HDR Plus / tone mapping: Off or Standard"
+                items += tr("Ambilight, the light sensor and Dynamic contrast: Off",
+                    "Ambilight, Lichtsensor und Dynamischer Kontrast: Aus")
+                if (sdr) items += tr("Colour temperature: Warm", "Farbtemperatur: Warm")
+                if (mode.isHDR) items += tr("HDR Plus / tone mapping: Off or Standard", "HDR Plus / Tone Mapping: Aus oder Standard")
             }
             VIZIO -> {
                 items += "Auto Brightness Control: Off, Contrast Control: Off"
-                if (sdr) items += "Color Temperature: Normal (Vizio's is the film standard)"
+                if (sdr) items += tr("Color Temperature: Normal (Vizio's is the film standard)",
+                    "Color Temperature: Normal (bei Vizio ist das der Filmstandard)")
             }
             ROKU -> {
-                items += "Dynamic contrast and Action smoothing: Off"
+                items += tr("Dynamic contrast and Action smoothing: Off", "Dynamic contrast und Action smoothing: Off")
                 if (sdr) items += "Color temperature: Warm"
             }
             OTHER -> {
-                items += "Energy saving, light sensors and contrast boosters: Off"
-                if (sdr) items += "Colour temperature: Warm"
-                if (mode.isHDR) items += "Dynamic tone mapping: Off"
+                items += tr("Energy saving, light sensors and contrast boosters: Off",
+                    "Energiesparen, Lichtsensoren und Kontrastverstärker: Aus")
+                if (sdr) items += tr("Colour temperature: Warm", "Farbtemperatur: Warm")
+                if (mode.isHDR) items += tr("Dynamic tone mapping: Off", "Dynamisches Tone Mapping: Aus")
             }
         }
-        if (mode == SignalMode.HDR10P) items += "HDR10+ mode: the plain setting, not Adaptive / Dynamic"
+        if (mode == SignalMode.HDR10P) items += tr(
+            "HDR10+ mode: the plain setting, not Adaptive / Dynamic",
+            if (this == VIZIO || this == ROKU) "HDR10+-Modus: die einfache Einstellung, nicht Adaptive / Dynamic"
+            else "HDR10+-Modus: die einfache Einstellung, nicht Adaptiv / Dynamisch",
+        )
         return items
     }
 
     /** Everything to set before measuring, as one list (picture mode first). */
-    fun setup(mode: SignalMode): List<String> = listOf("Picture mode: ${pictureMode(mode)}") + extras(mode)
+    fun setup(mode: SignalMode): List<String> {
+        val prefix = tr("Picture mode: ", if (this == VIZIO || this == ROKU) "Bildmodus (Picture Mode): " else "Bildmodus: ")
+        return listOf(prefix + pictureMode(mode)) + extras(mode)
+    }
 
-    /** Where the TV's colour gamut setting is, and what it should be. */
+    /**
+     * Where the TV's colour gamut setting is, and what it should be. Ends the [GamutCheck] sentence:
+     * "... and <this>" / "... und ob <this>" (so in German the verb comes last).
+     */
     val gamutSetting: String
         get() = when (this) {
-            LG -> "Picture › Advanced Settings › Colour › Colour Gamut is Auto Detect"
-            SAMSUNG -> "Picture › Expert Settings › Color Space is Auto"
-            SONY -> "Live Colour is Off"
-            else -> "the Colour Gamut (or Colour Space) setting is Auto"
+            LG -> tr("Picture › Advanced Settings › Colour › Colour Gamut is Auto Detect",
+                "Bild › Erweiterte Einstellungen › Farbe › Farbraum (Colour Gamut) auf „Automatische Erkennung“ steht")
+            SAMSUNG -> tr("Picture › Expert Settings › Color Space is Auto",
+                "Bild › Experteneinstellungen › Farbraum auf „Auto“ steht")
+            SONY -> tr("Live Colour is Off", "Live Colour auf „Aus“ steht")
+            VIZIO, ROKU -> tr("the Colour Gamut (or Colour Space) setting is Auto",
+                "die Einstellung Color Gamut (oder Color Space) auf „Auto“ steht")
+            else -> tr("the Colour Gamut (or Colour Space) setting is Auto",
+                "die Einstellung Farbraum (Colour Gamut / Colour Space) auf „Auto“ steht")
         }
 
     /**
@@ -194,10 +256,11 @@ enum class Brand(val raw: String) {
      */
     val cmsNames: CmsNames
         get() = when (this) {
-            LG -> CmsNames("Tint", "Saturation", "Luminance")
-            SONY -> CmsNames("Hue", "Saturation", "Lightness")
+            LG -> CmsNames(tr("Tint", "Farbton"), tr("Saturation", "Sättigung"), tr("Luminance", "Luminanz"))
+            SONY -> CmsNames(tr("Hue", "Farbton"), tr("Saturation", "Sättigung"), tr("Lightness", "Helligkeit"))
             VIZIO -> CmsNames("Hue", "Saturation", "Brightness")
-            else -> CmsNames("Hue", "Saturation", "Luminance")
+            ROKU -> CmsNames("Hue", "Saturation", "Luminance")
+            else -> CmsNames(tr("Hue", "Farbton"), tr("Saturation", "Sättigung"), tr("Luminance", "Luminanz"))
         }
 
     /** "Tint / Saturation / Luminance". */
@@ -219,9 +282,9 @@ enum class Multipoint(val raw: Int) {
     val id: Int get() = raw
     val label: String
         get() = when (this) {
-            TWENTY -> "20 points (5%, 10% … 100%)"
-            TEN -> "10 points (10%, 20% … 100%)"
-            NONE -> "None (2-point only)"
+            TWENTY -> tr("20 points (5%, 10% … 100%)", "20 Punkte (5 %, 10 % … 100 %)")
+            TEN -> tr("10 points (10%, 20% … 100%)", "10 Punkte (10 %, 20 % … 100 %)")
+            NONE -> tr("None (2-point only)", "Keins (nur 2 Punkte)")
         }
 
     companion object {
@@ -255,9 +318,9 @@ enum class ColourMenu(val raw: String) {
 
     val label: String
         get() = when (this) {
-            RGB_SLIDERS -> "Red / Green / Blue sliders"
-            HSL -> "Hue / Saturation / Luminance"
-            OFF -> "None"
+            RGB_SLIDERS -> tr("Red / Green / Blue sliders", "Regler für Rot / Grün / Blau")
+            HSL -> tr("Hue / Saturation / Luminance", "Farbton / Sättigung / Luminanz")
+            OFF -> tr("None", "Keins")
         }
 
     companion object {
@@ -291,23 +354,24 @@ enum class PanelType(val raw: String) {
         get() = when (this) {
             WOLED -> "OLED"
             QDOLED -> "QD-OLED"
-            QDLCD -> "Quantum dot LED or mini-LED"
+            QDLCD -> tr("Quantum dot LED or mini-LED", "Quantum-Dot-LED oder Mini-LED")
             LCD -> "LED (LCD)"
-            RGBLED -> "Micro RGB or RGB mini-LED"
+            RGBLED -> tr("Micro RGB or RGB mini-LED", "Micro-RGB oder RGB-Mini-LED")
             PLASMA -> "Plasma"
-            UNKNOWN -> "Not sure"
+            UNKNOWN -> tr("Not sure", "Weiß nicht")
         }
 
     /** Examples, to help pick. */
     val detail: String?
         get() = when (this) {
-            WOLED -> "LG OLED, Panasonic, Philips, most Sony OLEDs"
-            QDOLED -> "Samsung S90 and S95, Sony A95"
-            QDLCD -> "QLED, Neo QLED, QNED, Bravia 7 and 9, TCL and Hisense mini-LED"
-            LCD -> "Other LED TVs and most monitors"
-            RGBLED -> "Hisense, Samsung and Sony RGB backlights"
-            PLASMA -> "Panasonic, Pioneer, Samsung, LG plasma"
-            UNKNOWN -> "Readings will be approximate"
+            WOLED -> tr("LG OLED, Panasonic, Philips, most Sony OLEDs", "LG OLED, Panasonic, Philips, die meisten Sony-OLEDs")
+            QDOLED -> tr("Samsung S90 and S95, Sony A95", "Samsung S90 und S95, Sony A95")
+            QDLCD -> tr("QLED, Neo QLED, QNED, Bravia 7 and 9, TCL and Hisense mini-LED",
+                "QLED, Neo QLED, QNED, Bravia 7 und 9, Mini-LED von TCL und Hisense")
+            LCD -> tr("Other LED TVs and most monitors", "Andere LED-Fernseher und die meisten Monitore")
+            RGBLED -> tr("Hisense, Samsung and Sony RGB backlights", "RGB-Hintergrundbeleuchtung von Hisense, Samsung und Sony")
+            PLASMA -> tr("Panasonic, Pioneer, Samsung, LG plasma", "Plasma von Panasonic, Pioneer, Samsung, LG")
+            UNKNOWN -> tr("Readings will be approximate", "Die Messwerte sind dann nur ungefähr")
         }
 
     /** The key in a camera profile's `panels`, null when not known. */
@@ -331,7 +395,16 @@ object GamutCheck {
         val over = primaries.count { it.sat > 10 || it.lum > 40 }
         val under = primaries.count { it.sat < -12 }
         if (!(over >= 2 || under >= 2)) return null
-        val how = if (over >= 2) "stronger" else "weaker"
+        val stronger = over >= 2
+        if (L10n.german) {
+            val how = if (stronger) "kräftigere" else "blassere"
+            return "Dein Fernseher zeigt $how Farben, als ${mode.label} vorsieht. Das liegt meist an einer Einstellung " +
+                "und lässt sich nicht mit den Farbreglern beheben. Prüfe, ob der Bildmodus auf Filmmaker oder Kino steht " +
+                "und ob ${brand.gamutSetting}. Spielst du von einem Apple TV oder einer anderen Box ab? Stell sie so ein, " +
+                "dass sie den Dynamikbereich des Videos übernimmt (Apple TV: Einstellungen › Video und Audio › " +
+                "Inhalt anpassen › Dynamikbereich anpassen), damit der Fernseher das Video so bekommt, wie es ist."
+        }
+        val how = if (stronger) "stronger" else "weaker"
         return "Your TV is showing $how colours than ${mode.label} uses. That's usually a setting, not something " +
             "the colour sliders can fix. Check that the picture mode is Filmmaker or Cinema and ${brand.gamutSetting}. " +
             "Playing from an Apple TV or another box? Set it to match the video's dynamic range (Apple TV: Settings › " +

@@ -56,6 +56,7 @@ import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -69,7 +70,9 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.SignalMode
+import io.github.blublub.tvcal.ui.L10n
 import io.github.blublub.tvcal.profiles.onYouTube
 import io.github.blublub.tvcal.storage.ColourMenu
 import io.github.blublub.tvcal.ui.theme.Card
@@ -170,7 +173,7 @@ fun PinnedActionBar(state: PinnedActionHostState) {
 @Composable
 fun Walkthrough(
     pages: List<WalkPage>,
-    finishTitle: String = "Done",
+    finishTitle: String = stringResource(R.string.guided_walk_done),
     /** The eyebrow's prefix: "Set up" gives "Set up · 5 of 6". */
     section: String? = null,
     /** Page titles: 22 sp semibold (`Type.stepTitle`), the same as a step's title. */
@@ -200,10 +203,11 @@ fun Walkthrough(
         index -= 1
     }
 
+    val countFormat = stringResource(R.string.guided_walk_count)
     fun eyebrow(p: WalkPage, i: Int): String? {
         if (p.eyebrow != null) return p.eyebrow
         if (pages.size <= 1) return section
-        val count = "${i + 1} of ${pages.size}"
+        val count = String.format(countFormat, "${i + 1}", "${pages.size}")
         return if (section != null) "$section · $count" else count
     }
 
@@ -244,13 +248,13 @@ fun Walkthrough(
             Box(Modifier.fillMaxWidth().heightIn(min = 44.dp), contentAlignment = Alignment.Center) {
                 if (pages.size > 1) PageDots(count = pages.size, index = current)
                 if (current > 0) {
-                    LinkButton("Back", onClick = { back() }, modifier = Modifier.align(Alignment.CenterStart),
+                    LinkButton(stringResource(R.string.guided_back), onClick = { back() }, modifier = Modifier.align(Alignment.CenterStart),
                         style = Type.bodyBrand)
                 }
             }
         }
         // Read the page at tap time, like the original.
-        PinnedActionOrInline(if (onLastPage) finishTitle else "Next", enabled = canAdvance(current)) {
+        PinnedActionOrInline(if (onLastPage) finishTitle else stringResource(R.string.guided_walk_next), enabled = canAdvance(current)) {
             if (index >= pages.size - 1) onFinish() else next()
         }
     }
@@ -323,13 +327,13 @@ private fun TextMeasurer.unitText(text: String, style: TextStyle) =
 @Composable
 fun PlacementArt() {
     val measurer = rememberTextMeasurer()
-    val label = "15–30 cm · facing the centre"
+    val label = stringResource(R.string.guided_art_placement_label)
+    val a11y = stringResource(R.string.guided_art_placement_a11y)
     Canvas(
         Modifier
             .fillMaxSize()
             .clearAndSetSemantics {
-                contentDescription =
-                    "A phone on a stand, 15 to 30 centimetres from the TV, facing the grey patch in the middle"
+                contentDescription = a11y
             },
     ) {
         // Drawn on a 325 × 160 canvas (the Figma frame), scaled to fit.
@@ -376,18 +380,19 @@ fun DarkRoomArt() {
     }
     Row(Modifier.semantics(mergeDescendants = true) {}, horizontalArrangement = Arrangement.spacedBy(30.dp),
         verticalAlignment = Alignment.Top) {
-        item("lightbulb.slash", "Lights off")
-        item("tv", "TV on")
-        item("timer", "20–30 min")
+        item("lightbulb.slash", stringResource(R.string.guided_art_lights_off))
+        item("tv", stringResource(R.string.guided_art_tv_on))
+        item("timer", stringResource(R.string.guided_art_minutes))
     }
 }
 
 /** The four formats, in the order to calibrate them, with the current one highlighted. */
 @Composable
 fun FormatOrderArt(current: SignalMode) {
+    val a11y = stringResource(R.string.guided_art_format_order_a11y, current.label)
     Column(
         Modifier.clearAndSetSemantics {
-            contentDescription = "Calibrate in order: SDR, HDR10, HDR10+, Dolby Vision. Now: ${current.label}"
+            contentDescription = a11y
         },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -413,7 +418,7 @@ fun FormatOrderArt(current: SignalMode) {
                             .background(if (now) m.tint else m.tint.copy(alpha = 0.13f), RoundedCornerShape(8.dp))
                             .padding(horizontal = 6.dp, vertical = 6.dp),
                     )
-                    Text(if (m.onYouTube) "YouTube" else "USB file", style = Type.micro, color = Theme.textSecondary,
+                    Text(if (m.onYouTube) "YouTube" else stringResource(R.string.guided_art_usb_file), style = Type.micro, color = Theme.textSecondary,
                         maxLines = 1)
                 }
                 if (m != all.last()) {
@@ -422,7 +427,7 @@ fun FormatOrderArt(current: SignalMode) {
                 }
             }
         }
-        Text("Each format has its own picture settings on the TV", style = Type.small, color = Theme.textSecondary,
+        Text(stringResource(R.string.guided_art_format_settings), style = Type.small, color = Theme.textSecondary,
             textAlign = TextAlign.Center, modifier = Modifier.padding(horizontal = 16.dp))
     }
 }
@@ -456,11 +461,13 @@ private fun DrawScope.inDp(block: DrawScope.(Size) -> Unit) {
  */
 @Composable
 fun WhiteBalanceArt(points: Int) {
+    val a11y = if (points <= 3) stringResource(R.string.guided_art_rgb_sliders)
+    else stringResource(R.string.guided_art_n_sliders, "$points")
     Canvas(
         Modifier
             .fillMaxSize()
             .clearAndSetSemantics {
-                contentDescription = if (points <= 3) "Red, green and blue sliders" else "$points sliders"
+                contentDescription = a11y
             },
     ) {
         inDp { size ->
@@ -494,27 +501,30 @@ fun WhiteBalanceArt(points: Int) {
 @Composable
 fun ColourMenuArt(menu: ColourMenu) {
     val labels = when (menu) {
-        ColourMenu.HSL -> listOf("H", "S", "B")
+        // German TV menus: Farbton / Sättigung / Helligkeit, Rot / Grün / Blau.
+        ColourMenu.HSL -> if (L10n.german) listOf("F", "S", "H") else listOf("H", "S", "B")
         ColourMenu.RGB_SLIDERS -> listOf("R", "G", "B")
         ColourMenu.OFF -> emptyList()
     }
     val measurer = rememberTextMeasurer()
+    val a11y = when (menu) {
+        ColourMenu.OFF -> stringResource(R.string.guided_art_no_colour_menu)
+        ColourMenu.HSL -> stringResource(R.string.guided_art_hsb_sliders)
+        ColourMenu.RGB_SLIDERS -> stringResource(R.string.guided_art_rgb_sliders)
+    }
+    val noSliders = stringResource(R.string.guided_art_no_colour_sliders)
     Canvas(
         Modifier
             .fillMaxSize()
             .clearAndSetSemantics {
-                contentDescription = when (menu) {
-                    ColourMenu.OFF -> "No colour menu"
-                    ColourMenu.HSL -> "Hue, saturation and brightness sliders"
-                    ColourMenu.RGB_SLIDERS -> "Red, green and blue sliders"
-                }
+                contentDescription = a11y
             },
     ) {
         inDp { size ->
             val tv = artTVRect(size)
             drawArtTV(tv)
             if (menu == ColourMenu.OFF) {
-                val t = measurer.unitText("No colour sliders", Type.tiny.copy(color = Theme.textSecondary))
+                val t = measurer.unitText(noSliders, Type.tiny.copy(color = Theme.textSecondary))
                 drawText(t, topLeft = Offset(tv.center.x - t.size.width / 2f, tv.center.y - t.size.height / 2f))
                 return@inDp
             }

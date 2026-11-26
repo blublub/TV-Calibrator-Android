@@ -63,14 +63,34 @@ import io.github.blublub.tvcal.ui.theme.symbol
 fun WelcomeView(onFinish: () -> Unit, onDismiss: () -> Unit) {
     val links = LocalApp.current.links
     val appName = stringResource(R.string.app_name)
+    val videoTitle = stringResource(R.string.home_welcome_video_title)
+    val videoText = stringResource(R.string.home_welcome_video_text)
+    val tvTitle = stringResource(R.string.home_welcome_tv_title)
+    val tvText = stringResource(R.string.home_welcome_tv_text, appName)
+    val meterTitle = stringResource(R.string.home_welcome_meter_title)
+    val meterText = stringResource(R.string.home_welcome_meter_text)
+    val meterBullets = listOf(
+        stringResource(R.string.home_welcome_meter_bullet1),
+        stringResource(R.string.home_welcome_meter_bullet2),
+        stringResource(R.string.home_welcome_meter_bullet3),
+    )
+    val needTitle = stringResource(R.string.home_welcome_need_title)
+    val needText = stringResource(R.string.home_welcome_need_text)
+    val needBullets = listOf(
+        stringResource(R.string.home_welcome_need_bullet1),
+        stringResource(R.string.home_welcome_need_bullet2),
+        stringResource(R.string.home_welcome_need_bullet3),
+        stringResource(R.string.home_welcome_need_bullet4),
+    )
+    val closeLabel = stringResource(R.string.home_close)
 
     val pages = buildList {
         links.links.explainerURL?.let { url ->
             add(
                 WalkPage(
                     symbol = "",
-                    title = "New to calibration? Start with the video",
-                    text = "This app goes with Slidebean's videos on what calibration does to a TV's picture, with a full session start to finish. If you haven't seen them, they're worth a few minutes first.",
+                    title = videoTitle,
+                    text = videoText,
                     extra = { VideoPreview(url = url) },
                 ),
             )
@@ -78,32 +98,23 @@ fun WelcomeView(onFinish: () -> Unit, onDismiss: () -> Unit) {
         add(
             WalkPage(
                 symbol = "tv",
-                title = "Make your TV look the way the film was made",
-                text = "Most TVs come out of the box too blue, too bright and too saturated. $appName walks you through your TV's own picture settings until they match the standard that films and shows are made to.",
+                title = tvTitle,
+                text = tvText,
             ),
         )
         add(
             WalkPage(
                 symbol = "camera.viewfinder",
-                title = "Your phone is the meter",
-                text = "The TV plays test-pattern videos from our YouTube channel. Your phone's camera reads each colour, and the app tells you which setting to change and by how much. Nothing is installed on the TV.",
-                bullets = listOf(
-                    "Start from the most accurate picture mode (often Filmmaker Mode), then fine-tune it",
-                    "One step at a time: white, greys, then colours",
-                    "A before and after score at the end",
-                ),
+                title = meterTitle,
+                text = meterText,
+                bullets = meterBullets,
             ),
         )
         add(
             WalkPage(
-                symbol = "", title = "What you need",
-                text = "No TV handy? Try the demo on the home screen to see how it works.",
-                bullets = listOf(
-                    "Your TV's remote",
-                    "The YouTube app on the TV",
-                    "Something to stand the phone on, 15–30 cm from the screen",
-                    "A dark room",
-                ),
+                symbol = "", title = needTitle,
+                text = needText,
+                bullets = needBullets,
                 art = { PlacementArt() },
             ),
         )
@@ -129,13 +140,13 @@ fun WelcomeView(onFinish: () -> Unit, onDismiss: () -> Unit) {
                         onFinish()
                         onDismiss()
                     }
-                    .semantics { contentDescription = "Close" },
+                    .semantics { contentDescription = closeLabel },
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(symbol("xmark"), contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(22.dp))
             }
             Text(
-                "Welcome", style = Type.headlineBrand, color = Color.White, maxLines = 1,
+                stringResource(R.string.home_welcome), style = Type.headlineBrand, color = Color.White, maxLines = 1,
                 modifier = Modifier
                     .align(Alignment.Center)
                     .semantics { heading() },
@@ -151,7 +162,8 @@ fun WelcomeView(onFinish: () -> Unit, onDismiss: () -> Unit) {
                     .padding(horizontal = 20.dp, vertical = 12.dp),
             ) {
                 Walkthrough(
-                    pages = pages, finishTitle = "Get started", section = "How it works",
+                    pages = pages, finishTitle = stringResource(R.string.home_get_started),
+                    section = stringResource(R.string.home_how_it_works),
                     onFinish = {
                         onFinish()
                         onDismiss()
@@ -175,18 +187,19 @@ private val frameBottom = Color(0xFF010D12)
 @Composable
 fun VideoPreview(url: String, compact: Boolean = false) {
     val context = LocalContext.current
+    val description = stringResource(R.string.home_video_desc)
     val modifier = Modifier
         .fillMaxWidth()
         .clickable { openUrl(context, url) }
         .clearAndSetSemantics {
-            contentDescription = "Watch how TV calibration works, on YouTube"
+            contentDescription = description
             role = Role.Button
         }
     if (compact) {
         Row(modifier, horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
             VideoFrame(play = 30.dp, compact = true, modifier = Modifier.width(112.dp))
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text("New to this? Watch how it works", style = Type.bodyStrong, color = Color.White)
+                Text(stringResource(R.string.home_video_compact), style = Type.bodyStrong, color = Color.White)
                 VideoSource()
             }
         }
@@ -194,7 +207,7 @@ fun VideoPreview(url: String, compact: Boolean = false) {
         Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             VideoFrame(play = 60.dp, compact = false, modifier = Modifier.fillMaxWidth())
             Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text("Watch how TV calibration works", style = Type.bodyStrong, color = Color.White)
+                Text(stringResource(R.string.home_video_title), style = Type.bodyStrong, color = Color.White)
                 VideoSource()
             }
         }
@@ -204,7 +217,7 @@ fun VideoPreview(url: String, compact: Boolean = false) {
 @Composable
 private fun VideoSource() {
     Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text("Slidebean · opens YouTube", style = Type.small, color = Theme.tealBright)
+        Text(stringResource(R.string.home_video_source), style = Type.small, color = Theme.tealBright)
         Icon(symbol("arrow.up.right"), contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(12.dp))
     }
 }

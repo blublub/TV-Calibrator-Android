@@ -45,7 +45,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -55,6 +58,7 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.Analysis
 import io.github.blublub.tvcal.engine.LiveReading
 import io.github.blublub.tvcal.engine.Patterns
@@ -63,10 +67,12 @@ import io.github.blublub.tvcal.engine.signedFixed
 import io.github.blublub.tvcal.measure.GuidedController
 import io.github.blublub.tvcal.measure.SweepRunner
 import io.github.blublub.tvcal.measure.uiScope
+import io.github.blublub.tvcal.storage.Brand
 import io.github.blublub.tvcal.storage.ColourMenu
 import io.github.blublub.tvcal.storage.GamutCheck
 import io.github.blublub.tvcal.storage.GuideStep
 import io.github.blublub.tvcal.storage.Multipoint
+import io.github.blublub.tvcal.ui.L10n
 import io.github.blublub.tvcal.ui.LocalApp
 import io.github.blublub.tvcal.ui.components.GamutChart
 import io.github.blublub.tvcal.ui.components.GamutDot
@@ -94,8 +100,15 @@ enum class WBKind { gain, offset, fine }
 /** Measurements started from these steps outlive the step on screen (like the original's `Task {}`). */
 private val liveStepsScope = uiScope()
 
-/** "RED" -> "Red" (Swift's `.capitalized`). */
-private fun capitalized(s: String): String = s.lowercase().replaceFirstChar { it.uppercase() }
+/** "RED" -> "Red" / "Rot" (Swift's `.capitalized`, in the app's language). */
+private fun capitalized(s: String): String = L10n.colourName(s)
+
+/** A percentage in the language's style: "50%" / "50 %". */
+private fun pct(v: Any): String = L10n.tr("$v%", "$v %")
+
+/** A short patch name ("50%", "50% (92 nits)") in the app's language. */
+private fun shortLabel(name: String): String =
+    if (L10n.german) L10n.patchNameDe(shortName(name)) else shortName(name)
 
 // MARK: - Pinned main action
 
@@ -165,21 +178,22 @@ fun AverageLine(reading: LiveReading, restart: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
         if (reading.jitter >= 0.004) {
             Text(
-                "This TV's readings wobble about ±${fmt(reading.jitter * 100)}%, so the bars show an average.",
+                stringResource(R.string.live_jitter, fmt(reading.jitter * 100)),
                 style = Type.small, color = Theme.textSecondary,
             )
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "Average of ${reading.averaged} reading${if (reading.averaged == 1) "" else "s"}" +
-                    (if (reading.averaged < reading.need) " (needs ${reading.need} to call it steady)" else "") +
-                    " · latest ${fmt(reading.latestY, if (reading.latestY < 10) 2 else 1)} cd/m²",
+                pluralStringResource(R.plurals.live_average_of, reading.averaged, reading.averaged.toString()) +
+                    (if (reading.averaged < reading.need) " " + stringResource(R.string.live_average_needs, reading.need.toString()) else "") +
+                    " · " + stringResource(R.string.live_average_latest, fmt(reading.latestY, if (reading.latestY < 10) 2 else 1)),
                 style = Type.small.copy(fontFeatureSettings = "tnum"), color = Theme.textSecondary,
                 modifier = Modifier.weight(1f),
             )
+            val hint = stringResource(R.string.live_restart_hint)
             LinkButton(
-                "Restart", restart, style = Type.captionStrong,
-                modifier = Modifier.semantics { stateDescription = "Use after changing a setting, to see its effect sooner" },
+                stringResource(R.string.live_restart), restart, style = Type.captionStrong,
+                modifier = Modifier.semantics { stateDescription = hint },
             )
         }
     }
@@ -209,7 +223,7 @@ fun tipListTone(kind: TipKind): TipTone = when (kind) {
 private fun bigSigned(v: Double?, suffix: String = ""): String {
     if (v == null || !v.isFinite()) return "–"
     val digits = if (abs(v) < 9.95) 1 else 0
-    return signedFixed(v, digits).replace("-", "−") + suffix
+    return L10n.signedNum(v, digits).replace("-", "−") + suffix
 }
 
 /** One channel of the white balance: "Red  +3.2%" over a centred bar with a green tolerance zone. */
@@ -225,10 +239,12 @@ private fun ChannelBalanceRow(
 ) {
     val ok = value?.let { abs(it) <= tolerance } ?: false
     val tint = if (ok) Theme.green else Color.White
+    val onTarget = stringResource(R.string.live_on_target)
+    val percentWord = " " + stringResource(R.string.live_percent_word)
     Column(
         Modifier.clearAndSetSemantics {
             contentDescription = label
-            stateDescription = if (ok) "On target" else bigSigned(value?.let { it * 100 }, " percent")
+            stateDescription = if (ok) onTarget else bigSigned(value?.let { it * 100 }, percentWord)
         },
         verticalArrangement = Arrangement.spacedBy(7.dp),
     ) {
@@ -283,10 +299,10 @@ private fun CentredTrack(value: Double?, colour: Color, fullScale: Double, toler
 @Composable
 private fun BalanceScale() {
     Row(Modifier.fillMaxWidth().clearAndSetSemantics { }) {
-        Text("Too little", style = Type.tiny, color = Theme.textSecondary, modifier = Modifier.weight(1f))
-        Text("On target", style = Type.tiny, color = Theme.green)
+        Text(stringResource(R.string.live_too_little), style = Type.tiny, color = Theme.textSecondary, modifier = Modifier.weight(1f))
+        Text(stringResource(R.string.live_on_target), style = Type.tiny, color = Theme.green)
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
-            Text("Too much", style = Type.tiny, color = Theme.textSecondary)
+            Text(stringResource(R.string.live_too_much), style = Type.tiny, color = Theme.textSecondary)
         }
     }
 }
@@ -309,10 +325,11 @@ private fun ColourControlRow(
 ) {
     val ok = value?.let { abs(it) <= tolerance } ?: false
     val tint = if (ok) Theme.green else Color.White
+    val onTarget = stringResource(R.string.live_on_target)
     Column(
         Modifier.clearAndSetSemantics {
             contentDescription = label
-            stateDescription = if (ok) "On target" else (caption ?: bigSigned(value))
+            stateDescription = if (ok) onTarget else (caption ?: bigSigned(value))
         },
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -341,8 +358,8 @@ private fun ColourControlRow(
 @Composable
 private fun DemoNote() {
     Card(hero = true) {
-        Text("Demo · simulated readings", style = Type.captionStrong, color = Theme.accent)
-        Text("Try the remote buttons below.", style = Type.small, color = Theme.textSecondary)
+        Text(stringResource(R.string.live_demo_title), style = Type.captionStrong, color = Theme.accent)
+        Text(stringResource(R.string.live_demo_hint), style = Type.small, color = Theme.textSecondary)
     }
 }
 
@@ -352,7 +369,7 @@ private fun WaitingForReading() {
     Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
         CircularProgressIndicator(Modifier.size(20.dp), color = Theme.tealBright, strokeWidth = 2.dp)
         Text(
-            "Start the video on the TV: readings appear as soon as the camera sees it.",
+            stringResource(R.string.live_waiting),
             style = Type.captionBrand, color = Theme.textSecondary,
         )
     }
@@ -367,30 +384,33 @@ private class WBStill(val q: List<Double>, val since: Long)
 fun WhiteBalanceStep(guided: GuidedController, kind: WBKind, pid: String) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         WhiteBalanceBody(guided, kind, pid)
-        StepMainAction(wbNextTitle(guided, kind, pid)) { wbNext(guided, kind, guided.live.reading?.steady ?: false) }
+        StepMainAction(wbNextTitle(LocalContext.current, guided, kind, pid)) { wbNext(guided, kind, guided.live.reading?.steady ?: false) }
     }
 }
 
 /** The step without its main action (fine-tune puts that below the grey chips). */
 @Composable
 private fun WhiteBalanceBody(guided: GuidedController, kind: WBKind, pid: String) {
+    val context = LocalContext.current
     val brand = guided.tv.brand
     val suggestion: Int? = if (kind == WBKind.fine) guided.suggestions[pid] else null
     var still by remember(pid) { mutableStateOf<WBStill?>(null) }
 
     /** "10% grey", "50% grey (92 nits)", "100 nits". */
-    val greyName = shortName(Patterns.patch(guided.hdr, pid)?.name ?: pid).replaceFirst("%", "% grey")
+    val greyName = shortLabel(Patterns.patch(guided.hdr, pid)?.name ?: pid).replaceFirst("%", L10n.tr("% grey", "% Grau"))
 
     /** What to adjust: "Adjust Red and Blue Gain". */
     val instructions = when (kind) {
-        WBKind.gain -> "Adjust Red and Blue ${brand.gainName}"
-        WBKind.offset -> "Adjust Red and Blue ${brand.offsetName}"
+        WBKind.gain -> stringResource(R.string.live_adjust_rb, brand.gainName)
+        WBKind.offset -> stringResource(R.string.live_adjust_rb, brand.offsetName)
         WBKind.fine ->
-            if (suggestion != null) "Adjust Red and Blue on the $suggestion% control"
-            else "Adjust Red and Blue on the control nearest this grey"
+            if (suggestion != null) stringResource(R.string.live_adjust_fine_control, suggestion.toString())
+            else stringResource(R.string.live_adjust_fine_nearest)
     }
 
-    val whereText = if (kind == WBKind.fine) brand.whiteBalancePath.replace(" (set it to 2 Point)", "") + " › 10 or 20 Point"
+    // The menu without LG's "(set it to 2 Point)" hint, which doesn't apply to fine-tuning.
+    val whereText = if (kind == WBKind.fine)
+        brand.whiteBalanceMenu + " › " + stringResource(R.string.live_ten_or_twenty_point)
     else brand.whiteBalancePath
 
     /** The reading, when it's for the pattern on screen. */
@@ -416,15 +436,15 @@ private fun WhiteBalanceBody(guided: GuidedController, kind: WBKind, pid: String
     fun stillNotice(r: LiveReading): String? {
         val s = still
         if (kind != WBKind.fine || r.ok || s == null || System.currentTimeMillis() - s.since <= 60_000) return null
-        return STILL_NOTICE
+        return context.getString(R.string.live_still_notice)
     }
 
     val demoControls: List<Pair<String, String>> = when (kind) {
-        WBKind.gain -> listOf("Red ${brand.gainName}" to "gain:R", "Blue ${brand.gainName}" to "gain:B")
-        WBKind.offset -> listOf("Red ${brand.offsetName}" to "offset:R", "Blue ${brand.offsetName}" to "offset:B")
+        WBKind.gain -> listOf("${capitalized("RED")} ${brand.gainName}" to "gain:R", "${capitalized("BLUE")} ${brand.gainName}" to "gain:B")
+        WBKind.offset -> listOf("${capitalized("RED")} ${brand.offsetName}" to "offset:R", "${capitalized("BLUE")} ${brand.offsetName}" to "offset:B")
         WBKind.fine -> {
             val p = suggestion ?: (Patterns.patch(guided.hdr, pid)?.percent ?: 50.0).roundToInt()
-            listOf("Red $p%" to "p20:R:$p", "Blue $p%" to "p20:B:$p")
+            listOf("${capitalized("RED")} ${pct(p)}" to "p20:R:$p", "${capitalized("BLUE")} ${pct(p)}" to "p20:B:$p")
         }
     }
 
@@ -432,9 +452,9 @@ private fun WhiteBalanceBody(guided: GuidedController, kind: WBKind, pid: String
         // The instruction, then the white-point target, big: the dot has to land in the centre ring. Then the
         // video to play (the grey's details when fine-tuning).
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            if (kind == WBKind.fine) Eyebrow(text = "Fine-tune $greyName")
+            if (kind == WBKind.fine) Eyebrow(text = stringResource(R.string.live_fine_eyebrow, greyName))
             Text(instructions, style = Type.stepTitleStyle)
-            Text("Until both bars sit on the line. Leave Green alone.", style = Type.captionBrand, color = Theme.textSecondary)
+            Text(stringResource(R.string.live_until_line), style = Type.captionBrand, color = Theme.textSecondary)
         }
         if (valid != null) BigWhiteTarget(valid)
         if (guided.tv.isDemo) {
@@ -450,11 +470,11 @@ private fun WhiteBalanceBody(guided: GuidedController, kind: WBKind, pid: String
         if (reading != null) {
             val m = reading.mismatch
             if (m != null) {
-                TipRow(tone = TipTone.limit, text = "$m Is the right file playing, with the camera pointed at the centre?")
+                TipRow(tone = TipTone.limit, text = stringResource(R.string.live_mismatch, m))
             } else {
                 Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                    ChannelBalanceRow(label = "Red", value = reading.qR, colour = Theme.red, chime = chimeKey("R"))
-                    ChannelBalanceRow(label = "Blue", value = reading.qB, colour = Theme.blue, chime = chimeKey("B"))
+                    ChannelBalanceRow(label = capitalized("RED"), value = reading.qR, colour = Theme.red, chime = chimeKey("R"))
+                    ChannelBalanceRow(label = capitalized("BLUE"), value = reading.qB, colour = Theme.blue, chime = chimeKey("B"))
                     BalanceScale()
                 }
                 stillNotice(reading)?.let { TipRow(tone = TipTone.limit, text = it) }
@@ -467,28 +487,25 @@ private fun WhiteBalanceBody(guided: GuidedController, kind: WBKind, pid: String
             DemoRemote(guided = guided, controls = demoControls, modifier = Modifier.padding(top = 4.dp))
         }
         Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-            LinkButton("Can't get closer", {
+            LinkButton(stringResource(R.string.live_cant_get_closer), {
                 guided.markLimit(if (kind == WBKind.gain) "bright" else if (kind == WBKind.offset) "dark" else "fine:$pid")
                 wbNext(guided, kind, done = true)
             })
             if (kind == WBKind.fine && nextGrey(guided, pid) != null) {
-                LinkButton("Back to the check", { guided.go(GuideStep.CHECK) })
+                LinkButton(stringResource(R.string.live_back_to_check), { guided.go(GuideStep.CHECK) })
             }
         }
         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Text("TV menu: $whereText", style = Type.small, color = Theme.textSecondary)
+            Text(stringResource(R.string.live_tv_menu, whereText), style = Type.small, color = Theme.textSecondary)
             if (valid != null) AverageLine(reading = valid) { guided.live.restartAverage() }
         }
     }
 }
 
-private const val STILL_NOTICE = "The bars haven't moved for a minute. If you've been adjusting, it may be the wrong " +
-    "control: try the one a step above or below, and when you find it, pick it under “The control that moves this grey”."
-
-private fun wbNextTitle(guided: GuidedController, kind: WBKind, pid: String): String = when (kind) {
-    WBKind.gain -> "Next: dark end"
-    WBKind.offset -> "Next: check"
-    WBKind.fine -> if (nextGrey(guided, pid) != null) "Next grey" else "Back to the check"
+private fun wbNextTitle(context: Context, guided: GuidedController, kind: WBKind, pid: String): String = when (kind) {
+    WBKind.gain -> context.getString(R.string.live_next_dark)
+    WBKind.offset -> context.getString(R.string.live_next_check)
+    WBKind.fine -> context.getString(if (nextGrey(guided, pid) != null) R.string.live_next_grey else R.string.live_back_to_check)
 }
 
 private fun nextGrey(guided: GuidedController, after: String): String? {
@@ -521,24 +538,31 @@ private fun wbNext(guided: GuidedController, kind: WBKind, done: Boolean) {
 
 /** The step's tips (kept from the original, where the bars now say what to do). */
 @Suppress("unused")
-private fun wbTips(guided: GuidedController, kind: WBKind, pid: String, r: LiveReading, stillSince: Long?): List<Pair<String, TipKind>> {
-    if (r.steady) return listOf("Both channels are on target. Keep these TV settings." to TipKind.done)
-    val out = mutableListOf(wbTip(guided, kind, pid, "Red", r.qR ?: 0.0), wbTip(guided, kind, pid, "Blue", r.qB ?: 0.0))
+private fun wbTips(context: Context, guided: GuidedController, kind: WBKind, pid: String, r: LiveReading, stillSince: Long?): List<Pair<String, TipKind>> {
+    if (r.steady) return listOf(L10n.tr("Both channels are on target. Keep these TV settings.",
+        "Beide Kanäle sind im Ziel. Behalte diese TV-Einstellungen.") to TipKind.done)
+    val out = mutableListOf(wbTip(guided, kind, pid, capitalized("RED"), r.qR ?: 0.0), wbTip(guided, kind, pid, capitalized("BLUE"), r.qB ?: 0.0))
     if (kind == WBKind.fine && !r.ok && stillSince != null && System.currentTimeMillis() - stillSince > 60_000) {
-        out.add(STILL_NOTICE to TipKind.limit)
+        out.add(context.getString(R.string.live_still_notice) to TipKind.limit)
     }
     return out
 }
 
 private fun wbTip(guided: GuidedController, kind: WBKind, pid: String, name: String, e: Double): Pair<String, TipKind> {
-    if (abs(e) <= 0.012) return "$name is on target" to TipKind.ok
+    if (abs(e) <= 0.012) return L10n.tr("$name is on target", "$name ist im Ziel") to TipKind.ok
     val clicks = if (e.isFinite()) (abs(e) / 0.008).roundToInt().coerceIn(1, 10) else 1
     val brand = guided.tv.brand
     val suggestion = if (kind == WBKind.fine) guided.suggestions[pid] else null
     val control = when (kind) {
         WBKind.gain -> "$name ${brand.gainName}"
         WBKind.offset -> "$name ${brand.offsetName}"
-        WBKind.fine -> suggestion?.let { "$name on the $it% control" } ?: "$name on the multipoint control"
+        WBKind.fine -> suggestion?.let { L10n.tr("$name on the $it% control", "$name am $it-%-Regler") }
+            ?: L10n.tr("$name on the multipoint control", "$name am Mehrpunkt-Regler")
+    }
+    if (L10n.german) {
+        return ("$name ist ${fmt(abs(e) * 100, 0)} % ${if (e > 0) "zu stark" else "zu schwach"}: " +
+            "$control um etwa $clicks ${if (clicks > 1) "Klicks" else "Klick"} ${if (e > 0) "senken" else "anheben"}, " +
+            "dann den Balken beobachten.") to TipKind.todo
     }
     return ("$name is ${fmt(abs(e) * 100, 0)}% ${if (e > 0) "too strong" else "too weak"}: " +
         "${if (e > 0) "lower" else "raise"} $control about $clicks click${if (clicks > 1) "s" else ""}, then watch the bar.") to TipKind.todo
@@ -551,12 +575,15 @@ private fun wbTip(guided: GuidedController, kind: WBKind, pid: String, name: Str
 @Composable
 private fun BigWhiteTarget(reading: LiveReading) {
     // Beside its message, so the Red and Blue bars below still fit on screen.
+    val targetText = stringResource(R.string.live_white_target)
+    val onTarget = stringResource(R.string.live_on_target)
+    val fromD65 = stringResource(R.string.live_de_from_d65, fmt(reading.de, 1))
     Row(
         Modifier
             .padding(vertical = 4.dp)
             .clearAndSetSemantics {
-                contentDescription = "White point target"
-                stateDescription = if (reading.steady) "On target" else "dE ${fmt(reading.de, 1)} from D65"
+                contentDescription = targetText
+                stateDescription = if (reading.steady) onTarget else fromD65
             },
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -564,10 +591,10 @@ private fun BigWhiteTarget(reading: LiveReading) {
         WhiteTarget(uv = reading.uv, d65 = reading.d65uv, ok = reading.ok, modifier = Modifier.size(150.dp))
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(
-                if (reading.steady) "On target" else if (reading.ok) "In the ring. Hold still…" else "Bring the dot into the ring",
+                if (reading.steady) onTarget else if (reading.ok) stringResource(R.string.live_in_ring) else stringResource(R.string.live_bring_dot),
                 style = Type.bodyStrong, color = if (reading.ok) Theme.green else Color.White,
             )
-            Text("dE ${fmt(reading.de, 1)} from D65", style = Type.small.copy(fontFeatureSettings = "tnum"),
+            Text(fromD65, style = Type.small.copy(fontFeatureSettings = "tnum"),
                 color = Theme.textSecondary)
         }
     }
@@ -579,11 +606,13 @@ private fun BigWhiteTarget(reading: LiveReading) {
 @Composable
 private fun ColourChip(id: String, selected: Boolean, done: Boolean, limit: Boolean, modifier: Modifier = Modifier, action: () -> Unit) {
     val c = Theme.swatch(id)
+    val description = if (limit) stringResource(R.string.live_chip_limit, capitalized(id))
+        else if (done) stringResource(R.string.live_chip_done, capitalized(id)) else capitalized(id)
     Column(
         modifier
             .clickable(role = Role.Button, onClick = action)
             .semantics(mergeDescendants = true) {
-                contentDescription = capitalized(id) + (if (limit) ", as close as this TV gets" else if (done) ", done" else "")
+                contentDescription = description
                 this.selected = selected
             },
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -638,7 +667,7 @@ private fun ColoursContent(guided: GuidedController) {
 
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         if (guided.tv.isDemo) DemoNote()
-        Text("Bring $name onto its ring", style = Type.stepTitleStyle)
+        Text(stringResource(R.string.live_bring_colour, name), style = Type.stepTitleStyle)
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
             for (c in Patterns.colourIDs) {
                 ColourChip(
@@ -654,7 +683,7 @@ private fun ColoursContent(guided: GuidedController) {
         }
         val before = guided.lastSession?.before
         if (guided.latestBefore == null) {
-            TipRow(tone = TipTone.limit, text = "Run the Before check first, so brightness can be judged against this TV's own white.")
+            TipRow(tone = TipTone.limit, text = stringResource(R.string.live_run_before_first))
         } else if (!guided.tv.isDemo && before != null) {
             GamutCheck.note(Analysis.analyse(before, guided.hdr), guided.mode, guided.tv.brand)?.let {
                 TipRow(tone = TipTone.limit, text = it)
@@ -667,12 +696,12 @@ private fun ColoursContent(guided: GuidedController) {
             DemoRemote(
                 guided = guided,
                 controls = if (cms == ColourMenu.RGB_SLIDERS)
-                    listOf("$name Red" to "cms:$cur:R", "$name Green" to "cms:$cur:G", "$name Blue" to "cms:$cur:B")
+                    listOf("$name ${capitalized("RED")}" to "cms:$cur:R", "$name ${capitalized("GREEN")}" to "cms:$cur:G", "$name ${capitalized("BLUE")}" to "cms:$cur:B")
                 else listOf("$name ${n.hue}" to "hsl:$cur:hue", "$name ${n.saturation}" to "hsl:$cur:sat",
                     "$name ${n.brightness}" to "hsl:$cur:lum"),
             )
         }
-        LinkButton("Can't get closer", {
+        LinkButton(stringResource(R.string.live_cant_get_closer), {
             val c = currentColour(guided)
             guided.markLimit(c)
             guided.finishColour(c, done = true)
@@ -681,13 +710,13 @@ private fun ColoursContent(guided: GuidedController) {
         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
             if (cms == ColourMenu.OFF) {
                 Text(
-                    "No colour controls are set for this TV: just check the colours, or choose its colour menu in Screen settings.",
+                    stringResource(R.string.live_no_colour_controls),
                     style = Type.small, color = Theme.textSecondary,
                 )
             }
-            Text("TV menu: ${guided.tv.brand.colourMenuPath} › $name", style = Type.small, color = Theme.textSecondary)
+            Text(stringResource(R.string.live_tv_menu_colour, guided.tv.brand.colourMenuPath, name), style = Type.small, color = Theme.textSecondary)
         }
-        StepMainAction(if (isLastColour(cur)) "Finish colours" else "Next colour") {
+        StepMainAction(stringResource(if (isLastColour(cur)) R.string.live_finish_colours else R.string.live_next_colour)) {
             // Worked out at tap time.
             val c = currentColour(guided)
             val r = guided.live.reading
@@ -706,10 +735,10 @@ private fun ColoursContent(guided: GuidedController) {
         AlertDialog(
             onDismissRequest = { unfinished = null },
             containerColor = Theme.surface,
-            title = { Text("${capitalized(u)} isn't on target yet", style = Type.headlineBrand, color = Color.White) },
+            title = { Text(stringResource(R.string.live_not_on_target_title, capitalized(u)), style = Type.headlineBrand, color = Color.White) },
             text = {
                 Text(
-                    "If the sliders have stopped bringing the dot closer to its ring, the TV has reached its limit for this colour. That's common, and the app will note it in your results.",
+                    stringResource(R.string.live_not_on_target_body),
                     style = Type.captionBrand, color = Theme.textSecondary,
                 )
             },
@@ -719,11 +748,11 @@ private fun ColoursContent(guided: GuidedController) {
                     guided.finishColour(u, done = true)
                     show()
                     unfinished = null
-                }) { Text("Move on: it's as close as this TV gets", style = Type.bodyStrong, color = Theme.tealBright) }
+                }) { Text(stringResource(R.string.live_move_on), style = Type.bodyStrong, color = Theme.tealBright) }
             },
             dismissButton = {
                 TextButton(onClick = { unfinished = null }) {
-                    Text("Keep adjusting", style = Type.bodyBrand, color = Theme.tealBright)
+                    Text(stringResource(R.string.live_keep_adjusting), style = Type.bodyBrand, color = Theme.tealBright)
                 }
             },
         )
@@ -737,7 +766,7 @@ private fun ColoursLive(guided: GuidedController, cur: String) {
     if (r != null && r.id == cur) {
         val m = r.mismatch
         if (m != null) {
-            TipRow(tone = TipTone.limit, text = "$m Is the right file playing, with the camera pointed at the centre?")
+            TipRow(tone = TipTone.limit, text = stringResource(R.string.live_mismatch, m))
         } else {
             val t = r.tuv
             if (t != null) {
@@ -745,13 +774,13 @@ private fun ColoursLive(guided: GuidedController, cur: String) {
                     verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     GamutChart(dots = listOf(GamutDot(id = cur, uv = r.uv, target = t, de = r.de)), hdr = guided.hdr,
                         modifier = Modifier.heightIn(max = 220.dp))
-                    Text("Ring: target · dot: now · dE ${fmt(r.de, 1)}", style = Type.small.copy(fontFeatureSettings = "tnum"),
+                    Text(stringResource(R.string.live_ring_legend, fmt(r.de, 1)), style = Type.small.copy(fontFeatureSettings = "tnum"),
                         color = Theme.textSecondary)
                 }
             }
             ColourControlRows(guided, r, cur)
             AverageLine(reading = r) { guided.live.restartAverage() }
-            TipList(tips = colourTips(guided, r, cur))
+            TipList(tips = colourTips(LocalContext.current, guided, r, cur))
         }
     } else {
         WaitingForReading()
@@ -768,37 +797,41 @@ private fun ColourControlRows(guided: GuidedController, r: LiveReading, cur: Str
     if (guided.tv.colourMenu == ColourMenu.RGB_SLIDERS) {
         val h = r.rgbHint
         val stuck = r.outOfReach?.channels ?: emptyList()
+        val tooMuch = stringResource(R.string.live_too_much_lower)
+        val tooLittle = stringResource(R.string.live_too_little_raise)
         Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            listOf("Red", "Green", "Blue").forEachIndexed { j, label ->
+            // The English names also key the chime.
+            listOf("Red", "Green", "Blue").forEachIndexed { j, key ->
+                val label = capitalized(key.uppercase())
                 // The hint says how far to move the slider (+ raise); drawn as the error (+ too much).
                 val v: Double? = if (h == null || listOf("R", "G", "B")[j] in stuck) null else -h[j] * 100
                 ColourControlRow(
                     label = label, value = v, colour = colour, fullScale = 20.0, tolerance = 3.0,
-                    caption = v?.let { if (it > 0) "Too much: lower it" else "Too little: raise it" },
-                    chime = colourChimeKey(guided, cur, label),
+                    caption = v?.let { if (it > 0) tooMuch else tooLittle },
+                    chime = colourChimeKey(guided, cur, key),
                 )
             }
             BalanceScale()
         }
         if (r.rgbApprox) {
-            Text("Estimated: the Before check didn't get all three primaries.", style = Type.small, color = Theme.textSecondary)
+            Text(stringResource(R.string.live_estimated), style = Type.small, color = Theme.textSecondary)
         }
     } else {
         val n = guided.tv.brand.cmsNames
         Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
             ColourControlRow(
                 label = n.hue, value = r.hue, colour = colour, fullScale = 10.0, tolerance = 2.0,
-                caption = "Leans toward ${r.toward?.let { capitalized(it) } ?: "a neighbour"}: move ${n.hue} a click and keep going the way that shrinks the bar",
+                caption = stringResource(R.string.live_leans_toward, r.toward?.let { capitalized(it) } ?: stringResource(R.string.live_a_neighbour), n.hue),
                 chime = colourChimeKey(guided, cur, "hue"),
             )
             ColourControlRow(
                 label = n.saturation, value = r.sat, colour = colour, fullScale = 15.0, tolerance = 3.0,
-                caption = if ((r.sat ?: 0.0) > 0) "Too strong: lower ${n.saturation}" else "Too weak: raise ${n.saturation}",
+                caption = if ((r.sat ?: 0.0) > 0) stringResource(R.string.live_too_strong_lower, n.saturation) else stringResource(R.string.live_too_weak_raise, n.saturation),
                 chime = colourChimeKey(guided, cur, "sat"),
             )
             ColourControlRow(
                 label = n.brightness, value = r.lum, colour = colour, fullScale = 25.0, tolerance = 5.0,
-                caption = if ((r.lum ?: 0.0) > 0) "Too bright: lower ${n.brightness}" else "Too dim: raise ${n.brightness}",
+                caption = if ((r.lum ?: 0.0) > 0) stringResource(R.string.live_too_bright_lower, n.brightness) else stringResource(R.string.live_too_dim_raise, n.brightness),
                 chime = colourChimeKey(guided, cur, "lum"),
             )
             BalanceScale()
@@ -806,31 +839,31 @@ private fun ColourControlRows(guided: GuidedController, r: LiveReading, cur: Str
     }
 }
 
-private fun colourTips(guided: GuidedController, d: LiveReading, cur: String): List<Pair<String, TipKind>> {
+private fun colourTips(context: Context, guided: GuidedController, d: LiveReading, cur: String): List<Pair<String, TipKind>> {
     val name = capitalized(cur)
-    if (d.steady) return listOf("$name is on target. Nice." to TipKind.done)
+    if (d.steady) return listOf(context.getString(R.string.live_colour_on_target, name) to TipKind.done)
     val t = mutableListOf<Pair<String, TipKind>>()
     when (guided.tv.colourMenu) {
-        ColourMenu.OFF -> return listOf("Nothing to adjust on this TV; just note the numbers." to TipKind.ok)
+        ColourMenu.OFF -> return listOf(context.getString(R.string.live_nothing_to_adjust) to TipKind.ok)
         ColourMenu.HSL -> {}                                   // each bar says what to do
         ColourMenu.RGB_SLIDERS -> {
             if (d.rgbHint == null) {
-                return listOf("Run the Before check first: the Red/Green/Blue hints need this TV's white as a reference." to TipKind.todo)
+                return listOf(context.getString(R.string.live_rgb_needs_before) to TipKind.todo)
             }
-            val names = listOf("Red", "Green", "Blue")
+            val names = listOf("RED", "GREEN", "BLUE").map { capitalized(it) }
+            val and = L10n.tr(" and ", " und ")
             val stuck = (d.outOfReach?.channels ?: emptyList()).mapNotNull { c -> listOf("R", "G", "B").indexOf(c).takeIf { it >= 0 } }
             val o = d.outOfReach
             if (o != null) {
-                val others = listOf(0, 1, 2).filter { it !in stuck }.joinToString(" and ") { names[it].lowercase() }
+                // German nouns keep their capital.
+                val others = listOf(0, 1, 2).filter { it !in stuck }.joinToString(and) { if (L10n.german) names[it] else names[it].lowercase() }
                 t.add(
-                    ("**Out of reach:** to match exactly, $name would need ${stuck.joinToString(" and ") { names[it] }} below zero. " +
-                        "$name sits beyond what this TV's $others can mix, so that slider stops helping once it reaches zero. " +
-                        "The best this colour can get is about **dE ${fmt(o.bestDE)}**. When you're there, use **Can't get closer**.") to TipKind.limit,
+                    context.getString(R.string.live_out_of_reach, name, stuck.joinToString(and) { names[it] }, others, fmt(o.bestDE)) to TipKind.limit,
                 )
             }
         }
     }
-    if (t.isEmpty() && d.ok) t.add("Close enough - holding steady…" to TipKind.ok)
+    if (t.isEmpty() && d.ok) t.add(context.getString(R.string.live_close_enough) to TipKind.ok)
     return t
 }
 
@@ -848,12 +881,12 @@ fun FineStep(guided: GuidedController) {
         MenuQuestionCard(tv = guided.tv, colours = false)
     } else if (guided.tv.multipoint == Multipoint.NONE) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text("Fine-tune", style = Type.stepTitleStyle)
+            Text(stringResource(R.string.live_fine_title), style = Type.stepTitleStyle)
             Text(
-                "This TV has only 2-point white balance (Screen settings), so there's nothing to fine-tune beyond the bright and dark ends.",
+                stringResource(R.string.live_only_two_point),
                 style = Type.bodyBrand, color = Theme.textSecondary,
             )
-            StepMainAction("Back to the check") { guided.go(GuideStep.CHECK) }
+            StepMainAction(stringResource(R.string.live_back_to_check)) { guided.go(GuideStep.CHECK) }
         }
     } else if (holdingFinder || (!guided.finderReady && !guided.finderSkipped)) {
         PointFinderView(guided = guided, holding = holdingFinder, onHoldingChange = { holdingFinder = it })
@@ -869,7 +902,7 @@ fun FineTuneView(guided: GuidedController) {
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         key(cur) { WhiteBalanceBody(guided, WBKind.fine, cur) }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Eyebrow(text = "Greys")
+            Eyebrow(text = stringResource(R.string.live_greys))
             Row(
                 Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 1.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -878,8 +911,8 @@ fun FineTuneView(guided: GuidedController) {
                     val selected = pid == cur
                     val shape = RoundedCornerShape(percent = 50)
                     Text(
-                        shortName(Patterns.patch(guided.hdr, pid)?.name ?: pid) +
-                            (sugg[pid]?.let { " → TV $it%" } ?: "") +
+                        shortLabel(Patterns.patch(guided.hdr, pid)?.name ?: pid) +
+                            (sugg[pid]?.let { " → TV ${pct(it)}" } ?: "") +
                             (if (guided.state.finder.overrides[pid] != null) " ✓" else ""),
                         style = Type.captionBrand,
                         color = if (selected) Color.White else Theme.textSecondary,
@@ -899,21 +932,21 @@ fun FineTuneView(guided: GuidedController) {
         Card(spacing = 8.dp) {
             if (!guided.finderSkipped) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text("The control that moves this grey", style = Type.bodyStrong, color = Color.White,
+                    Text(stringResource(R.string.live_control_that_moves), style = Type.bodyStrong, color = Color.White,
                         modifier = Modifier.weight(1f))
                     ControlPicker(guided, cur, sugg[cur])
                 }
                 Text(
-                    "If you pick one, it's remembered for this TV, and the suggestions for nearby greys adjust to match.",
+                    stringResource(R.string.live_pick_remembered),
                     style = Type.small, color = Theme.textSecondary,
                 )
-                LinkButton("Run the point finder again", { guided.resetFinder() }, style = Type.captionStrong)
+                LinkButton(stringResource(R.string.live_run_finder_again), { guided.resetFinder() }, style = Type.captionStrong)
             } else {
-                Text("If the bars don't move, try the control one step lower or higher.", style = Type.small,
+                Text(stringResource(R.string.live_try_step_lower), style = Type.small,
                     color = Theme.textSecondary)
             }
         }
-        StepMainAction(wbNextTitle(guided, WBKind.fine, cur)) {
+        StepMainAction(wbNextTitle(LocalContext.current, guided, WBKind.fine, cur)) {
             wbNext(guided, WBKind.fine, guided.live.reading?.steady ?: false)
         }
     }
@@ -926,10 +959,13 @@ private fun ControlPicker(guided: GuidedController, cur: String, suggestion: Int
     val selection = guided.state.finder.overrides[cur] ?: 0
     val grid = guided.grid
     val options = listOf(0) + (if (grid > 0) (grid..100 step grid).toList() else emptyList())
-    fun label(v: Int) = if (v == 0) suggestion?.let { "TV $it% (measured)" } ?: "Measured" else "TV $v%"
+    val context = LocalContext.current
+    val pickerName = stringResource(R.string.live_control_that_moves)
+    fun label(v: Int) = if (v == 0) suggestion?.let { context.getString(R.string.live_tv_percent_measured, it.toString()) }
+        ?: context.getString(R.string.live_measured) else context.getString(R.string.live_tv_percent, v.toString())
     Box {
         TextButton(onClick = { open = true }, modifier = Modifier.semantics {
-            contentDescription = "The control that moves this grey"
+            contentDescription = pickerName
             stateDescription = label(selection)
         }) {
             Text(label(selection), style = Type.bodyBrand, color = Theme.tealBright)
@@ -966,10 +1002,10 @@ private fun FinderStatusRow(text: String, state: FinderRowStatus) {
             modifier = Modifier.weight(1f))
         Box(Modifier.size(20.dp), contentAlignment = Alignment.Center) {
             when (state) {
-                FinderRowStatus.done -> Icon(symbol("checkmark"), contentDescription = "Done", tint = Theme.tealBright,
+                FinderRowStatus.done -> Icon(symbol("checkmark"), contentDescription = stringResource(R.string.live_done), tint = Theme.tealBright,
                     modifier = Modifier.size(17.dp))
                 FinderRowStatus.active -> CircularProgressIndicator(Modifier.size(16.dp), color = Theme.tealBright, strokeWidth = 2.dp)
-                FinderRowStatus.waiting -> Icon(symbol("clock"), contentDescription = "Waiting", tint = Theme.tealBright,
+                FinderRowStatus.waiting -> Icon(symbol("clock"), contentDescription = stringResource(R.string.live_waiting_state), tint = Theme.tealBright,
                     modifier = Modifier.size(18.dp))
             }
         }
@@ -987,10 +1023,10 @@ fun PointFinderView(guided: GuidedController, holding: Boolean, onHoldingChange:
 
     /** The main action for the state on screen; none while measuring (Cancel is in the page). */
     val pinnedTitle: String? = when {
-        showingResult -> "Fine-tune with these points"
+        showingResult -> stringResource(R.string.live_finder_use_points)
         running -> null
-        haveBase -> "I've made the four changes - measure"
-        else -> "Measure (about 2½ minutes)"
+        haveBase -> stringResource(R.string.live_finder_made_changes)
+        else -> stringResource(R.string.live_finder_measure)
     }
 
     fun pinnedTap() {
@@ -1023,8 +1059,8 @@ fun PointFinderView(guided: GuidedController, holding: Boolean, onHoldingChange:
 
 @Composable
 private fun FinderResult(guided: GuidedController) {
-    Text("Here's what each control moves", style = Type.stepTitleStyle)
-    Text("TV control → moves the grey at", style = Type.bodyBrand, color = Theme.textSecondary)
+    Text(stringResource(R.string.live_finder_result_title), style = Type.stepTitleStyle)
+    Text(stringResource(R.string.live_finder_result_header), style = Type.bodyBrand, color = Theme.textSecondary)
     Card(spacing = 4.dp) {
         for (m in guided.finderMap) {
             val shift = m.level - m.point.toDouble()
@@ -1033,50 +1069,50 @@ private fun FinderResult(guided: GuidedController) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("${if (m.channel == "R") "Red" else if (m.channel == "B") "Blue" else "TV"} ${m.point}",
+                Text("${if (m.channel == "R") capitalized("RED") else if (m.channel == "B") capitalized("BLUE") else "TV"} ${m.point}",
                     style = Type.brand(16f), color = Color.White, modifier = Modifier.weight(1f))
                 Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text("→ ${fmt(m.level, 0)}%", style = Type.brand(17f), color = Theme.tealBright)
-                    Text("Shift ${signed(shift, 0)}", style = Type.tiny,
+                    Text(stringResource(R.string.live_finder_level, fmt(m.level, 0)), style = Type.brand(17f), color = Theme.tealBright)
+                    Text(stringResource(R.string.live_finder_shift, signed(shift, 0)), style = Type.tiny,
                         color = if (abs(shift) >= 5) Theme.limit else Theme.green)
                 }
             }
         }
     }
-    TipRow(tone = TipTone.todo, text = "**Now put them back.** Set those four controls back to where they were (−10 each) before fine-tuning.")
+    TipRow(tone = TipTone.todo, text = stringResource(R.string.live_finder_put_back))
 }
 
 @Composable
 private fun FinderFinding(guided: GuidedController, step: Int, haveBase: Boolean) {
     val running = guided.runner.running
-    Text(if (running) "Finding your TV's points" else "Find your TV's controls", style = Type.stepTitleStyle)
+    Text(stringResource(if (running) R.string.live_finder_finding else R.string.live_finder_find), style = Type.stepTitleStyle)
     Card(hero = true) {
-        Eyebrow(text = "Optional · about 6 minutes")
-        Text("Step $step of 3", style = Type.cardTitle.copy(letterSpacing = (-0.6).sp), color = Color.White)
+        Eyebrow(text = stringResource(R.string.live_finder_optional))
+        Text(stringResource(R.string.live_finder_step, step.toString()), style = Type.cardTitle.copy(letterSpacing = (-0.6).sp), color = Color.White)
         when (step) {
             1 -> Text(
-                markdown("Measure the greys as they are. Tap Measure, then play **${guided.finderFile}** on the TV."),
+                markdown(stringResource(R.string.live_finder_step1, guided.finderFile)),
                 style = Type.bodyBrand, color = Color.White,
             )
             2 -> {
-                Text("Nudge four controls in the multipoint menu, exactly as listed:", style = Type.bodyBrand, color = Color.White)
+                Text(stringResource(R.string.live_finder_nudge_intro), style = Type.bodyBrand, color = Color.White)
                 Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     for ((channel, point) in PointFinder.nudges) {
                         Row(horizontalArrangement = Arrangement.spacedBy(18.dp)) {
-                            Text("TV $point% control", style = Type.bodyBrand, color = Color.White, modifier = Modifier.width(150.dp))
-                            Text(if (channel == "R") "Red" else "Blue", style = Type.bodyBrand, color = Theme.channel(channel),
+                            Text(stringResource(R.string.live_finder_tv_control, point.toString()), style = Type.bodyBrand, color = Color.White, modifier = Modifier.width(150.dp))
+                            Text(capitalized(if (channel == "R") "RED" else "BLUE"), style = Type.bodyBrand, color = Theme.channel(channel),
                                 modifier = Modifier.width(48.dp))
                             Text("+${PointFinder.NUDGE}", style = Type.bodyBrand, color = Color.White)
                         }
                     }
                 }
                 Text(
-                    "Then measure again with the same video. The app compares the two and finds each control.",
+                    stringResource(R.string.live_finder_then_again),
                     style = Type.captionBrand, color = Theme.textSecondary,
                 )
             }
             else -> Text(
-                "Measure again with the same video. The app compares the two and finds each control.",
+                stringResource(R.string.live_finder_again),
                 style = Type.bodyBrand, color = Color.White,
             )
         }
@@ -1088,7 +1124,7 @@ private fun FinderFinding(guided: GuidedController, step: Int, haveBase: Boolean
         }
     }
     Text(
-        "A TV's “40%” control often moves a different grey. This finds where each one really acts.",
+        stringResource(R.string.live_finder_explain),
         style = Type.captionBrand, color = Theme.textSecondary,
     )
     (guided.runner.phase as? SweepRunner.Phase.Failed)?.let { TipRow(tone = TipTone.limit, text = it.message) }
@@ -1096,17 +1132,17 @@ private fun FinderFinding(guided: GuidedController, step: Int, haveBase: Boolean
         MeasuringCard(runner = guided.runner, file = guided.finderFile, mode = guided.mode)
     }
     Card(spacing = 0.dp) {
-        FinderStatusRow("Measure the greys as they are",
+        FinderStatusRow(stringResource(R.string.live_finder_row1),
             if (haveBase) FinderRowStatus.done else if (running) FinderRowStatus.active else FinderRowStatus.waiting)
-        FinderStatusRow("Nudge four controls (+${PointFinder.NUDGE} each)",
+        FinderStatusRow(stringResource(R.string.live_finder_row2, PointFinder.NUDGE.toString()),
             if (step == 3) FinderRowStatus.done else if (step == 2) FinderRowStatus.active else FinderRowStatus.waiting)
-        FinderStatusRow("Measure again and find each control",
+        FinderStatusRow(stringResource(R.string.live_finder_row3),
             if (step == 3) FinderRowStatus.active else FinderRowStatus.waiting)
     }
     if (running) {
-        SecondaryButton("Cancel", { guided.runner.cancel() })
+        SecondaryButton(stringResource(R.string.live_cancel), { guided.runner.cancel() })
     } else {
-        LinkButton("Skip: fine-tune without it", { guided.skipFinder() })
+        LinkButton(stringResource(R.string.live_finder_skip), { guided.skipFinder() })
     }
 }
 
@@ -1119,8 +1155,8 @@ fun DemoRemote(guided: GuidedController, controls: List<Pair<String, String>>, m
         for ((label, key) in controls) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(label, style = Type.bodyBrand, color = Color.White, modifier = Modifier.weight(1f))
-                DemoKey("−", "$label down") { guided.demoPress(mapOf(key to -1)) }
-                DemoKey("+", "$label up") { guided.demoPress(mapOf(key to 1)) }
+                DemoKey("−", stringResource(R.string.live_demo_down, label)) { guided.demoPress(mapOf(key to -1)) }
+                DemoKey("+", stringResource(R.string.live_demo_up, label)) { guided.demoPress(mapOf(key to 1)) }
             }
         }
     }

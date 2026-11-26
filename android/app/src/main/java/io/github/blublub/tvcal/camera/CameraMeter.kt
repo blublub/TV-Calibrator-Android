@@ -3,6 +3,8 @@
 // CC BY-NC 4.0). Changed: translated to Kotlin; thresholds scale with the sensor's white level.
 package io.github.blublub.tvcal.camera
 
+import io.github.blublub.tvcal.ui.L10n
+
 import android.content.Context
 import io.github.blublub.tvcal.engine.CameraProfile
 import io.github.blublub.tvcal.engine.CameraSettings
@@ -67,7 +69,7 @@ class CameraMeter(context: Context) {
     val running: StateFlow<Boolean> = _running.asStateFlow()
     private val _busy = MutableStateFlow(false)
     val busy: StateFlow<Boolean> = _busy.asStateFlow()
-    private val _message = MutableStateFlow("The camera is off.")
+    private val _message = MutableStateFlow(L10n.tr("The camera is off.", "Die Kamera ist aus."))
     val message: StateFlow<String> = _message.asStateFlow()
     private val _dark = MutableStateFlow<DarkLevel?>(null)
     val dark: StateFlow<DarkLevel?> = _dark.asStateFlow()
@@ -77,6 +79,9 @@ class CameraMeter(context: Context) {
     val logLines: StateFlow<List<String>> = _logLines.asStateFlow()
 
     private var duration = 1.0 / 250
+
+    /** The "too bright" problem, which stops a measurement instead of being retried. */
+    val tooBright: String get() = L10n.tr("Too bright for the camera. Move the phone a little further from the TV.", "Zu hell für die Kamera. Halte das Handy etwas weiter vom Fernseher weg.")
     /** Only one measurement uses the camera at a time (two would mix up which photo had which shutter time). */
     private val inUse = Mutex()
 
@@ -102,7 +107,7 @@ class CameraMeter(context: Context) {
     /** Starts the camera. The caller has already been granted the camera permission. */
     suspend fun start() {
         if (_running.value) return
-        _message.value = "Starting the camera…"
+        _message.value = L10n.tr("Starting the camera…", "Kamera wird gestartet …")
         val error = engine.start()
         if (error != null) {
             _message.value = error
@@ -116,13 +121,13 @@ class CameraMeter(context: Context) {
         }
         _dark.value?.let { engine.floorLevel = it.short.max() }
         _running.value = true
-        _message.value = if (_dark.value == null) "Cover the lens and measure the darkness once." else "Ready to measure."
+        _message.value = if (_dark.value == null) L10n.tr("Cover the lens and measure the darkness once.", "Decke die Linse ab und miss einmal die Dunkelheit.") else L10n.tr("Ready to measure.", "Bereit zum Messen.")
     }
 
     fun stop() {
         engine.stop()
         _running.value = false
-        _message.value = "The camera is off."
+        _message.value = L10n.tr("The camera is off.", "Die Kamera ist aus.")
     }
 
     private suspend fun shot(seconds: Double, dark: Boolean = false) = engine.capture(seconds, learnsWhite = !dark)
@@ -134,7 +139,7 @@ class CameraMeter(context: Context) {
     suspend fun measureDark() = inUse.withLock {
         _busy.value = true
         try {
-            _message.value = "Measuring with the lens covered…"
+            _message.value = L10n.tr("Measuring with the lens covered…", "Messung mit abgedeckter Linse …")
             // Three shutter times: the shortest, 1/30 s and 1/4 s. In real darkness all three read the same.
             // A little light leaking in shows between 1/30 s and 1/4 s; a lot can fill the sensor at both, and
             // shows against the shortest.
@@ -143,7 +148,7 @@ class CameraMeter(context: Context) {
             val b = shot(DarkLevel.T_LONG, dark = true)
             val cs = c.stats; val st = a.stats; val lt = b.stats
             if (cs == null || st == null || lt == null) {
-                _message.value = "Couldn't take a photo. Try again."
+                _message.value = L10n.tr("Couldn't take a photo. Try again.", "Konnte kein Foto aufnehmen. Versuch es noch einmal.")
                 return@withLock
             }
             val leak = (0 until 3).maxOf { lt.mean[it] - st.mean[it] }
@@ -153,8 +158,8 @@ class CameraMeter(context: Context) {
                 log("Dark rejected: brightest colour reads ${fixed(cs.mean.max(), 1)} at 1/${fixed(1 / c.used, 0)} s, " +
                     "${fixed(st.mean.max(), 1)} at 1/${fixed(1 / a.used, 0)} s, ${fixed(lt.mean.max(), 1)} at 1/${fixed(1 / b.used, 0)} s")
                 _message.value = if (maxOf(leak, flood) > 2000 * bitScale)
-                    "Still seeing light. Lay the phone screen-up on a table, so the camera on the back is pressed flat against it, and try again."
-                else "Some light is still getting in. A fingertip isn't enough: lay the phone screen-up on a table, so the camera on the back is pressed flat against it, and try again."
+                    L10n.tr("Still seeing light. Lay the phone screen-up on a table, so the camera on the back is pressed flat against it, and try again.", "Es kommt noch Licht an. Leg das Handy mit dem Display nach oben auf einen Tisch, sodass die Kamera auf der Rückseite flach aufliegt, und versuch es noch einmal.")
+                else L10n.tr("Some light is still getting in. A fingertip isn't enough: lay the phone screen-up on a table, so the camera on the back is pressed flat against it, and try again.", "Es kommt noch etwas Licht durch. Ein Finger reicht nicht: Leg das Handy mit dem Display nach oben auf einen Tisch, sodass die Kamera auf der Rückseite flach aufliegt, und versuch es noch einmal.")
                 return@withLock
             }
             val d = DarkLevel(st.mean.toList(), lt.mean.toList(), engine.settings.format + " " + engine.settings.lens)
@@ -163,7 +168,7 @@ class CameraMeter(context: Context) {
             prefs.edit().putString("darkLevel", engineJson.encodeToString(DarkLevel.serializer(), d)).apply()
             log("Dark at 1/${fixed(1 / a.used, 0)} s: ${st.mean.joinToString(" ") { fixed(it, 2) }}; " +
                 "at 1/${fixed(1 / b.used, 0)} s: ${lt.mean.joinToString(" ") { fixed(it, 2) }}")
-            _message.value = "Ready. Point the box at the centre of the TV."
+            _message.value = L10n.tr("Ready. Point the box at the centre of the TV.", "Bereit. Richte das Kästchen auf die Mitte des Fernsehers.")
         } finally {
             _busy.value = false
         }
@@ -181,14 +186,14 @@ class CameraMeter(context: Context) {
                 val stats = s.stats
                 if (stats == null) {
                     log("Measurement failed: no usable photo")
-                    return@withLock null to "The phone couldn't take a photo."
+                    return@withLock null to L10n.tr("The phone couldn't take a photo.", "Das Handy konnte kein Foto aufnehmen.")
                 }
                 val base = dark.at(s.used)
                 val net = DoubleArray(3) { maxOf(stats.mean[it] - base[it], 0.0) }
                 val peak = net.max() / maxOf(engine.whiteLevel - base.max(), 1000 * bitScale)
                 if (stats.clipped || peak > 0.75) {
                     if (s.used <= engine.minDuration * 1.01) {
-                        return@withLock null to "Too bright for the camera. Move the phone a little further from the TV."
+                        return@withLock null to tooBright
                     }
                     seconds = s.used / 4
                     return@repeat
@@ -202,7 +207,7 @@ class CameraMeter(context: Context) {
                 _lastReading.value = reading
                 return@withLock reading to null
             }
-            null to "Couldn't find a good exposure for this patch."
+            null to L10n.tr("Couldn't find a good exposure for this patch.", "Für dieses Feld ließ sich keine passende Belichtung finden.")
         } finally {
             _busy.value = false
         }
@@ -228,7 +233,7 @@ class CameraXYZMeter(
         val (reading, problem) = camera.measure()
         val t1 = now()
         if (reading == null) {
-            if (problem != null && problem.startsWith("Too bright")) throw MeasureError.Message(problem)
+            if (problem != null && problem == camera.tooBright) throw MeasureError.Message(problem)
             // No photo (the camera was interrupted, or isn't ready): a missed reading, after a short pause so
             // callers that keep trying don't spin.
             MeterClock.sleep(0.3)
@@ -237,8 +242,12 @@ class CameraXYZMeter(
         val diffs = if (checkSettings) profile.camera.mismatches(reading.settings) else emptyList()
         if (diffs.isNotEmpty()) {
             throw MeasureError.Message(
-                "The camera is running with different settings than its profile was made for (" +
-                    diffs.joinToString("; ") + "). This can follow a system update.",
+                L10n.tr(
+                    "The camera is running with different settings than its profile was made for (" +
+                        diffs.joinToString("; ") + "). This can follow a system update.",
+                    "Die Kamera läuft mit anderen Einstellungen als ihr Profil (" + diffs.joinToString("; ") +
+                        "). Das kann nach einem System-Update passieren.",
+                ),
             )
         }
         return MeterReading(t0, t1, profile.xyz(Vec3(reading.rgb[0], reading.rgb[1], reading.rgb[2]), panel))

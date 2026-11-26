@@ -47,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -108,9 +109,9 @@ fun TVListView() {
         Column(Modifier.padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             // The headline is for a first visit; with screens saved, they come first.
             if (app.tvs.isEmpty()) {
-                Text("See it the way\nit was made.", style = Type.displayStyle)
+                Text(stringResource(R.string.home_headline), style = Type.displayStyle)
                 Text(
-                    "Calibrate your TV’s picture with your phone as the meter.",
+                    stringResource(R.string.home_subtitle),
                     style = Type.bodyBrand, color = Theme.textSecondary,
                 )
             }
@@ -118,9 +119,9 @@ fun TVListView() {
             Box(Modifier.clickable { nav.push(Route.Camera) }) { CameraStatusRow() }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Your screens", style = Type.section, color = Color.White, modifier = Modifier.weight(1f))
+                Text(stringResource(R.string.home_your_screens), style = Type.section, color = Color.White, modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(8.dp))
-                LinkButton("Manage Screens", onClick = { managing = true }, style = Type.captionStrong)
+                LinkButton(stringResource(R.string.home_manage_screens), onClick = { managing = true }, style = Type.captionStrong)
             }
 
             if (app.tvs.isEmpty()) {
@@ -134,7 +135,7 @@ fun TVListView() {
                     }
                     DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                         DropdownMenuItem(
-                            text = { Text("Delete", color = Theme.red) },
+                            text = { Text(stringResource(R.string.home_delete), color = Theme.red) },
                             leadingIcon = { Icon(symbol("trash"), contentDescription = null, tint = Theme.red) },
                             onClick = {
                                 menu = false
@@ -145,9 +146,9 @@ fun TVListView() {
                 }
             }
 
-            PrimaryButton("Add a Screen", onClick = { adding = true })
+            PrimaryButton(stringResource(R.string.home_add_screen), onClick = { adding = true })
             if (app.tvs.none { it.isDemo }) {
-                SecondaryButton("Try the demo, no screen needed", onClick = {
+                SecondaryButton(stringResource(R.string.home_try_demo), onClick = {
                     val tv = app.addDemoTV()
                     nav.push(Route.TV(tv.id))
                 })
@@ -155,15 +156,20 @@ fun TVListView() {
 
             Box(Modifier.clickable { welcoming = true }) {
                 ToolTile(
-                    symbol = "play.rectangle", title = "How it works",
-                    text = if (links.links.explainerURL == null) "What you need, how it works" else "The video, and what you need",
+                    symbol = "play.rectangle", title = stringResource(R.string.home_how_it_works),
+                    text = stringResource(
+                        if (links.links.explainerURL == null) R.string.home_how_it_works_detail
+                        else R.string.home_how_it_works_detail_video,
+                    ),
                 )
             }
             Box(Modifier.clickable { nav.push(Route.Live) }) {
-                ToolTile(symbol = "viewfinder", title = "Read any colour on screen", text = "Live meter")
+                ToolTile(symbol = "viewfinder", title = stringResource(R.string.home_live_title),
+                    text = stringResource(R.string.home_live_detail))
             }
             Box(Modifier.clickable { nav.push(Route.Settings) }) {
-                ToolTile(symbol = "switch.2", title = "Settings", text = "Camera profile, videos", boxed = false)
+                ToolTile(symbol = "switch.2", title = stringResource(R.string.home_settings),
+                    text = stringResource(R.string.home_settings_detail), boxed = false)
             }
         }
     }
@@ -195,6 +201,7 @@ fun TVListView() {
 /** The home screen's own bar: the app's name on the left, settings on the right (48 dp, as in the design). */
 @Composable
 private fun HomeNavigationBar(openSettings: () -> Unit) {
+    val settingsLabel = stringResource(R.string.home_settings)
     Row(
         Modifier
             .fillMaxWidth()
@@ -213,7 +220,7 @@ private fun HomeNavigationBar(openSettings: () -> Unit) {
             Modifier
                 .size(44.dp)
                 .clickable(onClick = openSettings)
-                .semantics { contentDescription = "Settings" },
+                .semantics { contentDescription = settingsLabel },
             contentAlignment = Alignment.CenterEnd,
         ) {
             Icon(symbol("slider.horizontal.3"), contentDescription = null, tint = Theme.tealBright,
@@ -234,7 +241,7 @@ private fun EmptyScreensCard(
         if (video != null) {
             VideoPreview(url = video, compact = true)
         } else {
-            LinkButton("New to this? See how it works", onClick = howItWorks, style = Type.captionStrong)
+            LinkButton(stringResource(R.string.home_new_to_this), onClick = howItWorks, style = Type.captionStrong)
         }
     }
 }
@@ -246,6 +253,7 @@ private val patchGrey = Color(0xFF777D7E)
 @Composable
 private fun PlacementPanel() {
     val shape = RoundedCornerShape(18.dp)
+    val placement = stringResource(R.string.home_placement_desc)
     BoxWithConstraints(
         Modifier
             .fillMaxWidth()
@@ -253,8 +261,7 @@ private fun PlacementPanel() {
             .clip(shape)
             .background(Theme.surface, shape)
             .clearAndSetSemantics {
-                contentDescription =
-                    "Put the phone on a stand 15 to 30 centimetres from the TV, facing the centre of the screen"
+                contentDescription = placement
             },
     ) {
         val w = maxWidth
@@ -277,7 +284,7 @@ private fun PlacementPanel() {
             )
         }
         Text(
-            "15–30 cm · facing the centre",
+            stringResource(R.string.home_placement_label),
             style = Type.tiny, color = Theme.textSecondary, maxLines = 1, softWrap = false,
             modifier = Modifier.offset(x = (45 * s).dp, y = 75.dp),
         )
@@ -335,7 +342,7 @@ fun TVCard(tv: TVRecord) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(tv.name, style = Type.bodyStrong, color = Color.White)
                 Text(
-                    if (tv.isDemo) "Demo: simulated readings" else tv.brand.label,
+                    if (tv.isDemo) stringResource(R.string.home_demo_readings) else tv.brand.label,
                     style = Type.captionBrand, color = Theme.textSecondary,
                 )
             }
@@ -372,16 +379,17 @@ private fun FormatChip(mode: SignalMode, stage: FormatStage) {
         FormatStage.NOT_STARTED -> Theme.hairline
     }
     val word = when (stage) {
-        FormatStage.DONE -> "calibrated"
-        FormatStage.STARTED -> "started"
-        FormatStage.NOT_STARTED -> "not started"
+        FormatStage.DONE -> stringResource(R.string.home_format_calibrated)
+        FormatStage.STARTED -> stringResource(R.string.home_format_started)
+        FormatStage.NOT_STARTED -> stringResource(R.string.home_format_not_started)
     }
+    val chipDescription = stringResource(R.string.home_format_desc, mode.label, word)
     Row(
         Modifier
             .background(if (stage == FormatStage.DONE) mode.tint else Color.Transparent, shape)
             .border(1.dp, stroke, shape)
             .padding(horizontal = 7.dp, vertical = 4.dp)
-            .clearAndSetSemantics { contentDescription = "${mode.label}: $word" },
+            .clearAndSetSemantics { contentDescription = chipDescription },
         horizontalArrangement = Arrangement.spacedBy(3.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -454,20 +462,20 @@ private fun CameraStatusContent(profiles: ProfileService, camera: CameraMeter) {
         CameraPhase.READY -> Theme.green
     }
     val title = when (phase) {
-        CameraPhase.CHECKING -> "Checking this phone"
-        CameraPhase.UNAVAILABLE -> "Camera not available"
-        CameraPhase.SET_UP -> "Set up the camera"
-        CameraPhase.DARKNESS -> "Measure the darkness"
-        CameraPhase.STANDARD -> "Standard profile"
-        CameraPhase.READY -> "Ready to measure"
+        CameraPhase.CHECKING -> stringResource(R.string.home_camera_checking)
+        CameraPhase.UNAVAILABLE -> stringResource(R.string.home_camera_unavailable)
+        CameraPhase.SET_UP -> stringResource(R.string.home_camera_set_up)
+        CameraPhase.DARKNESS -> stringResource(R.string.home_camera_darkness)
+        CameraPhase.STANDARD -> stringResource(R.string.home_camera_standard)
+        CameraPhase.READY -> stringResource(R.string.home_camera_ready)
     }
     val detail = when (phase) {
-        CameraPhase.CHECKING -> "Finding the right camera profile."
+        CameraPhase.CHECKING -> stringResource(R.string.home_camera_checking_detail)
         CameraPhase.UNAVAILABLE -> profiles.summary
-        CameraPhase.SET_UP -> "A minute, before your first reading."
-        CameraPhase.DARKNESS -> "Cover the camera to set its baseline."
-        CameraPhase.STANDARD -> "Readings approximate. You can still get started."
-        CameraPhase.READY -> "Camera set up. Place your phone on its stand."
+        CameraPhase.SET_UP -> stringResource(R.string.home_camera_set_up_detail)
+        CameraPhase.DARKNESS -> stringResource(R.string.home_camera_darkness_detail)
+        CameraPhase.STANDARD -> stringResource(R.string.home_camera_standard_detail)
+        CameraPhase.READY -> stringResource(R.string.home_camera_ready_detail)
     }
     /** Something for the user to do (set up, measure the darkness): the teal card. Otherwise one line. */
     val needsAction = phase == CameraPhase.SET_UP || phase == CameraPhase.DARKNESS || phase == CameraPhase.UNAVAILABLE
@@ -506,7 +514,7 @@ private fun CameraStatusContent(profiles: ProfileService, camera: CameraMeter) {
             }
             Text(title, style = Type.captionStrong, color = colour)
             Text(
-                if (phase == CameraPhase.STANDARD) "Readings approximate" else "Phone camera",
+                stringResource(if (phase == CameraPhase.STANDARD) R.string.home_readings_approximate else R.string.home_phone_camera),
                 style = Type.small, color = Theme.textSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f),
             )
@@ -525,6 +533,7 @@ fun ManageScreensView(onDismiss: () -> Unit) {
     var editing by remember { mutableStateOf<TVRecord?>(null) }
     var doomed by remember { mutableStateOf<TVRecord?>(null) }
     var adding by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     /** "LG · SDR calibrated", "Samsung · Not started". */
     fun detail(tv: TVRecord): String {
@@ -533,23 +542,26 @@ fun ManageScreensView(onDismiss: () -> Unit) {
         val calibrated = counts.filter { it.second >= full }.map { it.first.label }
         val started = counts.firstOrNull { it.second > 0 }
         val progress = when {
-            calibrated.isNotEmpty() -> calibrated.joinToString(", ") + " calibrated"
-            started != null -> started.first.label + " in progress"
-            else -> "Not started"
+            calibrated.isNotEmpty() -> context.getString(R.string.home_progress_calibrated, calibrated.joinToString(", "))
+            started != null -> context.getString(R.string.home_progress_in_progress, started.first.label)
+            else -> context.getString(R.string.home_progress_not_started)
         }
-        return (if (tv.isDemo) "Demo" else tv.brand.label) + " · " + progress
+        return (if (tv.isDemo) context.getString(R.string.home_demo) else tv.brand.label) + " · " + progress
     }
 
     ScreenWithBottomAction(
         modifier = Modifier.fillMaxSize(),
-        bottom = { SecondaryButton("Done", onClick = onDismiss) },
+        bottom = { SecondaryButton(stringResource(R.string.home_done), onClick = onDismiss) },
     ) { padding ->
         Column(
             Modifier
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            ScreensTitleBar(title = "Manage Screens", closeLabel = "Close", onClose = onDismiss)
+            ScreensTitleBar(
+                title = stringResource(R.string.home_manage_screens),
+                closeLabel = stringResource(R.string.home_close), onClose = onDismiss,
+            )
             Box(Modifier.weight(1f)) {
                 Column(
                     Modifier
@@ -561,10 +573,10 @@ fun ManageScreensView(onDismiss: () -> Unit) {
                     for (tv in app.tvs.toList()) {
                         ManagedScreenRow(tv = tv, detail = detail(tv), onEdit = { editing = tv }, onDelete = { doomed = tv })
                     }
-                    SecondaryButton("Add a Screen", onClick = { adding = true })
+                    SecondaryButton(stringResource(R.string.home_add_screen), onClick = { adding = true })
                 }
                 if (app.tvs.isEmpty()) {
-                    Text("No screens yet.", style = Type.bodyBrand, color = Theme.textSecondary,
+                    Text(stringResource(R.string.home_no_screens), style = Type.bodyBrand, color = Theme.textSecondary,
                         modifier = Modifier.align(Alignment.Center))
                 }
             }
@@ -608,9 +620,9 @@ private fun ManagedScreenRow(tv: TVRecord, detail: String, onEdit: () -> Unit, o
             Text(detail, style = Type.captionBrand, color = Theme.textSecondary)
         }
         if (!tv.isDemo) {
-            RowIconButton("pencil", Theme.tealBright, "Edit ${tv.name}", onEdit)
+            RowIconButton("pencil", Theme.tealBright, stringResource(R.string.home_edit_screen, tv.name), onEdit)
         }
-        RowIconButton("trash", Theme.red, "Delete ${tv.name}", onDelete)
+        RowIconButton("trash", Theme.red, stringResource(R.string.home_delete_screen, tv.name), onDelete)
     }
 }
 
@@ -662,18 +674,18 @@ private fun DeleteScreenAlert(doomed: TVRecord?, onDoomedChange: (TVRecord?) -> 
     val tv = doomed ?: return
     AlertDialog(
         onDismissRequest = { onDoomedChange(null) },
-        title = { Text("Delete ${tv.name}?") },
+        title = { Text(stringResource(R.string.home_delete_title, tv.name)) },
         text = {
-            Text("Delete the screen and its history. Its measurements and calibration progress are removed from this phone.")
+            Text(stringResource(R.string.home_delete_text))
         },
         confirmButton = {
             TextButton(onClick = {
                 delete(tv)
                 onDoomedChange(null)
-            }) { Text("Delete", color = Theme.red, fontSize = 15.sp) }
+            }) { Text(stringResource(R.string.home_delete), color = Theme.red, fontSize = 15.sp) }
         },
         dismissButton = {
-            TextButton(onClick = { onDoomedChange(null) }) { Text("Cancel", color = Theme.tealBright, fontSize = 15.sp) }
+            TextButton(onClick = { onDoomedChange(null) }) { Text(stringResource(R.string.home_cancel), color = Theme.tealBright, fontSize = 15.sp) }
         },
         containerColor = Theme.surface,
         titleContentColor = Color.White,

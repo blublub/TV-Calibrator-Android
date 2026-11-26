@@ -55,6 +55,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -65,6 +67,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.camera.CameraMeter
 import io.github.blublub.tvcal.camera.CameraXYZMeter
 import io.github.blublub.tvcal.engine.LiveAnalysis
@@ -73,6 +76,7 @@ import io.github.blublub.tvcal.measure.FreeMeter
 import io.github.blublub.tvcal.measure.uiScope
 import io.github.blublub.tvcal.profiles.ProfileService
 import io.github.blublub.tvcal.ui.CameraViewfinder
+import io.github.blublub.tvcal.ui.L10n
 import io.github.blublub.tvcal.ui.LocalApp
 import io.github.blublub.tvcal.ui.LocalCameraPermission
 import io.github.blublub.tvcal.ui.LocalNav
@@ -119,7 +123,7 @@ private fun ScreenTitleBar(title: String, onBack: (() -> Unit)?) {
     Box(Modifier.fillMaxWidth().height(52.dp), contentAlignment = Alignment.Center) {
         if (onBack != null) {
             IconButton(onClick = onBack, modifier = Modifier.align(Alignment.CenterStart).padding(start = 4.dp)) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Theme.tealBright)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.live_back), tint = Theme.tealBright)
             }
         }
         Text(title, style = Type.headlineBrand, color = Color.White)
@@ -134,6 +138,7 @@ fun CameraSetupView(
     onDismiss: () -> Unit = LocalNav.current.let { nav -> { nav.pop() } },
 ) {
     val app = LocalApp.current
+    val context = LocalContext.current
     val permission = LocalCameraPermission.current
     val running by camera.running.collectAsState()
     val busy by camera.busy.collectAsState()
@@ -175,37 +180,43 @@ fun CameraSetupView(
      */
     val messageTip: Pair<TipTone, String>? = run {
         val m = message
-        val quiet = listOf("The camera is off.", "Cover the lens and measure the darkness once.", "Ready to measure.",
-            "Ready. Point the box at the centre of the TV.")
+        // The camera's messages come in the app's language (CameraMeter uses the same L10n.tr pairs).
+        val quiet = listOf(
+            L10n.tr("The camera is off.", "Die Kamera ist aus."),
+            L10n.tr("Cover the lens and measure the darkness once.", "Decke die Linse ab und miss einmal die Dunkelheit."),
+            L10n.tr("Ready to measure.", "Bereit zum Messen."),
+            L10n.tr("Ready. Point the box at the centre of the TV.", "Bereit. Richte das Kästchen auf die Mitte des Fernsehers."),
+            L10n.tr("Measuring with the lens covered…", "Messung mit abgedeckter Linse …"),
+        )
         // "Measuring with the lens covered…" would contradict the screen-down instructions; the button
         // being busy says enough.
-        if (m.isEmpty() || m in quiet || m.startsWith("Measuring")) null
+        if (m.isEmpty() || m in quiet || m.startsWith(L10n.tr("Measuring", "Messung mit abgedeckter Linse"))) null
         else (if (m.endsWith("…")) TipTone.todo else TipTone.limit) to m
     }
 
     /** The steps already done, shown above the next one. */
-    val doneSoFar = if (profiles.profile != null) "✓ Profile · ✓ camera locked" else "✓ Camera locked"
+    val doneSoFar = stringResource(if (profiles.profile != null) R.string.live_done_profile_locked else R.string.live_done_locked)
 
     val settings = camera.settings
     val rawSize = camera.engine.rawSize
-    val sizeText = if (rawSize == null) "" else ", RAW photos ${rawSize.width}x${rawSize.height}"
-    val lockedText = "Locked: back main camera, ISO ${(settings.iso ?: 0.0).toInt()}, focus closest$sizeText"
+    val sizeText = if (rawSize == null) "" else stringResource(R.string.live_raw_size, rawSize.width.toString(), rawSize.height.toString())
+    val lockedText = stringResource(R.string.live_locked_text, (settings.iso ?: 0.0).toInt().toString(), sizeText)
     /** One line for the ready summary. */
     // Android: no aperture lock (phone lenses have a fixed aperture), so no aperture here.
-    val lockedSummary = "Settings locked · ISO ${(settings.iso ?: 0.0).toInt()} · focus fixed"
+    val lockedSummary = stringResource(R.string.live_locked_summary, (settings.iso ?: 0.0).toInt().toString())
 
     /** "4 setup checks complete" / "2 of 4 setup checks complete". */
     val checksDone = listOf(profiles.profile != null, running, running && dark != null && !redoDark, testPassed).count { it }
-    val checksText = if (checksDone == 4) "4 setup checks complete" else "$checksDone of 4 setup checks complete"
+    val checksText = if (checksDone == 4) stringResource(R.string.live_checks_all) else stringResource(R.string.live_checks_some, checksDone.toString())
 
     val darknessActionTitle =
-        if (redoDark || messageTip?.first == TipTone.limit) "Measure the darkness again" else "Measure the darkness"
+        stringResource(if (redoDark || messageTip?.first == TipTone.limit) R.string.live_measure_dark_again else R.string.live_measure_dark)
 
     fun measureDark() {
         test = null
         cameraSetupScope.launch {
             camera.measureDark()
-            if (camera.message.value.startsWith("Ready")) redoDark = false
+            if (camera.message.value.startsWith(L10n.tr("Ready", "Bereit"))) redoDark = false
         }
     }
 
@@ -217,7 +228,7 @@ fun CameraSetupView(
                 val r = meter.read()
                 val xyz = r.xyz
                 if (xyz == null) {
-                    CameraTestOutcome.Failed("No reading. Is the TV showing something bright in the box?")
+                    CameraTestOutcome.Failed(context.getString(R.string.live_no_reading))
                 } else {
                     val a = LiveAnalysis.of(xyz, hdr = false)
                     val uneven = (camera.lastReading.value?.uneven ?: 0.0) > 0.05
@@ -234,7 +245,7 @@ fun CameraSetupView(
     ScreenWithBottomAction(
         bottom = {
             when (stage) {
-                CameraStage.start -> PrimaryButton("Start the camera", {
+                CameraStage.start -> PrimaryButton(stringResource(R.string.live_start_camera), {
                     if (permission.granted) {
                         cameraSetupScope.launch { app.startCamera() }
                     } else {
@@ -243,14 +254,14 @@ fun CameraSetupView(
                     }
                 }, enabled = profiles.profile != null && !busy)
                 CameraStage.darkness -> PrimaryButton(darknessActionTitle, { measureDark() }, enabled = !busy)
-                CameraStage.placement -> PrimaryButton("Test reading", { runTest() },
+                CameraStage.placement -> PrimaryButton(stringResource(R.string.live_test_reading), { runTest() },
                     enabled = ready && !busy && profiles.profile != null)
-                CameraStage.ready -> PrimaryButton("Done", onDismiss)
+                CameraStage.ready -> PrimaryButton(stringResource(R.string.live_done), onDismiss)
             }
         },
     ) { pad ->
         Column(Modifier.fillMaxSize().screenBackground().padding(pad)) {
-            ScreenTitleBar("Set up the camera", onDismiss)
+            ScreenTitleBar(stringResource(R.string.live_set_up_camera), onDismiss)
             // The preview stays put while the steps scroll underneath.
             Column(
                 Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 4.dp),
@@ -258,7 +269,7 @@ fun CameraSetupView(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CameraViewfinder(camera, running, Modifier.height(240.dp))
-                Text("Blurry on purpose: it averages out the TV's pixels", style = Type.small, color = Theme.textSecondary,
+                Text(stringResource(R.string.live_blurry), style = Type.small, color = Theme.textSecondary,
                     modifier = Modifier.fillMaxWidth())
             }
             Column(
@@ -271,29 +282,29 @@ fun CameraSetupView(
             ) {
                 if (profiles.isStandard) {
                     TipRow(tone = TipTone.limit,
-                        text = "Using the approximate profile from the camera's own colour data: readings are approximate.")
+                        text = stringResource(R.string.live_using_approx))
                 }
                 when (stage) {
                     CameraStage.start -> {
                         // Steps 1 and 2: the camera profile, then starting the camera.
                         messageTip?.let { TipRow(tone = it.first, text = it.second) }
-                        StepCard("1 · Camera profile") {
+                        StepCard(stringResource(R.string.live_step_profile)) {
                             if (profiles.profile != null) {
                                 // Android: no trained profiles; the summary explains the approximate one.
                                 Text(profiles.summary, style = Type.bodyBrand, color = Color.White)
                             } else {
                                 Text(profiles.summary, style = Type.bodyBrand, color = Color.White)
-                                SecondaryButton("Check again", { profiles.refresh(camera.engine) })
+                                SecondaryButton(stringResource(R.string.live_check_again), { profiles.refresh(camera.engine) })
                             }
                         }
-                        StepCard("2 · Start camera") {
-                            Text("Exposure and focus stay locked after you start.", style = Type.bodyBrand, color = Color.White)
+                        StepCard(stringResource(R.string.live_step_start)) {
+                            Text(stringResource(R.string.live_stay_locked), style = Type.bodyBrand, color = Color.White)
                         }
                         Row(Modifier.fillMaxWidth().heightIn(min = 48.dp), verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text("Next: measure darkness", style = Type.bodyBrand, color = Color.White)
-                                Text("Then place your phone on a stand", style = Type.captionBrand, color = Theme.textSecondary)
+                                Text(stringResource(R.string.live_next_darkness), style = Type.bodyBrand, color = Color.White)
+                                Text(stringResource(R.string.live_then_stand), style = Type.captionBrand, color = Theme.textSecondary)
                             }
                             Icon(symbol("arrow.down"), contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(17.dp))
                         }
@@ -301,37 +312,37 @@ fun CameraSetupView(
                     CameraStage.darkness -> {
                         // Step 3: the sensor's baseline with the lens in total darkness.
                         StepCard(doneSoFar) {
-                            Text("3 · Measure darkness", style = Type.cardTitle.copy(letterSpacing = (-0.6).sp), color = Color.White)
+                            Text(stringResource(R.string.live_step_darkness), style = Type.cardTitle.copy(letterSpacing = (-0.6).sp), color = Color.White)
                             DarknessIllustration()
                             Text(
-                                markdown("This needs **total darkness**: lay the phone screen-up on a table, so the camera is pressed flat against it. A fingertip isn't enough."),
+                                markdown(stringResource(R.string.live_darkness_help)),
                                 style = Type.captionBrand, color = Theme.textSecondary,
                             )
                             if (redoDark && !busy) {
-                                LinkButton("Keep the last measurement", { redoDark = false }, style = Type.captionStrong)
+                                LinkButton(stringResource(R.string.live_keep_last), { redoDark = false }, style = Type.captionStrong)
                             }
                         }
                         messageTip?.let { TipRow(tone = it.first, text = it.second) }
                     }
                     CameraStage.placement -> {
                         // Step 4: the phone on a stand, pointing at the middle of the TV, and a test reading.
-                        Text("4 · Place the phone", style = Type.stepTitleStyle)
+                        Text(stringResource(R.string.live_step_place), style = Type.stepTitleStyle)
                         PlacementIllustration()
                         Text(
-                            "A hand's length (15–30 cm) from the TV, square to it, level with the centre. The grey patch should fill the yellow box with room to spare.",
+                            stringResource(R.string.live_place_help),
                             style = Type.bodyBrand, color = Theme.textSecondary,
                         )
                         messageTip?.let { TipRow(tone = it.first, text = it.second) }
                         when (val t = test) {
                             is CameraTestOutcome.Reading -> {
-                                TipRow(tone = TipTone.ok, text = "Test reading received")
+                                TipRow(tone = TipTone.ok, text = stringResource(R.string.live_test_received))
                                 if (t.uneven) {
-                                    TipRow(tone = TipTone.limit, text = "The box isn't evenly lit: move closer so the patch fills it.")
+                                    TipRow(tone = TipTone.limit, text = stringResource(R.string.live_uneven))
                                 }
                                 Card {
                                     Text("${fmt(t.luminance, if (t.luminance < 10) 2 else 1)} cd/m²",
                                         style = Type.bodyStrong.copy(fontFeatureSettings = "tnum"), color = Color.White)
-                                    Text("x ${fixed(t.x, 4)} · y ${fixed(t.y, 4)}",
+                                    Text("x ${L10n.num(t.x, 4)} · y ${L10n.num(t.y, 4)}",
                                         style = Type.captionBrand.copy(fontFeatureSettings = "tnum"), color = Theme.textSecondary)
                                 }
                             }
@@ -343,28 +354,30 @@ fun CameraSetupView(
                         // Everything done: the green summary.
                         Card {
                             Text(doneSoFar, style = Type.small, color = Theme.green)
-                            Text("✓ Darkness measured", style = Type.bodyBrand, color = Theme.green)
-                            Text("✓ Phone placement checked", style = Type.bodyBrand, color = Theme.green)
+                            Text(stringResource(R.string.live_darkness_measured), style = Type.bodyBrand, color = Theme.green)
+                            Text(stringResource(R.string.live_placement_checked), style = Type.bodyBrand, color = Theme.green)
                             Text(lockedSummary, style = Type.captionBrand, color = Theme.textSecondary)
                         }
-                        TipRow(tone = TipTone.ok, text = "Ready to measure. Keep the phone still.")
+                        TipRow(tone = TipTone.ok, text = stringResource(R.string.live_ready_keep_still))
                     }
                 }
                 if (stage != CameraStage.start || logLines.isNotEmpty()) {
                     // Camera log
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        val shownText = stringResource(R.string.live_shown)
+                        val hiddenText = stringResource(R.string.live_hidden)
                         val turn by animateFloatAsState(if (showLog) 180f else 0f, tween(200), label = "chevron")
                         Row(
                             Modifier
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
                                 .clickable(role = Role.Button) { showLog = !showLog }
-                                .semantics { stateDescription = if (showLog) "Shown" else "Hidden" },
+                                .semantics { stateDescription = if (showLog) shownText else hiddenText },
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                Text("Camera log", style = Type.bodyBrand, color = Color.White)
+                                Text(stringResource(R.string.live_camera_log), style = Type.bodyBrand, color = Color.White)
                                 Text(checksText, style = Type.captionBrand, color = Theme.textSecondary)
                             }
                             Icon(symbol("chevron.down"), contentDescription = null, tint = Theme.tealBright,
@@ -376,15 +389,15 @@ fun CameraSetupView(
                                     Text(lockedText, style = Type.captionBrand, color = Theme.textSecondary)
                                     Column {
                                         if (dark != null && stage != CameraStage.darkness) {
-                                            LinkButton("Measure the darkness again", {
+                                            LinkButton(stringResource(R.string.live_measure_dark_again), {
                                                 test = null
                                                 redoDark = true
                                             }, style = Type.captionStrong, enabled = !busy)
                                         }
                                         if (stage == CameraStage.ready) {
-                                            LinkButton("Test again", { test = null }, style = Type.captionStrong, enabled = !busy)
+                                            LinkButton(stringResource(R.string.live_test_again), { test = null }, style = Type.captionStrong, enabled = !busy)
                                         }
-                                        LinkButton("Stop the camera", { camera.stop() }, style = Type.captionStrong, enabled = !busy)
+                                        LinkButton(stringResource(R.string.live_stop_camera), { camera.stop() }, style = Type.captionStrong, enabled = !busy)
                                     }
                                 }
                                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -414,13 +427,14 @@ private fun StepCard(eyebrow: String, content: @Composable ColumnScope.() -> Uni
 /** The phone lying screen-up on a table, in the dark (design: darkness "Instruction illustration"). */
 @Composable
 private fun DarknessIllustration() {
+    val description = stringResource(R.string.live_darkness_illustration)
     Column(
         Modifier
             .fillMaxWidth()
             .height(100.dp)
             .background(Theme.surface, RoundedCornerShape(18.dp))
             .clearAndSetSemantics {
-                contentDescription = "The phone lying screen-up on a table, its back camera pressed flat against it"
+                contentDescription = description
             },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -440,7 +454,7 @@ private fun DarknessIllustration() {
                 .height(2.dp)
                 .background(Theme.tealBright),
         )
-        Text("Screen facing up", style = Type.tiny, color = Theme.textSecondary, modifier = Modifier.padding(top = 5.dp))
+        Text(stringResource(R.string.live_screen_up), style = Type.tiny, color = Theme.textSecondary, modifier = Modifier.padding(top = 5.dp))
     }
 }
 
@@ -450,6 +464,7 @@ private fun DarknessIllustration() {
  */
 @Composable
 private fun PlacementIllustration() {
+    val description = stringResource(R.string.live_placement_illustration)
     BoxWithConstraints(
         Modifier
             .fillMaxWidth()
@@ -457,7 +472,7 @@ private fun PlacementIllustration() {
             .clip(RoundedCornerShape(18.dp))
             .background(Theme.surface)
             .clearAndSetSemantics {
-                contentDescription = "The phone on a stand, 15 to 30 centimetres from the TV, facing the middle of the screen"
+                contentDescription = description
             },
     ) {
         val ox = (maxWidth - 353.dp) / 2
@@ -485,7 +500,7 @@ private fun PlacementIllustration() {
             drawLine(Theme.tealBright, Offset(x, 166 * p), Offset(o + 268 * p, 176 * p), 2 * p, StrokeCap.Round)
             drawLine(Theme.tealBright, Offset(x, 166 * p), Offset(o + 307 * p, 176 * p), 2 * p, StrokeCap.Round)
         }
-        Text("15–30 cm · facing the centre", style = Type.tiny, color = Theme.textSecondary, softWrap = false,
+        Text(stringResource(R.string.live_placement_label), style = Type.tiny, color = Theme.textSecondary, softWrap = false,
             modifier = Modifier.offset(x = ox + 45.dp, y = 165.dp))
     }
 }
@@ -512,7 +527,8 @@ fun LiveMeterView() {
 
     ScreenWithBottomAction(bottom = null) { pad ->
         Column(Modifier.fillMaxSize().screenBackground().padding(pad)) {
-            ScreenTitleBar("Live meter") { nav.pop() }
+            val targetsText = stringResource(R.string.live_targets)
+            ScreenTitleBar(stringResource(R.string.live_meter_title)) { nav.pop() }
             Column(
                 Modifier
                     .fillMaxWidth()
@@ -522,7 +538,7 @@ fun LiveMeterView() {
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(bottom = 2.dp)
-                    .semantics { contentDescription = "Targets" }) {
+                    .semantics { contentDescription = targetsText }) {
                     listOf(false to "SDR", true to "HDR").forEachIndexed { i, (v, label) ->
                         SegmentedButton(
                             selected = hdr == v,
@@ -544,7 +560,7 @@ fun LiveMeterView() {
 
                 if (blocker != null) {
                     TipRow(tone = TipTone.limit, text = blocker)
-                    LinkButton("Set up the camera", { nav.push(Route.Camera) })
+                    LinkButton(stringResource(R.string.live_set_up_camera), { nav.push(Route.Camera) })
                 }
                 meter.error?.let { TipRow(tone = TipTone.limit, text = it) }
                 val a = meter.analysis
@@ -553,25 +569,25 @@ fun LiveMeterView() {
                     val name = a.name
                     val t = a.tuv
                     if (a.kind == LiveAnalysis.Kind.white && bal != null) {
-                        Eyebrow(text = "Live · greyscale")
+                        Eyebrow(text = stringResource(R.string.live_eyebrow_grey))
                         LiveReadingFigures(a)
                         Row(Modifier.fillMaxWidth().heightIn(min = 110.dp), horizontalArrangement = Arrangement.spacedBy(24.dp),
                             verticalAlignment = Alignment.CenterVertically) {
                             WhiteTarget(uv = a.uv, d65 = a.d65uv, ok = (a.de ?: 9.0) < 1, modifier = Modifier.size(110.dp))
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Text("White point", style = Type.bodyStrong, color = Color.White)
-                                Text("D65 target · dE ${fmt(a.de, 2)}", style = Type.captionBrand.copy(fontFeatureSettings = "tnum"),
+                                Text(stringResource(R.string.live_white_point), style = Type.bodyStrong, color = Color.White)
+                                Text(stringResource(R.string.live_d65_target, fmt(a.de, 2)), style = Type.captionBrand.copy(fontFeatureSettings = "tnum"),
                                     color = if ((a.de ?: 9.0) < 1) Theme.green else Theme.textSecondary)
                             }
                         }
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            BalanceBar(label = "Red", value = bal.x - 1, colour = Theme.red)
-                            BalanceBar(label = "Green", value = bal.y - 1, colour = Theme.green)
-                            BalanceBar(label = "Blue", value = bal.z - 1, colour = Theme.blue)
+                            BalanceBar(label = L10n.colourName("RED"), value = bal.x - 1, colour = Theme.red)
+                            BalanceBar(label = L10n.colourName("GREEN"), value = bal.y - 1, colour = Theme.green)
+                            BalanceBar(label = L10n.colourName("BLUE"), value = bal.z - 1, colour = Theme.blue)
                         }
                         a.advice?.let { TipRow(tone = if ((a.de ?: 9.0) < 1) TipTone.ok else TipTone.todo, text = it) }
                     } else if (name != null && t != null) {
-                        Eyebrow(text = "Live · colour · ${name.lowercase().replaceFirstChar { it.uppercase() }}")
+                        Eyebrow(text = stringResource(R.string.live_eyebrow_colour, L10n.colourName(name)))
                         LiveReadingFigures(a)
                         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                             GamutChart(dots = listOf(GamutDot(id = name, uv = a.uv, target = t)), hdr = hdr,
@@ -579,8 +595,8 @@ fun LiveMeterView() {
                         }
                         Card {
                             Row(horizontalArrangement = Arrangement.spacedBy(20.dp), verticalAlignment = Alignment.Top) {
-                                Figure("Hue", "${signed(a.hue)}°", Modifier.weight(1f))
-                                Figure("Saturation", "${signed(a.sat)}%", Modifier.weight(1f))
+                                Figure(stringResource(R.string.live_hue), "${signed(a.hue)}°", Modifier.weight(1f))
+                                Figure(stringResource(R.string.live_saturation), signed(a.sat) + L10n.tr("%", " %"), Modifier.weight(1f))
                             }
                         }
                     } else {
@@ -590,10 +606,10 @@ fun LiveMeterView() {
                     Row(Modifier.padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(Modifier.size(20.dp), color = Theme.tealBright, strokeWidth = 2.dp)
-                        Text("Reading…", style = Type.bodyBrand, color = Theme.textSecondary)
+                        Text(stringResource(R.string.live_reading_progress), style = Type.bodyBrand, color = Theme.textSecondary)
                     }
                 }
-                Text("Point the measuring box at a solid patch. Readings stay on this phone.", style = Type.small,
+                Text(stringResource(R.string.live_point_box), style = Type.small,
                     color = Theme.textSecondary)
             }
         }
@@ -611,7 +627,7 @@ private fun LiveReadingFigures(a: LiveAnalysis) {
             autoSize = TextAutoSize.StepBased(minFontSize = (76f * 0.5f).sp, maxFontSize = 76.sp),
         )
         Text("cd/m²", style = Type.brand(17f, FontWeight.Normal), color = Color.White)
-        Text("x ${fixed(a.xy.x, 4)} · y ${fixed(a.xy.y, 4)}", style = Type.captionBrand.copy(fontFeatureSettings = "tnum"),
+        Text("x ${L10n.num(a.xy.x, 4)} · y ${L10n.num(a.xy.y, 4)}", style = Type.captionBrand.copy(fontFeatureSettings = "tnum"),
             color = Theme.textSecondary)
     }
 }

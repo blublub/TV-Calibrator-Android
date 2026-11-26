@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- GuidedView: screen, header, step bar -->
+    <string name="guided_setup_camera">Set up the camera</string>
+    <string name="guided_check_and_finetune">Check and fine-tune</string>
+    <string name="guided_cancel">Cancel</string>
+    <string name="guided_close">Close</string>
+    <string name="guided_back">Back</string>
+    <string name="guided_steps_click_label">Shows all the steps, to go back or ahead</string>
+    <string name="guided_step_a11y">%1$s, step %2$s</string>
+    <string name="guided_step_a11y_current">%1$s, step %2$s, current</string>
+    <string name="guided_step_a11y_done">%1$s, step %2$s, done</string>
+    <string name="guided_tap_to_jump">%1$s · tap a step to jump</string>
+
+    <!-- 1. Set up -->
+    <string name="guided_generic_tv">TV</string>
+    <string name="guided_format_sdr">Start with everyday TV. Each format keeps its own settings on the TV.</string>
+    <string name="guided_format_hdr10">The TV has separate settings for HDR, so it’s calibrated after SDR.</string>
+    <string name="guided_format_advanced">Advanced: do SDR and HDR10 first. %1$s has its own settings on the TV.</string>
+    <string name="guided_calibrating">Calibrating %1$s</string>
+    <string name="guided_videos_on_youtube">The %1$s videos are on YouTube</string>
+    <string name="guided_download_patterns_title">Download the %1$s patterns</string>
+    <string name="guided_only_videos_prefix">Only play videos whose title starts with ‘%1$s’</string>
+    <string name="guided_only_files_prefix">Only play files whose name starts with ‘%1$s’</string>
+    <string name="guided_no_hdr_badge">The TV should show no HDR badge. You start each video with the TV\'s remote.</string>
+    <string name="guided_mode_badge">The TV should show its %1$s badge. You start each video with the TV\'s remote.</string>
+    <string name="guided_demo_settings_title">On a real TV: picture settings</string>
+    <string name="guided_set_up_brand">Set up the %1$s</string>
+    <string name="guided_open_picture">On the TV, open Picture and match these.</string>
+    <string name="guided_menu_names_vary">Menu names may vary a little by %1$s model.</string>
+    <string name="guided_dim_room">Dim the room</string>
+    <string name="guided_dim_room_text">Lights off, curtains closed, and the TV on for 20–30 minutes first: screens shift as they warm up.</string>
+    <string name="guided_place_phone">Place the phone</string>
+    <string name="guided_place_phone_text">Keep the yellow box inside the grey patch, and don’t move the phone once you start.</string>
+    <string name="guided_place_phone_lead">A hand\'s length (15–30 cm) from the TV, facing its middle, not touching the screen.</string>
+    <string name="guided_camera_ready">Get the camera ready</string>
+    <string name="guided_camera_ready_text">Next, the app measures the TV as it is, for your before and after. About two minutes.</string>
+    <string name="guided_setup_finish">Start: measure the TV as it is</string>
+    <string name="guided_setup_section">Getting ready</string>
+    <string name="guided_source_youtube">Play the videos in your TV’s YouTube app, or cast from your phone.</string>
+    <string name="guided_source_usb">Copy the %1$s folder to a USB stick and play the files with the TV’s media player.</string>
+    <string name="guided_open_playlist">Open the %1$s playlist</string>
+    <string name="guided_download_patterns_button">Download the %1$s patterns</string>
+    <string name="guided_patterns_on_youtube">Patterns on YouTube</string>
+    <string name="guided_pattern_files">Pattern files to download</string>
+    <string name="guided_patterns_youtube_text">Play the %1$s patterns from the TV Calibrator playlist on the Slidebean channel, in the TV’s YouTube app or cast from your phone, at the highest quality.</string>
+
+    <!-- Measuring a quick-check video -->
+    <string name="guided_tap_measure">Tap Measure</string>
+    <string name="guided_start_video">Start the video on the TV</string>
+    <string name="guided_keep_still_ads">Keep the phone still. Ads are fine: the app waits for the pattern.</string>
+    <string name="guided_keep_still">Keep the phone still.</string>
+    <string name="guided_measure_two_minutes">Measure (about two minutes)</string>
+    <string name="guided_is_video_playing">Is the %1$s video playing?</string>
+    <string name="guided_expected_nothing_saved">%1$s expected. Nothing was saved.</string>
+    <string name="guided_nothing_saved">Nothing was saved</string>
+    <string name="guided_replay_then_measure">Replay the %1$s video from the start, then measure again.</string>
+    <string name="guided_ill_replay">I’ll replay the %1$s video</string>
+
+    <!-- 2 + 7. Before / after -->
+    <string name="guided_measure_starting_point">Measure your starting point</string>
+    <string name="guided_one_final_check">One final check</string>
+    <string name="guided_your_starting_point">Your starting point</string>
+    <string name="guided_limits">%1$s: as close as this TV gets (its controls were at their limit).</string>
+    <string name="guided_measure_again">Measure again</string>
+    <string name="guided_next_white_balance">Next: fix the white balance</string>
+    <string name="guided_new_session">Start a new session</string>
+    <string name="guided_newsletter_title">Access our tools before anyone else</string>
+    <string name="guided_newsletter_subscribe">Subscribe to Untangled</string>
+
+    <!-- 5. Check the greyscale -->
+    <string name="guided_find_points">Find my TV’s points</string>
+    <string name="guided_finetune_optional">Fine-tune a grey (optional)</string>
+    <string name="guided_check_greys">Check the greys</string>
+    <string name="guided_next_colours">Next: colours</string>
+    <string name="guided_continue_colours">Continue to colours</string>
+    <string name="guided_col_grey">Grey</string>
+    <string name="guided_col_red">Red</string>
+    <string name="guided_col_blue">Blue</string>
+    <string name="guided_on_target">On target</string>
+    <string name="guided_redo_bright">Redo bright end</string>
+    <string name="guided_redo_dark">Redo dark end</string>
+    <string name="guided_finetune">Fine-tune</string>
+
+    <!-- Walkthrough -->
+    <string name="guided_walk_done">Done</string>
+    <string name="guided_walk_next">Next</string>
+    <string name="guided_walk_count">%1$s of %2$s</string>
+    <string name="guided_art_placement_label">15–30 cm · facing the centre</string>
+    <string name="guided_art_placement_a11y">A phone on a stand, 15 to 30 centimetres from the TV, facing the grey patch in the middle</string>
+    <string name="guided_art_lights_off">Lights off</string>
+    <string name="guided_art_tv_on">TV on</string>
+    <string name="guided_art_minutes">20–30 min</string>
+    <string name="guided_art_format_order_a11y">Calibrate in order: SDR, HDR10, HDR10+, Dolby Vision. Now: %1$s</string>
+    <string name="guided_art_usb_file">USB file</string>
+    <string name="guided_art_format_settings">Each format has its own picture settings on the TV</string>
+    <string name="guided_art_rgb_sliders">Red, green and blue sliders</string>
+    <string name="guided_art_n_sliders">%1$s sliders</string>
+    <string name="guided_art_no_colour_menu">No colour menu</string>
+    <string name="guided_art_hsb_sliders">Hue, saturation and brightness sliders</string>
+    <string name="guided_art_no_colour_sliders">No colour sliders</string>
+</resources>

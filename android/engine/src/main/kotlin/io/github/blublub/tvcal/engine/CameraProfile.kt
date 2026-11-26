@@ -116,8 +116,8 @@ data class CameraProfile(
     /** "Excellent" ... for the unseen-TV estimate (or the training average). */
     val accuracyWord: String
         get() {
-            val de = stats.unseen ?: stats.deAvg ?: return "Not rated"
-            return if (de < 1) "Excellent" else if (de < 2) "Very good" else if (de < 3) "Good" else "Approximate"
+            val de = stats.unseen ?: stats.deAvg ?: return EngineTexts.current.notRated
+            return if (de < 1) EngineTexts.current.excellent else if (de < 2) EngineTexts.current.veryGood else if (de < 3) EngineTexts.current.good else EngineTexts.current.approximate
         }
 }
 

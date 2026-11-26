@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen home (TVHomeView) -->
+    <string name="report_start_with">Start with %1$s</string>
+    <string name="report_view_results">View %1$s results</string>
+    <string name="report_continue">Continue %1$s</string>
+    <string name="report_screen_options">Screen options</string>
+    <string name="report_screen_settings">Screen settings</string>
+    <string name="report_export_history">Export history</string>
+    <string name="report_delete_this_screen">Delete this screen</string>
+    <string name="report_jump_to_step">Jump to a step</string>
+    <string name="report_delete_title">Delete %1$s?</string>
+    <string name="report_delete_text">Its measurements and calibration progress are removed from this phone.</string>
+    <string name="report_delete_confirm">Delete the screen and its history</string>
+    <string name="report_cancel">Cancel</string>
+    <string name="report_back">Back</string>
+    <string name="report_close">Close</string>
+    <string name="report_demo_note">Demo: simulated readings. The on-screen buttons stand in for the TV\'s remote.</string>
+    <string name="report_calibrated_caps">CALIBRATED</string>
+    <string name="report_starting_point_caps">STARTING POINT</string>
+    <string name="report_full_results">Full results</string>
+    <string name="report_see_starting_point">See the starting point</string>
+    <string name="report_advanced">Advanced</string>
+    <string name="report_usb_files">USB files</string>
+    <string name="report_not_started">Not started</string>
+    <string name="report_calibrated">Calibrated</string>
+    <string name="report_steps_of">%1$s of %2$s steps</string>
+    <string name="report_calibrate_anyway">Calibrate %1$s anyway</string>
+    <string name="report_not_now">Not now</string>
+    <string name="report_advanced_formats">Advanced formats</string>
+    <string name="report_needs_usb">%1$s needs a USB drive</string>
+    <string name="report_advanced_body">YouTube can\'t play %1$s: download the pattern files, copy them to a USB drive and play them on the TV. Do SDR and HDR10 first; this builds on those settings.</string>
+    <string name="report_go_to">Go to %1$s</string>
+    <string name="report_status_current">Current</string>
+    <string name="report_status_done">Done</string>
+    <string name="report_status_upcoming">Upcoming</string>
+
+    <!-- Results (ResultsView) -->
+    <string name="report_headline_measured">Your picture, measured.</string>
+    <string name="report_headline_not_there">Not quite there yet.</string>
+    <string name="report_headline_natural">A more natural picture.</string>
+    <string name="report_share_title">%1$s · calibration results</string>
+    <string name="report_before_after_caps">BEFORE → AFTER</string>
+    <string name="report_measured_caps">MEASURED</string>
+    <string name="report_grey_by_grey">Grey by grey</string>
+    <string name="report_share">Share</string>
+    <string name="report_share_before_after_date">Before → after · %1$s</string>
+    <string name="report_share_measured_date">Measured · %1$s</string>
+    <string name="report_based_on">based on TV Calibrator by Slidebean</string>
+    <string name="report_measured_with_phone">Measured with phone</string>
+
+    <!-- Report visuals -->
+    <string name="report_greyscale">Greyscale</string>
+    <string name="report_colours">Colours</string>
+    <string name="report_gamma">Gamma</string>
+    <string name="report_white_point">White point</string>
+    <string name="report_gauge_off">Off</string>
+    <string name="report_gauge_before">before</string>
+    <string name="report_gauge_after">after</string>
+    <string name="report_gauge_perfect">Perfect</string>
+    <string name="report_colours_on_target">%1$s of %2$s colours on target</string>
+    <string name="report_dot_target">· target %1$s</string>
+
+    <!-- Playback -->
+    <string name="report_usb_file">USB file</string>
+    <string name="report_play_on_tv">Play on the TV</string>
+    <string name="report_play_on_tv_from_start">Play on the TV, from the start</string>
+    <string name="report_open_on_youtube">Open on YouTube</string>
+    <string name="report_get_usb_file">Get the USB file</string>
+    <string name="report_youtube_on_tv">YouTube · on your TV</string>
+    <string name="report_start_video">Start the video on the TV</string>
+    <string name="report_waiting_flashes">Waiting for its flashes…</string>
+    <string name="report_title_starts_with">Its title starts with %1$s. Ads are fine: the app keeps waiting.</string>
+    <string name="report_file_starts_with">Its file name starts with %1$s.</string>
+    <string name="report_measuring_patch">Measuring %1$s</string>
+    <string name="report_measuring">Measuring…</string>
+    <string name="report_patches_of">%1$s of %2$s patches</string>
+    <string name="report_patches_measured">%1$s of %2$s patches measured</string>
+    <string name="report_camera_sees">Camera sees %1$s</string>
+    <string name="report_keep_still">Keep the TV menu closed and the phone still.</string>
+
+    <!-- Components -->
+    <string name="report_was">was %1$s</string>
+    <string name="report_reading">%1$s: %2$s</string>
+    <string name="report_reading_on_target">%1$s: %2$s, on target</string>
+    <string name="report_too_little">Too little</string>
+    <string name="report_on_target">On target</string>
+    <string name="report_too_much">Too much</string>
+    <string name="report_white_on_target">White is on target</string>
+    <string name="report_white_off_target">White is off target</string>
+    <string name="report_colour_chart">Colour chart</string>
+    <string name="report_colour_chart_one_on">Colour chart: %1$s is on target</string>
+    <string name="report_colour_chart_one_off">Colour chart: %1$s is off target</string>
+    <string name="report_colour_chart_many">Colour chart: %1$s of %2$s colours on target</string>
+    <string name="report_grey_chart_desc">Greyscale chart: red, green and blue against the target line</string>
+    <string name="report_percent">%1$s%%</string>
+    <string name="report_target">target %1$s</string>
+    <string name="report_greyscale_range">Greyscale · %1$s–%2$s%%</string>
+    <string name="report_colours_all_six">Colours · all six on target</string>
+    <string name="report_colours_all">Colours · all on target</string>
+    <string name="report_colours_some">Colours · %1$s of %2$s on target</string>
+    <string name="report_grey_legend_before">Before faded · after solid · flat target line</string>
+    <string name="report_grey_legend">Flat line is the target</string>
+    <string name="report_colour_legend_before">Rings: target · hollow: before · dots: after</string>
+    <string name="report_colour_legend">Rings: target · dots: your TV</string>
+    <string name="report_de_explainer">How far off (dE): under 1 is perfect. Greys under 2 and colours under 3 are excellent; TVs rarely match every colour exactly.</string>
+    <string name="report_numbers_mean">What the numbers mean</string>
+
+    <!-- Design system -->
+    <string name="report_page_of">Page %1$s of %2$s</string>
+</resources>

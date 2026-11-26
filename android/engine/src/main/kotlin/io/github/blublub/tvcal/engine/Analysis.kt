@@ -78,7 +78,7 @@ object Analysis {
         val rep = Report()
         val w = meas["W0"]
         if (w == null) {
-            rep.warnings.add("No 100% white reading - can't analyse this round.")
+            rep.warnings.add(EngineTexts.current.noWhite)
             return rep
         }
         rep.white = w
@@ -87,10 +87,7 @@ object Analysis {
             val drift = (w1.y / yw - 1) * 100
             rep.drift = drift
             if (abs(drift) > 3) {
-                rep.warnings.add(
-                    "Brightness drifted ${signedFixed(drift, 1)}% during the run (TV not warmed up, " +
-                        "or auto-brightness/energy saving still on).",
-                )
+                rep.warnings.add(EngineTexts.current.drifted(EngineTexts.signedNum(drift, 1)))
             }
         }
         // missed patches, in the video's order
@@ -98,9 +95,8 @@ object Analysis {
             val m = meas.missed[p.id] ?: continue
             val took = m.readings.maxOrNull() ?: 0.0
             rep.warnings.add(
-                "${m.name}: no reading. " + if (took != 0.0)
-                    "The camera's readings took up to ${fixed(took, 1)}s on it, against ${gFormat(m.hold)}s on screen."
-                else "The camera didn't return anything while it was on screen.",
+                if (took != 0.0) EngineTexts.current.missedTook(m.name, EngineTexts.num(took, 1), EngineTexts.g(m.hold))
+                else EngineTexts.current.missedNothing(m.name),
             )
         }
         var prevY = 0.0
@@ -111,7 +107,7 @@ object Analysis {
             val rgb = ColourMath.xyzToRGB709(xyz)
             val y = xyz.y
             if (y < prevY * 0.95 && !hdr) {
-                rep.warnings.add("${p.name} is darker than the step before it - timing may be off, or the TV is clipping/tone-mapping.")
+                rep.warnings.add(EngineTexts.current.darkerThanBefore(p.name))
             }
             prevY = y
             val tgt = if (hdr) ColourMath.pqDecode(level) else yw * level.pow(2.4)
@@ -123,7 +119,7 @@ object Analysis {
             val peak = rep.greys.maxOfOrNull { it.Y } ?: 0.0
             rep.peak = peak
             val names = clip.joinToString(", ") { it.name.split(" (")[0] }
-            rep.warnings.add("The TV tops out around ${fixed(peak, 0)} cd/m² - steps above that ($names) are left out of the corrections.")
+            rep.warnings.add(EngineTexts.current.topsOut(EngineTexts.num(peak, 0), names))
         }
         val tg = Patterns.colourTargets(hdr)
         // HDR: judge colours against the TV's own 100-nit white, so an overall HDR brightness
@@ -184,11 +180,11 @@ object Analysis {
     fun scoreWord(de: Double?): String {
         if (de == null || de.isNaN()) return ""
         return when {
-            de < 1 -> "Excellent"
-            de < 2 -> "Very good"
-            de < 3 -> "Good"
-            de < 5 -> "Noticeably off"
-            else -> "Clearly off"
+            de < 1 -> EngineTexts.current.excellent
+            de < 2 -> EngineTexts.current.veryGood
+            de < 3 -> EngineTexts.current.good
+            de < 5 -> EngineTexts.current.noticeablyOff
+            else -> EngineTexts.current.clearlyOff
         }
     }
 

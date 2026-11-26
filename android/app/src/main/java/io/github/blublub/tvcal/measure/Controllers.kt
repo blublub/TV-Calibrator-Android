@@ -227,8 +227,12 @@ class GuidedController(val app: AppModel, tv: TVRecord, mode: SignalMode) {
                 state = state.copy(finder = state.finder.copy(nudged = meas))
                 val map = finderMap
                 if (map.size < 2) {
-                    message = "The nudges didn't show up clearly enough to find the controls. Check the four changes were " +
-                        "made (+10 each), then measure the nudged pass again."
+                    message = io.github.blublub.tvcal.ui.L10n.tr(
+                        "The nudges didn't show up clearly enough to find the controls. Check the four changes were " +
+                            "made (+10 each), then measure the nudged pass again.",
+                        "Die Änderungen waren nicht deutlich genug zu sehen, um die Regler zu finden. Prüfe, ob alle vier " +
+                            "Änderungen gemacht wurden (je +10), und miss den geänderten Durchgang noch einmal.",
+                    )
                 } else {
                     app.store.appendLog(
                         tv,

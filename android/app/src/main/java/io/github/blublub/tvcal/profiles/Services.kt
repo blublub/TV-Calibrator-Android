@@ -3,6 +3,8 @@
 // Changed: no profile server; on Android the profile comes from the camera's own colour data.
 package io.github.blublub.tvcal.profiles
 
+import io.github.blublub.tvcal.ui.L10n
+
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.getValue
@@ -24,7 +26,7 @@ class ProfileService {
 
     var status by mutableStateOf(Status.CHECKING); private set
     var profile by mutableStateOf<CameraProfile?>(null); private set
-    var summary by mutableStateOf("Finding the camera's colour data."); private set
+    var summary by mutableStateOf(L10n.tr("Finding the camera's colour data.", "Farbdaten der Kamera werden gelesen.")); private set
 
     /** True while the profile is the approximate one (always, until trained profiles exist for phones). */
     val isStandard: Boolean get() = true
@@ -37,24 +39,28 @@ class ProfileService {
         val info = engine.inspect()
         if (info == null) {
             status = Status.UNAVAILABLE
-            summary = engine.inspectProblem ?: "This phone's camera doesn't report the colour data the meter needs."
+            summary = engine.inspectProblem ?: L10n.tr("This phone's camera doesn't report the colour data the meter needs.", "Die Kamera dieses Handys liefert nicht die Farbdaten, die das Messgerät braucht.")
             profile = null
             return
         }
         val p = MetadataProfile.profile(info, phoneModel, phoneModel, engine.settings)
         if (p == null) {
             status = Status.UNAVAILABLE
-            summary = "This phone's camera doesn't report the colour data the meter needs."
+            summary = L10n.tr("This phone's camera doesn't report the colour data the meter needs.", "Die Kamera dieses Handys liefert nicht die Farbdaten, die das Messgerät braucht.")
         } else {
             status = Status.READY
-            summary = "Approximate profile from this phone's own colour data. Readings show the direction and " +
-                "rough size of errors; they aren't checked against a colorimeter."
+            summary = L10n.tr(
+                "Approximate profile from this phone's own colour data. Readings show the direction and " +
+                    "rough size of errors; they aren't checked against a colorimeter.",
+                "Näherungsprofil aus den eigenen Farbdaten dieses Handys. Die Messwerte zeigen Richtung und " +
+                    "ungefähre Größe von Abweichungen; sie sind nicht mit einem Colorimeter abgeglichen.",
+            )
         }
         profile = p
     }
 
     /** The accuracy word to show for the profile in use. */
-    val accuracy: String get() = if (profile == null) "Not available" else "Approximate"
+    val accuracy: String get() = if (profile == null) L10n.tr("Not available", "Nicht verfügbar") else L10n.tr("Approximate", "Näherung")
 }
 
 /**

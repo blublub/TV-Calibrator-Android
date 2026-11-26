@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -47,12 +48,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.Patch
 import io.github.blublub.tvcal.engine.PatchKind
 import io.github.blublub.tvcal.engine.Patterns
 import io.github.blublub.tvcal.engine.SignalMode
 import io.github.blublub.tvcal.measure.SweepRunner
 import io.github.blublub.tvcal.profiles.onYouTube
+import io.github.blublub.tvcal.ui.L10n
 import io.github.blublub.tvcal.ui.LocalApp
 import io.github.blublub.tvcal.ui.openUrl
 import io.github.blublub.tvcal.ui.theme.Card
@@ -89,8 +92,8 @@ fun PlayFileCard(
 ) {
     val links = LocalApp.current.links
     val context = LocalContext.current
-    val sourceLabel = if (mode.onYouTube) "YouTube" else "USB file"
-    val playLabel = if (fromStart) "Play on the TV, from the start" else "Play on the TV"
+    val sourceLabel = if (mode.onYouTube) "YouTube" else stringResource(R.string.report_usb_file)
+    val playLabel = stringResource(if (fromStart) R.string.report_play_on_tv_from_start else R.string.report_play_on_tv)
     // The video itself on YouTube (or its playlist), or the pattern download.
     val sourceURL: String? =
         if (mode.onYouTube) (links.links.video(file) ?: links.links.playlist(mode)) else links.links.download(mode)
@@ -140,14 +143,14 @@ fun PlayFileCard(
                 Text(file, style = Type.bodyStrong, color = Color.White)
                 if (linked) {
                     Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(if (mode.onYouTube) "Open on YouTube" else "Get the USB file", style = Type.small,
+                        Text(stringResource(if (mode.onYouTube) R.string.report_open_on_youtube else R.string.report_get_usb_file), style = Type.small,
                             color = Theme.tealBright)
                         Icon(symbol(if (mode.onYouTube) "arrow.up.right" else "arrow.down"), contentDescription = null,
                             tint = Theme.tealBright, modifier = Modifier.size(12.dp))
                     }
                 } else {
-                    Text(if (mode.onYouTube) "YouTube · on your TV" else "USB file", style = Type.small,
-                        color = Theme.textSecondary)
+                    Text(stringResource(if (mode.onYouTube) R.string.report_youtube_on_tv else R.string.report_usb_file),
+                        style = Type.small, color = Theme.textSecondary)
                 }
             }
         }
@@ -176,7 +179,7 @@ fun MeasuringCard(
             else -> {}
         }
         if (showsCancel && runner.running) {
-            SecondaryButton("Cancel", onClick = { runner.cancel() })
+            SecondaryButton(stringResource(R.string.report_cancel), onClick = { runner.cancel() })
         }
     }
 }
@@ -186,7 +189,7 @@ fun MeasuringCard(
 @Composable
 private fun ColumnScope.MeasuringWaiting(file: String, mode: SignalMode, showsTitle: Boolean) {
     if (showsTitle) {
-        Text("Start the video on the TV", style = Type.stepTitleStyle)
+        Text(stringResource(R.string.report_start_video), style = Type.stepTitleStyle)
     }
     val pulse = rememberInfiniteTransition(label = "pulse")
     val a by pulse.animateFloat(1f, 0.35f, infiniteRepeatable(tween(900), RepeatMode.Reverse), label = "pulseAlpha")
@@ -195,13 +198,13 @@ private fun ColumnScope.MeasuringWaiting(file: String, mode: SignalMode, showsTi
             Icon(symbol("viewfinder"), contentDescription = null, tint = Theme.tealBright,
                 modifier = Modifier.size(54.dp).alpha(a))
         }
-        Text("Waiting for its flashes…", style = Type.bodyStrong, color = Color.White,
+        Text(stringResource(R.string.report_waiting_flashes), style = Type.bodyStrong, color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally))
     }
     WaitingFileCard(file, mode)
     Text(
-        if (mode.onYouTube) "Its title starts with ${mode.packPrefix}. Ads are fine: the app keeps waiting."
-        else "Its file name starts with ${mode.packPrefix}.",
+        if (mode.onYouTube) stringResource(R.string.report_title_starts_with, mode.packPrefix)
+        else stringResource(R.string.report_file_starts_with, mode.packPrefix),
         style = Type.captionBrand, color = Theme.textSecondary,
     )
 }
@@ -216,22 +219,29 @@ private fun ColumnScope.MeasuringPatches(runner: SweepRunner, mode: SignalMode, 
         playbackPatchColour(p.kind, p.id, Patterns.patch(mode.isHDR, p.id)?.level)
 
     if (showsTitle) {
-        Text(current?.let { "Measuring ${playbackPatchLabel(it.name)}" } ?: "Measuring…", style = Type.stepTitleStyle)
+        Text(current?.let { stringResource(R.string.report_measuring_patch, playbackPatchLabel(it.name)) }
+            ?: stringResource(R.string.report_measuring), style = Type.stepTitleStyle)
     }
     val swatch by animateColorAsState(current?.let { colour(it) } ?: Theme.card, tween(300), label = "swatch")
     Card(spacing = 12.dp, hero = true) {
         Box(Modifier.fillMaxWidth().height(130.dp), contentAlignment = Alignment.Center) {
             Box(Modifier.size(110.dp).background(swatch, RoundedCornerShape(9.dp)))
         }
-        Text("$doneCount of ${runner.patches.size} patches",
+        Text(stringResource(R.string.report_patches_of, doneCount.toString(), runner.patches.size.toString()),
             style = Type.brand(19f, FontWeight.SemiBold).copy(fontFeatureSettings = "tnum"), color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally))
+    }
+    val measuredLabel = stringResource(R.string.report_patches_measured, doneCount.toString(),
+        runner.patches.size.toString())
+    // "Camera sees %1$s": the words around the reading, so the reading can be bold.
+    val (seesBefore, seesAfter) = stringResource(R.string.report_camera_sees, "\u0000").split("\u0000").let {
+        it[0] to it.getOrElse(1) { "" }
     }
     Card(spacing = 16.dp) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .clearAndSetSemantics { contentDescription = "$doneCount of ${runner.patches.size} patches measured" },
+                .clearAndSetSemantics { contentDescription = measuredLabel },
             horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             runner.patches.forEachIndexed { i, p ->
@@ -249,13 +259,14 @@ private fun ColumnScope.MeasuringPatches(runner: SweepRunner, mode: SignalMode, 
         val reading = "${fmt(runner.latestY, if ((runner.latestY ?: 0.0) < 10) 2 else 1)} cd/m²"
         Text(
             buildAnnotatedString {
-                append("Camera sees ")
+                append(seesBefore)
                 withStyle(SpanStyle(fontWeight = FontWeight.SemiBold, color = Color.White)) { append(reading) }
+                append(seesAfter)
             },
             style = Type.captionBrand, color = Theme.textSecondary,
         )
     }
-    Text("Keep the TV menu closed and the phone still.", style = Type.captionBrand, color = Theme.textSecondary)
+    Text(stringResource(R.string.report_keep_still), style = Type.captionBrand, color = Theme.textSecondary)
 }
 
 /** The video to play while waiting: its format, where it comes from and its title. */
@@ -272,8 +283,8 @@ private fun WaitingFileCard(file: String, mode: SignalMode) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             ModeBadge(mode)
             Spacer(Modifier.weight(1f).width(8.dp))
-            Text(if (mode.onYouTube) "YouTube · on your TV" else "USB file", style = Type.small,
-                color = Theme.textSecondary, maxLines = 1)
+            Text(stringResource(if (mode.onYouTube) R.string.report_youtube_on_tv else R.string.report_usb_file),
+                style = Type.small, color = Theme.textSecondary, maxLines = 1)
         }
         Text(file, style = Type.brand(14f, FontWeight.SemiBold), color = Color.White)
     }
@@ -286,8 +297,21 @@ private fun playbackPatchColour(kind: PatchKind, id: String, level: Double?): Co
     return Color(l, l, l)
 }
 
-/** "100% WHITE" -> "100% white", "PQ 50% GREY (92 nits)" -> "50% grey (92 nits)". */
-private fun playbackPatchLabel(name: String): String = name.replace("PQ ", "").lowercase()
+/**
+ * "100% WHITE" -> "100% white", "PQ 50% GREY (92 nits)" -> "50% grey (92 nits)".
+ * German: "100 % Weiß", "50 % Grau (92 Nits)" (nouns keep their capital).
+ */
+private fun playbackPatchLabel(name: String): String {
+    val plain = name.replace("PQ ", "")
+    if (!L10n.german) return plain.lowercase()
+    return L10n.patchNameDe(plain)
+        .split(" ")
+        .joinToString(" ") { w ->
+            val i = w.indexOfFirst { it.isLetter() }
+            if (i < 0) w else w.lowercase().let { it.substring(0, i) + it[i].uppercase() + it.substring(i + 1) }
+        }
+        .replace("Weiss", "Weiß")
+}
 
 /** The camera's recent brightness readings, as a line. */
 @Composable

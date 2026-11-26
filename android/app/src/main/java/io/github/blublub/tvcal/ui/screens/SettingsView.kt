@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -44,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
 import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.SignalMode
-import io.github.blublub.tvcal.engine.fixed
 import io.github.blublub.tvcal.profiles.ProfileService
 import io.github.blublub.tvcal.ui.LocalApp
 import io.github.blublub.tvcal.ui.LocalNav
@@ -83,7 +83,7 @@ fun SettingsView(profiles: ProfileService) {
             .screenBackground()
             .statusBarsPadding(),
     ) {
-        SettingsTitleBar(title = "Settings", onBack = { nav.pop() })
+        SettingsTitleBar(title = stringResource(R.string.home_settings), onBack = { nav.pop() })
         Column(
             Modifier
                 .weight(1f)
@@ -95,10 +95,10 @@ fun SettingsView(profiles: ProfileService) {
         ) {
             // MARK: Camera profile
             Card(spacing = 12.dp) {
-                Eyebrow(text = "Camera profile")
+                Eyebrow(text = stringResource(R.string.home_settings_camera_profile))
                 val p = profiles.profile
                 SettingsRow(
-                    title = "This phone",
+                    title = stringResource(R.string.home_settings_this_phone),
                     detail = if (p == null) profiles.phoneModel else "${profiles.phoneModel} · ${profiles.accuracy}",
                     symbol = "camera",
                 )
@@ -108,20 +108,23 @@ fun SettingsView(profiles: ProfileService) {
                     }
                     if (p.stats.tvs.isNotEmpty()) {
                         val n = p.stats.tvs.size
-                        SettingsRow(title = "TVs matched", detail = "Matched on $n TV${if (n == 1) "" else "s"}",
+                        SettingsRow(title = stringResource(R.string.home_settings_tvs_matched),
+                            detail = pluralStringResource(R.plurals.home_settings_matched_on, n, n.toString()),
                             symbol = "checkmark")
                     }
                     val u = p.stats.unseen
                     val a = p.stats.deAvg
                     if (u != null) {
-                        SettingsRow(title = "Accuracy: ${p.accuracyWord}", detail = "dE ${fmt(u, 2)} on a new TV",
+                        SettingsRow(title = stringResource(R.string.home_settings_accuracy, p.accuracyWord),
+                            detail = stringResource(R.string.home_settings_de_new, fmt(u, 2)),
                             symbol = "info.circle")
                     } else if (a != null) {
-                        SettingsRow(title = "Accuracy: ${p.accuracyWord}", detail = "dE ${fmt(a, 2)} in training",
+                        SettingsRow(title = stringResource(R.string.home_settings_accuracy, p.accuracyWord),
+                            detail = stringResource(R.string.home_settings_de_training, fmt(a, 2)),
                             symbol = "info.circle")
                     }
                     p.camera.aperture?.let { ap ->
-                        SettingsRow(title = "Aperture", detail = "f/${fixed(ap, 1)}", symbol = "camera.aperture")
+                        SettingsRow(title = stringResource(R.string.home_settings_aperture), detail = "f/${fmt(ap, 1)}", symbol = "camera.aperture")
                     }
                 } else {
                     Text(profiles.summary, style = Type.captionBrand, color = Theme.textSecondary)
@@ -130,40 +133,42 @@ fun SettingsView(profiles: ProfileService) {
 
             // MARK: Pattern videos
             Card(spacing = 12.dp) {
-                Eyebrow(text = "Pattern videos")
+                Eyebrow(text = stringResource(R.string.home_settings_pattern_videos))
                 for (m in listOf(SignalMode.SDR, SignalMode.HDR10)) {
                     links.playlist(m)?.let { url ->
                         Box(Modifier.clickable { openUrl(context, url) }) {
-                            SettingsRow(title = "${m.label} playlist", detail = "YouTube", symbol = "arrow.up.right.square")
+                            SettingsRow(title = stringResource(R.string.home_settings_playlist, m.label), detail = "YouTube", symbol = "arrow.up.right.square")
                         }
                     }
                 }
                 for (m in listOf(SignalMode.HDR10P, SignalMode.DV)) {
                     links.download(m)?.let { url ->
                         Box(Modifier.clickable { openUrl(context, url) }) {
-                            SettingsRow(title = "${m.label} patterns", detail = "USB download", symbol = "arrow.down.circle")
+                            SettingsRow(title = stringResource(R.string.home_settings_patterns, m.label),
+                                detail = stringResource(R.string.home_settings_usb), symbol = "arrow.down.circle")
                         }
                     }
                 }
                 links.explainerURL?.let { url ->
                     Box(Modifier.clickable { openUrl(context, url) }) {
-                        SettingsRow(title = "How calibration works", detail = "The Slidebean video", symbol = "play.rectangle")
+                        SettingsRow(title = stringResource(R.string.home_settings_how_calibration),
+                            detail = stringResource(R.string.home_settings_slidebean_video), symbol = "play.rectangle")
                     }
                 }
                 links.helpURL?.let { help ->
                     Box(Modifier.clickable { openUrl(context, help) }) {
-                        SettingsRow(title = "Help and videos", symbol = "questionmark.circle")
+                        SettingsRow(title = stringResource(R.string.home_settings_help), symbol = "questionmark.circle")
                     }
                 }
                 Text(
-                    "SDR and HDR10 patterns play from YouTube in the TV's own YouTube app. HDR10+ and Dolby Vision patterns are a download, played from a USB stick or a media app.",
+                    stringResource(R.string.home_settings_pattern_note),
                     style = Type.captionBrand, color = Theme.textSecondary,
                 )
             }
 
             // MARK: Notifications and sounds
             Card(spacing = 12.dp) {
-                Eyebrow(text = "Notifications and sounds")
+                Eyebrow(text = stringResource(R.string.home_settings_notifications))
                 // TODO: re-check reminders and new-video notifications (Swift Notifications.shared) once
                 // notifications are ported: the permission states, the two toggles and "Open Settings".
                 SettingsToggle(
@@ -173,18 +178,19 @@ fun SettingsView(profiles: ProfileService) {
                         prefs.edit().putBoolean(SOUNDS_KEY, it).apply()
                     },
                 ) {
-                    SettingsRow(title = "Sounds", detail = "A chime when a setting reaches its target")
+                    SettingsRow(title = stringResource(R.string.home_settings_sounds),
+                        detail = stringResource(R.string.home_settings_sounds_detail))
                 }
             }
 
             // MARK: About
             Card(spacing = 12.dp) {
-                SettingsRow(title = appName, detail = "Version $version · not affiliated with Slidebean", symbol = "info.circle")
+                SettingsRow(title = appName, detail = stringResource(R.string.home_settings_version, version), symbol = "info.circle")
                 Box(Modifier.clickable { openUrl(context, "https://github.com/slidebean/tv-calibrator") }) {
-                    SettingsRow(title = "Based on TV Calibrator by Slidebean",
-                        detail = "Open source under CC BY-NC 4.0. Changed: ported to Android", symbol = "arrow.up.right.square")
+                    SettingsRow(title = stringResource(R.string.home_settings_based_on),
+                        detail = stringResource(R.string.home_settings_license), symbol = "arrow.up.right.square")
                 }
-                Text("Measurements stay on this phone.", style = Type.captionBrand, color = Theme.textSecondary)
+                Text(stringResource(R.string.home_settings_privacy), style = Type.captionBrand, color = Theme.textSecondary)
             }
         }
     }
@@ -193,6 +199,7 @@ fun SettingsView(profiles: ProfileService) {
 /** A pushed screen's bar: back on the left, the title centred (the Swift inline navigation title). */
 @Composable
 private fun SettingsTitleBar(title: String, onBack: () -> Unit) {
+    val backLabel = stringResource(R.string.home_back)
     Box(
         Modifier
             .fillMaxWidth()
@@ -204,7 +211,7 @@ private fun SettingsTitleBar(title: String, onBack: () -> Unit) {
                 .size(44.dp)
                 .align(Alignment.CenterStart)
                 .clickable(onClick = onBack)
-                .semantics { contentDescription = "Back" },
+                .semantics { contentDescription = backLabel },
             contentAlignment = Alignment.Center,
         ) {
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(24.dp))

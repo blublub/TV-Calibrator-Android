@@ -45,12 +45,13 @@ fun IntroView() {
     val progress by animateFloatAsState(if (shown) 1f else 0f, tween(900, easing = EaseOut), label = "intro")
     val radius = with(LocalDensity.current) { 320.dp.toPx() }
     val name = stringResource(R.string.app_name)
+    val description = stringResource(R.string.home_intro_desc, name)
 
     Box(
         Modifier
             .fillMaxSize()
             .background(IntroViewBase)
-            .clearAndSetSemantics { contentDescription = "$name, based on TV Calibrator by Slidebean" },
+            .clearAndSetSemantics { contentDescription = description },
         contentAlignment = Alignment.Center,
     ) {
         Box(

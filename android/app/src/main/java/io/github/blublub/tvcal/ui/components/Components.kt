@@ -62,6 +62,7 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -72,6 +73,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.Analysis
 import io.github.blublub.tvcal.engine.ColourMath
 import io.github.blublub.tvcal.engine.ColourResult
@@ -80,6 +82,7 @@ import io.github.blublub.tvcal.engine.Point2
 import io.github.blublub.tvcal.engine.Report
 import io.github.blublub.tvcal.engine.Vec3
 import io.github.blublub.tvcal.engine.signedFixed
+import io.github.blublub.tvcal.ui.L10n
 import io.github.blublub.tvcal.ui.theme.Card
 import io.github.blublub.tvcal.ui.theme.TVCalibratorTheme
 import io.github.blublub.tvcal.ui.theme.Theme
@@ -115,8 +118,9 @@ object Score {
     fun word(de: Double?, kind: ScoreKind = ScoreKind.grey): String {
         if (de == null || !de.isFinite()) return "–"
         val b = bands(kind)
-        return if (de < b[0]) "Perfect" else if (de < b[1]) "Excellent" else if (de < b[2]) "Very good"
-        else if (de < b[3]) "Good" else "Noticeably off"
+        return if (de < b[0]) L10n.tr("Perfect", "Perfekt") else if (de < b[1]) L10n.tr("Excellent", "Ausgezeichnet")
+        else if (de < b[2]) L10n.tr("Very good", "Sehr gut")
+        else if (de < b[3]) L10n.tr("Good", "Gut") else L10n.tr("Noticeably off", "Sichtbar daneben")
     }
 
     /** Green up to Excellent for greys and Very good for colours, white for Good, orange beyond. */
@@ -156,7 +160,7 @@ fun ScoreTile(
                 Text(label, style = Type.captionBrand, color = Theme.textSecondary,
                     modifier = Modifier.weight(1f).alignByBaseline())
                 if (hasWas) {
-                    Text("was ${fmt(was, digits)}", style = Type.small, color = Theme.textSecondary,
+                    Text(stringResource(R.string.report_was, fmt(was, digits)), style = Type.small, color = Theme.textSecondary,
                         modifier = Modifier.alignByBaseline())
                 }
             }
@@ -174,9 +178,10 @@ fun ScoreTile(
                 }
             }
         } else {
+            val wasText = stringResource(R.string.report_was, fmt(was, digits) + unit)
             val detail = buildList {
                 if (caption != null) add(caption)
-                if (hasWas) add("was " + fmt(was, digits) + unit)
+                if (hasWas) add(wasText)
             }.joinToString(" · ")
             Text(label, style = Type.captionBrand, color = Theme.textSecondary)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -219,12 +224,14 @@ fun BalanceBar(
 ) {
     val v = value.finite()
     val onTarget = v?.let { abs(it) <= tolerance } ?: false
-    val reading = valueText ?: v?.let { (signedFixed(it * 100, 1) + "%").replace("-", "−") } ?: "–"
+    val reading = valueText ?: v?.let { (L10n.signedNum(it * 100, 1) + if (L10n.german) " %" else "%").replace("-", "−") } ?: "–"
     val readingColour = if (onTarget) Theme.green else Color.White
 
+    val description = stringResource(if (onTarget) R.string.report_reading_on_target else R.string.report_reading,
+        label, reading)
     Column(
         modifier.clearAndSetSemantics {
-            contentDescription = "$label: $reading${if (onTarget) ", on target" else ""}"
+            contentDescription = description
         },
         verticalArrangement = Arrangement.spacedBy(7.dp),
     ) {
@@ -272,11 +279,11 @@ fun BalanceBar(
 @Composable
 fun BalanceScaleLabels(modifier: Modifier = Modifier) {
     Row(modifier.fillMaxWidth().clearAndSetSemantics {}) {
-        Text("Too little", style = Type.tiny, color = Theme.textSecondary)
+        Text(stringResource(R.string.report_too_little), style = Type.tiny, color = Theme.textSecondary)
         Spacer(Modifier.weight(1f))
-        Text("On target", style = Type.tiny, color = Theme.green)
+        Text(stringResource(R.string.report_on_target), style = Type.tiny, color = Theme.green)
         Spacer(Modifier.weight(1f))
-        Text("Too much", style = Type.tiny, color = Theme.textSecondary)
+        Text(stringResource(R.string.report_too_much), style = Type.tiny, color = Theme.textSecondary)
     }
 }
 
@@ -365,10 +372,11 @@ fun WhiteTarget(uv: Point2, d65: Point2, ok: Boolean, modifier: Modifier = Modif
     // Inner ring radius in u'v' (about dE 2); the outer ring is the design's 2x.
     val inner = 0.0045
     val outer = inner * 130 / 64.24
+    val description = stringResource(if (ok) R.string.report_white_on_target else R.string.report_white_off_target)
     Box(
         modifier
             .aspectRatio(1f)
-            .clearAndSetSemantics { contentDescription = if (ok) "White is on target" else "White is off target" },
+            .clearAndSetSemantics { contentDescription = description },
         contentAlignment = Alignment.BottomCenter,
     ) {
         Canvas(Modifier.matchParentSize()) {
@@ -472,8 +480,6 @@ fun gamutColour(id: String): Color = when (id.uppercase()) {
 fun gamutDots(rep: Report): List<GamutDot> =
     rep.colours.map { GamutDot(it.name, ColourMath.upvp(it.xy), ColourMath.upvp(it.txy), it.de) }
 
-private fun capitalized(s: String) = s.lowercase().replaceFirstChar { it.uppercase() }
-
 /**
  * The colours in CIE 1976 u'v', over the real Rec.709 (SDR) or P3 (HDR) gamut triangle: rings are the
  * targets, dots are the TV, a line joins each pair, and a green tick marks a colour that's on target.
@@ -490,9 +496,11 @@ fun GamutChart(
 ) {
     val active = highlight ?: if (dots.size == 1) dots.first().id else null
     val summary = when {
-        dots.isEmpty() -> "Colour chart"
-        dots.size == 1 -> "Colour chart: ${capitalized(dots[0].id)} is ${if (dots[0].onTarget) "on target" else "off target"}"
-        else -> "Colour chart: ${dots.count { it.onTarget }} of ${dots.size} colours on target"
+        dots.isEmpty() -> stringResource(R.string.report_colour_chart)
+        dots.size == 1 -> stringResource(
+            if (dots[0].onTarget) R.string.report_colour_chart_one_on else R.string.report_colour_chart_one_off,
+            L10n.colourName(dots[0].id.uppercase()))
+        else -> stringResource(R.string.report_colour_chart_many, dots.count { it.onTarget }.toString(), dots.size.toString())
     }
     val measurer = rememberTextMeasurer()
     val label = if (hdr) "P3 (HDR)" else "Rec. 709 (SDR)"
@@ -651,15 +659,17 @@ fun GreyBalanceChart(report: Report, hdr: Boolean, modifier: Modifier = Modifier
         .filter { it >= lo - 0.5 && it <= hi + 0.5 }
     val measurer = rememberTextMeasurer()
     val series = points.groupBy { it.series }
+    val tickTexts = ticks.map { stringResource(R.string.report_percent, it.roundToInt().toString()) }
+    val chartDescription = stringResource(R.string.report_grey_chart_desc)
 
     Canvas(
         modifier
             .fillMaxWidth()
             .height(160.dp)
-            .clearAndSetSemantics { contentDescription = "Greyscale chart: red, green and blue against the target line" },
+            .clearAndSetSemantics { contentDescription = chartDescription },
     ) {
         val p = 1.dp.toPx()
-        val labels = ticks.map { measurer.measure("${it.roundToInt()}%", Type.tiny.copy(color = Theme.textSecondary)) }
+        val labels = tickTexts.map { measurer.measure(it, Type.tiny.copy(color = Theme.textSecondary)) }
         val labelH = (labels.maxOfOrNull { it.size.height } ?: 0).toFloat()
         val plotH = size.height - labelH - 4 * p
         val w = size.width
@@ -692,16 +702,16 @@ fun GreyBalanceChart(report: Report, hdr: Boolean, modifier: Modifier = Modifier
 @Composable
 fun ResultScores(report: Report, hdr: Boolean, modifier: Modifier = Modifier, before: Report? = null) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        ScoreTile("Greyscale", Analysis.greyAverage(report, hdr), was = before?.let { Analysis.greyAverage(it, hdr) })
+        ScoreTile(stringResource(R.string.report_greyscale), Analysis.greyAverage(report, hdr), was = before?.let { Analysis.greyAverage(it, hdr) })
         if (report.colours.isNotEmpty()) {
-            ScoreTile("Colours", Analysis.colourAverage(report),
+            ScoreTile(stringResource(R.string.report_colours), Analysis.colourAverage(report),
                 was = before?.let { b -> if (b.colours.isEmpty()) null else Analysis.colourAverage(b) },
                 kind = ScoreKind.colour)
         }
         // HDR brightness isn't scored: no step adjusts it, and TVs differ in how bright they show HDR.
         if (!hdr) {
-            ScoreTile("Gamma", Analysis.gamma(report), was = before?.let { Analysis.gamma(it) }, digits = 2,
-                caption = "target 2.40")
+            ScoreTile(stringResource(R.string.report_gamma), Analysis.gamma(report), was = before?.let { Analysis.gamma(it) },
+                digits = 2, caption = stringResource(R.string.report_target, fmt(2.4, 2)))
         }
     }
 }
@@ -731,21 +741,21 @@ fun ResultCharts(
 ) {
     val greyTitle = run {
         val lv = report.greys.filter { hdr || it.level >= 0.099 }.map { it.level * 100 }
-        if (lv.isEmpty()) "Greyscale"
-        else "Greyscale · ${lv.min().roundToInt()}–${lv.max().roundToInt()}%"
+        if (lv.isEmpty()) stringResource(R.string.report_greyscale)
+        else stringResource(R.string.report_greyscale_range, lv.min().roundToInt().toString(), lv.max().roundToInt().toString())
     }
     val colourTitle = run {
         val total = report.colours.size
         val ok = report.colours.count { it.de < 3 }
-        if (ok == total) (if (total == 6) "Colours · all six on target" else "Colours · all on target")
-        else "Colours · $ok of $total on target"
+        if (ok == total) stringResource(if (total == 6) R.string.report_colours_all_six else R.string.report_colours_all)
+        else stringResource(R.string.report_colours_some, ok.toString(), total.toString())
     }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
         if (report.greys.isNotEmpty()) {
             Card {
                 Text(greyTitle, style = Type.bodyStrong, color = Color.White)
                 GreyBalanceChart(report, hdr, before = before)
-                Text(if (before != null) "Before faded · after solid · flat target line" else "Flat line is the target",
+                Text(stringResource(if (before != null) R.string.report_grey_legend_before else R.string.report_grey_legend),
                     style = Type.small, color = Theme.textSecondary)
             }
         }
@@ -756,16 +766,14 @@ fun ResultCharts(
                     GamutChart(gamutDots(report), hdr, Modifier.widthIn(max = 340.dp).fillMaxWidth(),
                         before = before?.let { gamutDots(it) } ?: emptyList())
                 }
-                Text(if (before != null) "Rings: target · hollow: before · dots: after" else "Rings: target · dots: your TV",
+                Text(stringResource(if (before != null) R.string.report_colour_legend_before else R.string.report_colour_legend),
                     style = Type.small, color = Theme.textSecondary)
             }
         }
     }
 }
 
-/** The dE explanation under the score tiles. */
-const val DE_EXPLAINER =
-    "How far off (dE): under 1 is perfect. Greys under 2 and colours under 3 are excellent; TVs rarely match every colour exactly."
+// The dE explanation under the score tiles: R.string.report_de_explainer.
 
 private val panelShape = RoundedCornerShape(22.dp)
 
@@ -799,14 +807,14 @@ fun ScoreInfo(modifier: Modifier = Modifier, marginNote: String? = null) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(symbol("info.circle"), contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(14.dp))
-            Text("What the numbers mean", style = Type.small, color = Theme.tealBright)
+            Text(stringResource(R.string.report_numbers_mean), style = Type.small, color = Theme.tealBright)
             Icon(symbol(if (open) "chevron.up" else "chevron.down"), contentDescription = null, tint = Theme.tealBright,
                 modifier = Modifier.size(12.dp))
         }
         AnimatedVisibility(open, enter = fadeIn(tween(200)) + expandVertically(tween(200)),
             exit = fadeOut(tween(200)) + shrinkVertically(tween(200))) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(DE_EXPLAINER, style = Type.small, color = Theme.textSecondary)
+                Text(stringResource(R.string.report_de_explainer), style = Type.small, color = Theme.textSecondary)
                 MarginNote(marginNote)
             }
         }

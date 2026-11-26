@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Live steps: shared parts -->
+    <string name="live_jitter">This TV\'s readings wobble about ±%1$s%%, so the bars show an average.</string>
+    <plurals name="live_average_of">
+        <item quantity="one">Average of %1$s reading</item>
+        <item quantity="other">Average of %1$s readings</item>
+    </plurals>
+    <string name="live_average_needs">(needs %1$s to call it steady)</string>
+    <string name="live_average_latest">latest %1$s cd/m²</string>
+    <string name="live_restart">Restart</string>
+    <string name="live_restart_hint">Use after changing a setting, to see its effect sooner</string>
+    <string name="live_on_target">On target</string>
+    <string name="live_percent_word">percent</string>
+    <string name="live_too_little">Too little</string>
+    <string name="live_too_much">Too much</string>
+    <string name="live_demo_title">Demo · simulated readings</string>
+    <string name="live_demo_hint">Try the remote buttons below.</string>
+    <string name="live_waiting">Start the video on the TV: readings appear as soon as the camera sees it.</string>
+
+    <!-- White balance -->
+    <string name="live_adjust_rb">Adjust Red and Blue %1$s</string>
+    <string name="live_adjust_fine_control">Adjust Red and Blue on the %1$s%% control</string>
+    <string name="live_adjust_fine_nearest">Adjust Red and Blue on the control nearest this grey</string>
+    <string name="live_ten_or_twenty_point">10 or 20 Point</string>
+    <string name="live_fine_eyebrow">Fine-tune %1$s</string>
+    <string name="live_until_line">Until both bars sit on the line. Leave Green alone.</string>
+    <string name="live_mismatch">%1$s Is the right file playing, with the camera pointed at the centre?</string>
+    <string name="live_cant_get_closer">Can\'t get closer</string>
+    <string name="live_back_to_check">Back to the check</string>
+    <string name="live_tv_menu">TV menu: %1$s</string>
+    <string name="live_still_notice">The bars haven\'t moved for a minute. If you\'ve been adjusting, it may be the wrong control: try the one a step above or below, and when you find it, pick it under “The control that moves this grey”.</string>
+    <string name="live_next_dark">Next: dark end</string>
+    <string name="live_next_check">Next: check</string>
+    <string name="live_next_grey">Next grey</string>
+    <string name="live_white_target">White point target</string>
+    <string name="live_de_from_d65">dE %1$s from D65</string>
+    <string name="live_in_ring">In the ring. Hold still…</string>
+    <string name="live_bring_dot">Bring the dot into the ring</string>
+
+    <!-- Colours -->
+    <string name="live_chip_limit">%1$s, as close as this TV gets</string>
+    <string name="live_chip_done">%1$s, done</string>
+    <string name="live_bring_colour">Bring %1$s onto its ring</string>
+    <string name="live_run_before_first">Run the Before check first, so brightness can be judged against this TV\'s own white.</string>
+    <string name="live_no_colour_controls">No colour controls are set for this TV: just check the colours, or choose its colour menu in Screen settings.</string>
+    <string name="live_tv_menu_colour">TV menu: %1$s › %2$s</string>
+    <string name="live_finish_colours">Finish colours</string>
+    <string name="live_next_colour">Next colour</string>
+    <string name="live_not_on_target_title">%1$s isn\'t on target yet</string>
+    <string name="live_not_on_target_body">If the sliders have stopped bringing the dot closer to its ring, the TV has reached its limit for this colour. That\'s common, and the app will note it in your results.</string>
+    <string name="live_move_on">Move on: it\'s as close as this TV gets</string>
+    <string name="live_keep_adjusting">Keep adjusting</string>
+    <string name="live_ring_legend">Ring: target · dot: now · dE %1$s</string>
+    <string name="live_too_much_lower">Too much: lower it</string>
+    <string name="live_too_little_raise">Too little: raise it</string>
+    <string name="live_estimated">Estimated: the Before check didn\'t get all three primaries.</string>
+    <string name="live_leans_toward">Leans toward %1$s: move %2$s a click and keep going the way that shrinks the bar</string>
+    <string name="live_a_neighbour">a neighbour</string>
+    <string name="live_too_strong_lower">Too strong: lower %1$s</string>
+    <string name="live_too_weak_raise">Too weak: raise %1$s</string>
+    <string name="live_too_bright_lower">Too bright: lower %1$s</string>
+    <string name="live_too_dim_raise">Too dim: raise %1$s</string>
+    <string name="live_colour_on_target">%1$s is on target. Nice.</string>
+    <string name="live_nothing_to_adjust">Nothing to adjust on this TV; just note the numbers.</string>
+    <string name="live_rgb_needs_before">Run the Before check first: the Red/Green/Blue hints need this TV\'s white as a reference.</string>
+    <string name="live_out_of_reach">**Out of reach:** to match exactly, %1$s would need %2$s below zero. %1$s sits beyond what this TV\'s %3$s can mix, so that slider stops helping once it reaches zero. The best this colour can get is about **dE %4$s**. When you\'re there, use **Can\'t get closer**.</string>
+    <string name="live_close_enough">Close enough - holding steady…</string>
+
+    <!-- Fine-tune and the point finder -->
+    <string name="live_fine_title">Fine-tune</string>
+    <string name="live_only_two_point">This TV has only 2-point white balance (Screen settings), so there\'s nothing to fine-tune beyond the bright and dark ends.</string>
+    <string name="live_greys">Greys</string>
+    <string name="live_control_that_moves">The control that moves this grey</string>
+    <string name="live_pick_remembered">If you pick one, it\'s remembered for this TV, and the suggestions for nearby greys adjust to match.</string>
+    <string name="live_run_finder_again">Run the point finder again</string>
+    <string name="live_try_step_lower">If the bars don\'t move, try the control one step lower or higher.</string>
+    <string name="live_tv_percent_measured">TV %1$s%% (measured)</string>
+    <string name="live_measured">Measured</string>
+    <string name="live_tv_percent">TV %1$s%%</string>
+    <string name="live_done">Done</string>
+    <string name="live_waiting_state">Waiting</string>
+    <string name="live_finder_use_points">Fine-tune with these points</string>
+    <string name="live_finder_made_changes">I\'ve made the four changes - measure</string>
+    <string name="live_finder_measure">Measure (about 2½ minutes)</string>
+    <string name="live_finder_result_title">Here\'s what each control moves</string>
+    <string name="live_finder_result_header">TV control → moves the grey at</string>
+    <string name="live_finder_level">→ %1$s%%</string>
+    <string name="live_finder_shift">Shift %1$s</string>
+    <string name="live_finder_put_back">**Now put them back.** Set those four controls back to where they were (−10 each) before fine-tuning.</string>
+    <string name="live_finder_finding">Finding your TV\'s points</string>
+    <string name="live_finder_find">Find your TV\'s controls</string>
+    <string name="live_finder_optional">Optional · about 6 minutes</string>
+    <string name="live_finder_step">Step %1$s of 3</string>
+    <string name="live_finder_step1">Measure the greys as they are. Tap Measure, then play **%1$s** on the TV.</string>
+    <string name="live_finder_nudge_intro">Nudge four controls in the multipoint menu, exactly as listed:</string>
+    <string name="live_finder_tv_control">TV %1$s%% control</string>
+    <string name="live_finder_then_again">Then measure again with the same video. The app compares the two and finds each control.</string>
+    <string name="live_finder_again">Measure again with the same video. The app compares the two and finds each control.</string>
+    <string name="live_finder_explain" formatted="false">A TV\'s “40%” control often moves a different grey. This finds where each one really acts.</string>
+    <string name="live_finder_row1">Measure the greys as they are</string>
+    <string name="live_finder_row2">Nudge four controls (+%1$s each)</string>
+    <string name="live_finder_row3">Measure again and find each control</string>
+    <string name="live_cancel">Cancel</string>
+    <string name="live_finder_skip">Skip: fine-tune without it</string>
+    <string name="live_demo_down">%1$s down</string>
+    <string name="live_demo_up">%1$s up</string>
+
+    <!-- Camera setup -->
+    <string name="live_back">Back</string>
+    <string name="live_done_profile_locked">✓ Profile · ✓ camera locked</string>
+    <string name="live_done_locked">✓ Camera locked</string>
+    <string name="live_raw_size">, RAW photos %1$sx%2$s</string>
+    <string name="live_locked_text">Locked: back main camera, ISO %1$s, focus closest%2$s</string>
+    <string name="live_locked_summary">Settings locked · ISO %1$s · focus fixed</string>
+    <string name="live_checks_all">4 setup checks complete</string>
+    <string name="live_checks_some">%1$s of 4 setup checks complete</string>
+    <string name="live_measure_dark_again">Measure the darkness again</string>
+    <string name="live_measure_dark">Measure the darkness</string>
+    <string name="live_no_reading">No reading. Is the TV showing something bright in the box?</string>
+    <string name="live_start_camera">Start the camera</string>
+    <string name="live_test_reading">Test reading</string>
+    <string name="live_set_up_camera">Set up the camera</string>
+    <string name="live_blurry">Blurry on purpose: it averages out the TV\'s pixels</string>
+    <string name="live_using_approx">Using the approximate profile from the camera\'s own colour data: readings are approximate.</string>
+    <string name="live_step_profile">1 · Camera profile</string>
+    <string name="live_check_again">Check again</string>
+    <string name="live_step_start">2 · Start camera</string>
+    <string name="live_stay_locked">Exposure and focus stay locked after you start.</string>
+    <string name="live_next_darkness">Next: measure darkness</string>
+    <string name="live_then_stand">Then place your phone on a stand</string>
+    <string name="live_step_darkness">3 · Measure darkness</string>
+    <string name="live_darkness_help">This needs **total darkness**: lay the phone screen-up on a table, so the camera is pressed flat against it. A fingertip isn\'t enough.</string>
+    <string name="live_keep_last">Keep the last measurement</string>
+    <string name="live_step_place">4 · Place the phone</string>
+    <string name="live_place_help">A hand\'s length (15–30 cm) from the TV, square to it, level with the centre. The grey patch should fill the yellow box with room to spare.</string>
+    <string name="live_test_received">Test reading received</string>
+    <string name="live_uneven">The box isn\'t evenly lit: move closer so the patch fills it.</string>
+    <string name="live_darkness_measured">✓ Darkness measured</string>
+    <string name="live_placement_checked">✓ Phone placement checked</string>
+    <string name="live_ready_keep_still">Ready to measure. Keep the phone still.</string>
+    <string name="live_shown">Shown</string>
+    <string name="live_hidden">Hidden</string>
+    <string name="live_camera_log">Camera log</string>
+    <string name="live_test_again">Test again</string>
+    <string name="live_stop_camera">Stop the camera</string>
+    <string name="live_darkness_illustration">The phone lying screen-up on a table, its back camera pressed flat against it</string>
+    <string name="live_screen_up">Screen facing up</string>
+    <string name="live_placement_illustration">The phone on a stand, 15 to 30 centimetres from the TV, facing the middle of the screen</string>
+    <string name="live_placement_label">15–30 cm · facing the centre</string>
+
+    <!-- Live meter -->
+    <string name="live_meter_title">Live meter</string>
+    <string name="live_targets">Targets</string>
+    <string name="live_eyebrow_grey">Live · greyscale</string>
+    <string name="live_white_point">White point</string>
+    <string name="live_d65_target">D65 target · dE %1$s</string>
+    <string name="live_eyebrow_colour">Live · colour · %1$s</string>
+    <string name="live_hue">Hue</string>
+    <string name="live_saturation">Saturation</string>
+    <string name="live_reading_progress">Reading…</string>
+    <string name="live_point_box">Point the measuring box at a solid patch. Readings stay on this phone.</string>
+
+    <!-- Camera check (test screen) -->
+    <string name="live_camtest_title">Camera check</string>
+    <string name="live_camtest_permission">The camera is the meter. Allow it to continue.</string>
+    <string name="live_camtest_allow">Allow the camera</string>
+    <string name="live_camtest_dark">Measure darkness</string>
+    <string name="live_camtest_dark_again">Measure darkness again</string>
+    <string name="live_camtest_stop">Stop</string>
+    <string name="live_camtest_live">Measure live</string>
+    <string name="live_camtest_approx">Approximate profile from this phone\'s own colour data, not trained against a colorimeter.</string>
+    <string name="live_camtest_log">Log</string>
+</resources>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home (RootView.kt) -->
+    <string name="home_headline">See it the way\nit was made.</string>
+    <string name="home_subtitle">Calibrate your TV’s picture with your phone as the meter.</string>
+    <string name="home_your_screens">Your screens</string>
+    <string name="home_manage_screens">Manage Screens</string>
+    <string name="home_delete">Delete</string>
+    <string name="home_add_screen">Add a Screen</string>
+    <string name="home_try_demo">Try the demo, no screen needed</string>
+    <string name="home_how_it_works">How it works</string>
+    <string name="home_how_it_works_detail">What you need, how it works</string>
+    <string name="home_how_it_works_detail_video">The video, and what you need</string>
+    <string name="home_live_title">Read any colour on screen</string>
+    <string name="home_live_detail">Live meter</string>
+    <string name="home_settings">Settings</string>
+    <string name="home_settings_detail">Camera profile, videos</string>
+    <string name="home_new_to_this">New to this? See how it works</string>
+    <string name="home_placement_desc">Put the phone on a stand 15 to 30 centimetres from the TV, facing the centre of the screen</string>
+    <string name="home_placement_label">15–30 cm · facing the centre</string>
+    <string name="home_demo_readings">Demo: simulated readings</string>
+    <string name="home_format_calibrated">calibrated</string>
+    <string name="home_format_started">started</string>
+    <string name="home_format_not_started">not started</string>
+    <string name="home_format_desc">%1$s: %2$s</string>
+
+    <string name="home_camera_checking">Checking this phone</string>
+    <string name="home_camera_unavailable">Camera not available</string>
+    <string name="home_camera_set_up">Set up the camera</string>
+    <string name="home_camera_darkness">Measure the darkness</string>
+    <string name="home_camera_standard">Standard profile</string>
+    <string name="home_camera_ready">Ready to measure</string>
+    <string name="home_camera_checking_detail">Finding the right camera profile.</string>
+    <string name="home_camera_set_up_detail">A minute, before your first reading.</string>
+    <string name="home_camera_darkness_detail">Cover the camera to set its baseline.</string>
+    <string name="home_camera_standard_detail">Readings approximate. You can still get started.</string>
+    <string name="home_camera_ready_detail">Camera set up. Place your phone on its stand.</string>
+    <string name="home_readings_approximate">Readings approximate</string>
+    <string name="home_phone_camera">Phone camera</string>
+
+    <string name="home_progress_calibrated">%1$s calibrated</string>
+    <string name="home_progress_in_progress">%1$s in progress</string>
+    <string name="home_progress_not_started">Not started</string>
+    <string name="home_demo">Demo</string>
+    <string name="home_done">Done</string>
+    <string name="home_close">Close</string>
+    <string name="home_cancel">Cancel</string>
+    <string name="home_no_screens">No screens yet.</string>
+    <string name="home_edit_screen">Edit %1$s</string>
+    <string name="home_delete_screen">Delete %1$s</string>
+    <string name="home_delete_title">Delete %1$s?</string>
+    <string name="home_delete_text">Delete the screen and its history. Its measurements and calibration progress are removed from this phone.</string>
+
+    <!-- Add / edit a screen (TVSetupFlow.kt) -->
+    <string name="home_setup_which_screen">Which screen is this?</string>
+    <string name="home_setup_which_screen_text">You can change these details later.</string>
+    <string name="home_setup_kind">What kind of screen is it?</string>
+    <string name="home_setup_kind_text">The camera reads each kind differently. The model name or the box usually says.</string>
+    <string name="home_setup_wb_title">Its white balance menu</string>
+    <string name="home_setup_wb_text">On the TV, open %1$s</string>
+    <string name="home_setup_colour_title">Its colour menu</string>
+    <string name="home_setup_colour_text">On the TV, open %1$s. Which controls can you see?</string>
+    <string name="home_setup_edit_title">Screen settings</string>
+    <string name="home_setup_add_finish">Add this screen</string>
+    <string name="home_save">Save</string>
+    <string name="home_setup_section">Screen details</string>
+    <string name="home_setup_name_label">Screen name</string>
+    <string name="home_setup_name_hint">e.g. Living room OLED</string>
+    <string name="home_setup_brand">Brand</string>
+    <string name="home_setup_name_tip">Choose the name you’ll recognise from the sofa.</string>
+    <string name="home_mp_two">Only 2 points</string>
+    <string name="home_mp_ten">10 points</string>
+    <string name="home_mp_twenty">20 points</string>
+    <string name="home_mp_two_detail">Gain and %1$s</string>
+    <string name="home_mp_ten_detail" formatted="false">10%, 20% … 100%</string>
+    <string name="home_mp_twenty_detail" formatted="false">5%, 10% … 100%</string>
+    <string name="home_usual_for">Usual for %1$s</string>
+    <string name="home_mp_not_sure">Not sure: ask me when we get there</string>
+    <string name="home_cm_rgb">Red / Green / Blue</string>
+    <string name="home_cm_off">No colour menu</string>
+    <string name="home_not_sure">Not sure</string>
+    <string name="home_mq_colour_title">First: your TV’s colour menu</string>
+    <string name="home_mq_wb_title">First: your TV’s white balance menu</string>
+    <string name="home_mq_colour_text">On the TV, open %1$s. Which sliders does each colour have?</string>
+    <string name="home_mq_wb_text">On the TV, open %1$s and look for a 10 or 20 point option. Which does it have?</string>
+    <string name="home_continue">Continue</string>
+
+    <!-- Welcome (WelcomeView.kt) -->
+    <string name="home_welcome">Welcome</string>
+    <string name="home_get_started">Get started</string>
+    <string name="home_welcome_video_title">New to calibration? Start with the video</string>
+    <string name="home_welcome_video_text">This app goes with Slidebean\'s videos on what calibration does to a TV\'s picture, with a full session start to finish. If you haven\'t seen them, they\'re worth a few minutes first.</string>
+    <string name="home_welcome_tv_title">Make your TV look the way the film was made</string>
+    <string name="home_welcome_tv_text">Most TVs come out of the box too blue, too bright and too saturated. %1$s walks you through your TV\'s own picture settings until they match the standard that films and shows are made to.</string>
+    <string name="home_welcome_meter_title">Your phone is the meter</string>
+    <string name="home_welcome_meter_text">The TV plays test-pattern videos from Slidebean\'s YouTube channel. Your phone\'s camera reads each colour, and the app tells you which setting to change and by how much. Nothing is installed on the TV.</string>
+    <string name="home_welcome_meter_bullet1">Start from the most accurate picture mode (often Filmmaker Mode), then fine-tune it</string>
+    <string name="home_welcome_meter_bullet2">One step at a time: white, greys, then colours</string>
+    <string name="home_welcome_meter_bullet3">A before and after score at the end</string>
+    <string name="home_welcome_need_title">What you need</string>
+    <string name="home_welcome_need_text">No TV handy? Try the demo on the home screen to see how it works.</string>
+    <string name="home_welcome_need_bullet1">Your TV\'s remote</string>
+    <string name="home_welcome_need_bullet2">The YouTube app on the TV</string>
+    <string name="home_welcome_need_bullet3">Something to stand the phone on, 15–30 cm from the screen</string>
+    <string name="home_welcome_need_bullet4">A dark room</string>
+    <string name="home_video_desc">Watch how TV calibration works, on YouTube</string>
+    <string name="home_video_compact">New to this? Watch how it works</string>
+    <string name="home_video_title">Watch how TV calibration works</string>
+    <string name="home_video_source">Slidebean · opens YouTube</string>
+
+    <!-- Opening screen (IntroView.kt) -->
+    <string name="home_intro_desc">%1$s, based on TV Calibrator by Slidebean</string>
+
+    <!-- Settings (SettingsView.kt) -->
+    <string name="home_back">Back</string>
+    <string name="home_settings_camera_profile">Camera profile</string>
+    <string name="home_settings_this_phone">This phone</string>
+    <string name="home_settings_tvs_matched">TVs matched</string>
+    <plurals name="home_settings_matched_on">
+        <item quantity="one">Matched on %1$s TV</item>
+        <item quantity="other">Matched on %1$s TVs</item>
+    </plurals>
+    <string name="home_settings_accuracy">Accuracy: %1$s</string>
+    <string name="home_settings_de_new">dE %1$s on a new TV</string>
+    <string name="home_settings_de_training">dE %1$s in training</string>
+    <string name="home_settings_aperture">Aperture</string>
+    <string name="home_settings_pattern_videos">Pattern videos</string>
+    <string name="home_settings_playlist">%1$s playlist</string>
+    <string name="home_settings_patterns">%1$s patterns</string>
+    <string name="home_settings_usb">USB download</string>
+    <string name="home_settings_how_calibration">How calibration works</string>
+    <string name="home_settings_slidebean_video">The Slidebean video</string>
+    <string name="home_settings_help">Help and videos</string>
+    <string name="home_settings_pattern_note">SDR and HDR10 patterns play from YouTube in the TV\'s own YouTube app. HDR10+ and Dolby Vision patterns are a download, played from a USB stick or a media app.</string>
+    <string name="home_settings_notifications">Notifications and sounds</string>
+    <string name="home_settings_sounds">Sounds</string>
+    <string name="home_settings_sounds_detail">A chime when a setting reaches its target</string>
+    <string name="home_settings_version">Version %1$s · not affiliated with Slidebean</string>
+    <string name="home_settings_based_on">Based on TV Calibrator by Slidebean</string>
+    <string name="home_settings_license">Open source under CC BY-NC 4.0. Changed: ported to Android</string>
+    <string name="home_settings_privacy">Measurements stay on this phone.</string>
+</resources>

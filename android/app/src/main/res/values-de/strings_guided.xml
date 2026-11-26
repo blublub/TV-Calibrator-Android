@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- GuidedView: screen, header, step bar -->
+    <string name="guided_setup_camera">Kamera einrichten</string>
+    <string name="guided_check_and_finetune">Prüfen und Feinabstimmung</string>
+    <string name="guided_cancel">Abbrechen</string>
+    <string name="guided_close">Schließen</string>
+    <string name="guided_back">Zurück</string>
+    <string name="guided_steps_click_label">Zeigt alle Schritte, um zurück- oder vorzuspringen</string>
+    <string name="guided_step_a11y">%1$s, Schritt %2$s</string>
+    <string name="guided_step_a11y_current">%1$s, Schritt %2$s, aktuell</string>
+    <string name="guided_step_a11y_done">%1$s, Schritt %2$s, erledigt</string>
+    <string name="guided_tap_to_jump">%1$s · Schritt antippen zum Springen</string>
+
+    <!-- 1. Set up -->
+    <string name="guided_generic_tv">TV</string>
+    <string name="guided_format_sdr">Fang mit dem normalen Fernsehbild an. Jedes Format hat am Fernseher seine eigenen Einstellungen.</string>
+    <string name="guided_format_hdr10">Der Fernseher hat eigene Einstellungen für HDR, deshalb kommt HDR nach SDR dran.</string>
+    <string name="guided_format_advanced">Für Fortgeschrittene: Mach zuerst SDR und HDR10. %1$s hat am Fernseher eigene Einstellungen.</string>
+    <string name="guided_calibrating">%1$s kalibrieren</string>
+    <string name="guided_videos_on_youtube">Die %1$s-Videos gibt es auf YouTube</string>
+    <string name="guided_download_patterns_title">Lade die %1$s-Testbilder herunter</string>
+    <string name="guided_only_videos_prefix">Spiel nur Videos ab, deren Titel mit „%1$s“ beginnt</string>
+    <string name="guided_only_files_prefix">Spiel nur Dateien ab, deren Name mit „%1$s“ beginnt</string>
+    <string name="guided_no_hdr_badge">Der Fernseher sollte kein HDR-Logo anzeigen. Jedes Video startest du mit der Fernbedienung des Fernsehers.</string>
+    <string name="guided_mode_badge">Der Fernseher sollte sein %1$s-Logo anzeigen. Jedes Video startest du mit der Fernbedienung des Fernsehers.</string>
+    <string name="guided_demo_settings_title">Bei einem echten Fernseher: Bildeinstellungen</string>
+    <string name="guided_set_up_brand">%1$s einrichten</string>
+    <string name="guided_open_picture">Öffne am Fernseher das Bild-Menü und stell Folgendes ein.</string>
+    <string name="guided_menu_names_vary">Die Menünamen können je nach %1$s-Modell etwas abweichen.</string>
+    <string name="guided_dim_room">Raum abdunkeln</string>
+    <string name="guided_dim_room_text">Licht aus, Vorhänge zu und den Fernseher vorher 20–30 Minuten laufen lassen: Bildschirme verändern sich, während sie warm werden.</string>
+    <string name="guided_place_phone">Handy aufstellen</string>
+    <string name="guided_place_phone_text">Halte das gelbe Kästchen im grauen Testfeld und bewege das Handy nicht mehr, sobald du startest.</string>
+    <string name="guided_place_phone_lead">Eine Handlänge (15–30 cm) vom Fernseher entfernt, auf seine Mitte gerichtet, ohne den Bildschirm zu berühren.</string>
+    <string name="guided_camera_ready">Kamera vorbereiten</string>
+    <string name="guided_camera_ready_text">Als Nächstes misst die App den Fernseher so, wie er jetzt ist – für deinen Vorher-Nachher-Vergleich. Etwa zwei Minuten.</string>
+    <string name="guided_setup_finish">Starten: Fernseher im jetzigen Zustand messen</string>
+    <string name="guided_setup_section">Vorbereitung</string>
+    <string name="guided_source_youtube">Spiel die Videos in der YouTube-App deines Fernsehers ab oder streame sie vom Handy.</string>
+    <string name="guided_source_usb">Kopiere den Ordner %1$s auf einen USB-Stick und spiel die Dateien mit dem Mediaplayer des Fernsehers ab.</string>
+    <string name="guided_open_playlist">%1$s-Playlist öffnen</string>
+    <string name="guided_download_patterns_button">%1$s-Testbilder herunterladen</string>
+    <string name="guided_patterns_on_youtube">Testbilder auf YouTube</string>
+    <string name="guided_pattern_files">Testbild-Dateien zum Herunterladen</string>
+    <string name="guided_patterns_youtube_text">Spiel die %1$s-Testbilder aus der Playlist „TV Calibrator“ auf dem Slidebean-Kanal ab – in der YouTube-App des Fernsehers oder vom Handy gestreamt, in der höchsten Qualität.</string>
+
+    <!-- Measuring a quick-check video -->
+    <string name="guided_tap_measure">Tippe auf „Messen“</string>
+    <string name="guided_start_video">Starte das Video am Fernseher</string>
+    <string name="guided_keep_still_ads">Halte das Handy still. Werbung ist kein Problem: Die App wartet auf das Testbild.</string>
+    <string name="guided_keep_still">Halte das Handy still.</string>
+    <string name="guided_measure_two_minutes">Messen (etwa zwei Minuten)</string>
+    <string name="guided_is_video_playing">Läuft das %1$s-Video?</string>
+    <string name="guided_expected_nothing_saved">%1$s erwartet. Es wurde nichts gespeichert.</string>
+    <string name="guided_nothing_saved">Nichts gespeichert</string>
+    <string name="guided_replay_then_measure">Spiel das %1$s-Video noch einmal von Anfang an ab und miss dann erneut.</string>
+    <string name="guided_ill_replay">Ich spiele das %1$s-Video neu ab</string>
+
+    <!-- 2 + 7. Before / after -->
+    <string name="guided_measure_starting_point">Miss deinen Ausgangspunkt</string>
+    <string name="guided_one_final_check">Eine letzte Prüfung</string>
+    <string name="guided_your_starting_point">Dein Ausgangspunkt</string>
+    <string name="guided_limits">%1$s: Näher kommt dieser Fernseher nicht heran (seine Regler waren am Anschlag).</string>
+    <string name="guided_measure_again">Erneut messen</string>
+    <string name="guided_next_white_balance">Weiter: Weißabgleich korrigieren</string>
+    <string name="guided_new_session">Neue Sitzung starten</string>
+    <string name="guided_newsletter_title">Nutze unsere Tools vor allen anderen</string>
+    <string name="guided_newsletter_subscribe">Untangled abonnieren</string>
+
+    <!-- 5. Check the greyscale -->
+    <string name="guided_find_points">Punkte meines Fernsehers finden</string>
+    <string name="guided_finetune_optional">Einen Grauton feinabstimmen (optional)</string>
+    <string name="guided_check_greys">Grautöne prüfen</string>
+    <string name="guided_next_colours">Weiter: Farben</string>
+    <string name="guided_continue_colours">Weiter zu den Farben</string>
+    <string name="guided_col_grey">Grau</string>
+    <string name="guided_col_red">Rot</string>
+    <string name="guided_col_blue">Blau</string>
+    <string name="guided_on_target">Im Ziel</string>
+    <string name="guided_redo_bright">Helle Töne neu</string>
+    <string name="guided_redo_dark">Dunkle Töne neu</string>
+    <string name="guided_finetune">Feinabstimmung</string>
+
+    <!-- Walkthrough -->
+    <string name="guided_walk_done">Fertig</string>
+    <string name="guided_walk_next">Weiter</string>
+    <string name="guided_walk_count">%1$s von %2$s</string>
+    <string name="guided_art_placement_label">15–30 cm · auf die Mitte gerichtet</string>
+    <string name="guided_art_placement_a11y">Ein Handy auf einem Ständer, 15 bis 30 Zentimeter vom Fernseher entfernt, auf das graue Testfeld in der Mitte gerichtet</string>
+    <string name="guided_art_lights_off">Licht aus</string>
+    <string name="guided_art_tv_on">TV an</string>
+    <string name="guided_art_minutes">20–30 Min.</string>
+    <string name="guided_art_format_order_a11y">In dieser Reihenfolge kalibrieren: SDR, HDR10, HDR10+, Dolby Vision. Jetzt: %1$s</string>
+    <string name="guided_art_usb_file">USB-Datei</string>
+    <string name="guided_art_format_settings">Jedes Format hat am Fernseher eigene Bildeinstellungen</string>
+    <string name="guided_art_rgb_sliders">Regler für Rot, Grün und Blau</string>
+    <string name="guided_art_n_sliders">%1$s Regler</string>
+    <string name="guided_art_no_colour_menu">Kein Farbmenü</string>
+    <string name="guided_art_hsb_sliders">Regler für Farbton, Sättigung und Helligkeit</string>
+    <string name="guided_art_no_colour_sliders">Keine Farbregler</string>
+</resources>

@@ -37,10 +37,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.camera.CameraMeter
 import io.github.blublub.tvcal.camera.MetadataProfile
 import io.github.blublub.tvcal.engine.CameraProfile
@@ -159,19 +161,19 @@ fun CameraTestScreen(meter: CameraMeter, hasPermission: Boolean, requestPermissi
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Camera check", style = MaterialTheme.typography.headlineSmall)
+        Text(stringResource(R.string.live_camtest_title), style = MaterialTheme.typography.headlineSmall)
         if (!hasPermission) {
-            Text("The camera is the meter. Allow it to continue.")
-            Button(onClick = requestPermission) { Text("Allow the camera") }
+            Text(stringResource(R.string.live_camtest_permission))
+            Button(onClick = requestPermission) { Text(stringResource(R.string.live_camtest_allow)) }
             return@Column
         }
         CameraViewfinder(meter, running, Modifier.fillMaxWidth())
         Text(message)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(enabled = running && !busy && !live, onClick = { scope.launch { meter.measureDark() } }) {
-                Text(if (dark == null) "Measure darkness" else "Measure darkness again")
+                Text(stringResource(if (dark == null) R.string.live_camtest_dark else R.string.live_camtest_dark_again))
             }
-            Button(enabled = running && dark != null, onClick = { live = !live }) { Text(if (live) "Stop" else "Measure live") }
+            Button(enabled = running && dark != null, onClick = { live = !live }) { Text(stringResource(if (live) R.string.live_camtest_stop else R.string.live_camtest_live)) }
         }
         val r = reading
         val p = profile
@@ -190,11 +192,11 @@ fun CameraTestScreen(meter: CameraMeter, hasPermission: Boolean, requestPermissi
             }
         }
         Text(
-            "Approximate profile from this phone's own colour data, not trained against a colorimeter.",
+            stringResource(R.string.live_camtest_approx),
             style = MaterialTheme.typography.bodySmall,
         )
         Spacer(Modifier.height(4.dp))
-        Text("Log", style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.live_camtest_log), style = MaterialTheme.typography.titleSmall)
         for (line in logLines.takeLast(12).reversed()) Mono(line, 10)
     }
 }

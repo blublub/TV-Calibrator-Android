@@ -114,12 +114,12 @@ object MeterClock {
 }
 
 sealed class MeasureError(message: String) : Exception(message) {
-    object NoSync : MeasureError(
-        "No sync flashes seen. Check the camera is pointed at the centre of the screen and the video is playing from the start.",
-    )
-    object OutOfOrder : MeasureError(
-        "The greys came in out of order, so the camera and the video got out of step. Start the measurement, then play the video from the very beginning.",
-    )
+    object NoSync : MeasureError("no sync") {
+        override val message: String get() = EngineTexts.current.noSync
+    }
+    object OutOfOrder : MeasureError("out of order") {
+        override val message: String get() = EngineTexts.current.outOfOrder
+    }
     class Message(text: String) : MeasureError(text)
 }
 

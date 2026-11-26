@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home (RootView.kt) -->
+    <string name="home_headline">Sieh es so,\nwie es gemacht wurde.</string>
+    <string name="home_subtitle">Kalibriere das Bild deines Fernsehers – mit deinem Handy als Messgerät.</string>
+    <string name="home_your_screens">Deine Fernseher</string>
+    <string name="home_manage_screens">Fernseher verwalten</string>
+    <string name="home_delete">Löschen</string>
+    <string name="home_add_screen">Fernseher hinzufügen</string>
+    <string name="home_try_demo">Demo ausprobieren, ganz ohne Fernseher</string>
+    <string name="home_how_it_works">So funktioniert’s</string>
+    <string name="home_how_it_works_detail">Was du brauchst und wie es abläuft</string>
+    <string name="home_how_it_works_detail_video">Das Video und was du brauchst</string>
+    <string name="home_live_title">Jede Farbe auf dem Bildschirm messen</string>
+    <string name="home_live_detail">Live-Messung</string>
+    <string name="home_settings">Einstellungen</string>
+    <string name="home_settings_detail">Kameraprofil, Videos</string>
+    <string name="home_new_to_this">Neu hier? So funktioniert’s</string>
+    <string name="home_placement_desc">Stell das Handy auf einem Ständer 15 bis 30 Zentimeter vor den Fernseher, auf die Bildschirmmitte gerichtet</string>
+    <string name="home_placement_label">15–30 cm · auf die Mitte gerichtet</string>
+    <string name="home_demo_readings">Demo: simulierte Messwerte</string>
+    <string name="home_format_calibrated">kalibriert</string>
+    <string name="home_format_started">begonnen</string>
+    <string name="home_format_not_started">nicht begonnen</string>
+    <string name="home_format_desc">%1$s: %2$s</string>
+
+    <string name="home_camera_checking">Handy wird geprüft</string>
+    <string name="home_camera_unavailable">Kamera nicht verfügbar</string>
+    <string name="home_camera_set_up">Kamera einrichten</string>
+    <string name="home_camera_darkness">Dunkelmessung machen</string>
+    <string name="home_camera_standard">Standardprofil</string>
+    <string name="home_camera_ready">Bereit zum Messen</string>
+    <string name="home_camera_checking_detail">Das passende Kameraprofil wird gesucht.</string>
+    <string name="home_camera_set_up_detail">Eine Minute, vor deinem ersten Messwert.</string>
+    <string name="home_camera_darkness_detail">Deck die Kamera ab, um ihren Nullpunkt festzulegen.</string>
+    <string name="home_camera_standard_detail">Messwerte nur ungefähr. Du kannst trotzdem loslegen.</string>
+    <string name="home_camera_ready_detail">Kamera eingerichtet. Stell dein Handy auf seinen Ständer.</string>
+    <string name="home_readings_approximate">Messwerte ungefähr</string>
+    <string name="home_phone_camera">Handykamera</string>
+
+    <string name="home_progress_calibrated">%1$s kalibriert</string>
+    <string name="home_progress_in_progress">%1$s in Arbeit</string>
+    <string name="home_progress_not_started">Nicht begonnen</string>
+    <string name="home_demo">Demo</string>
+    <string name="home_done">Fertig</string>
+    <string name="home_close">Schließen</string>
+    <string name="home_cancel">Abbrechen</string>
+    <string name="home_no_screens">Noch keine Fernseher.</string>
+    <string name="home_edit_screen">%1$s bearbeiten</string>
+    <string name="home_delete_screen">%1$s löschen</string>
+    <string name="home_delete_title">„%1$s“ löschen?</string>
+    <string name="home_delete_text">Löscht den Fernseher und seinen Verlauf. Seine Messungen und der Kalibrierungsfortschritt werden von diesem Handy entfernt.</string>
+
+    <!-- Add / edit a screen (TVSetupFlow.kt) -->
+    <string name="home_setup_which_screen">Welcher Fernseher ist das?</string>
+    <string name="home_setup_which_screen_text">Du kannst diese Angaben später ändern.</string>
+    <string name="home_setup_kind">Was für ein Fernseher ist es?</string>
+    <string name="home_setup_kind_text">Die Kamera misst jede Art etwas anders. Meist steht es in der Modellbezeichnung oder auf dem Karton.</string>
+    <string name="home_setup_wb_title">Sein Weißabgleich-Menü</string>
+    <string name="home_setup_wb_text">Öffne am Fernseher %1$s</string>
+    <string name="home_setup_colour_title">Sein Farbmenü</string>
+    <string name="home_setup_colour_text">Öffne am Fernseher %1$s. Welche Regler siehst du?</string>
+    <string name="home_setup_edit_title">Fernseher-Einstellungen</string>
+    <string name="home_setup_add_finish">Fernseher hinzufügen</string>
+    <string name="home_save">Speichern</string>
+    <string name="home_setup_section">Fernseher-Details</string>
+    <string name="home_setup_name_label">Name des Fernsehers</string>
+    <string name="home_setup_name_hint">z. B. OLED im Wohnzimmer</string>
+    <string name="home_setup_brand">Marke</string>
+    <string name="home_setup_name_tip">Wähl einen Namen, den du vom Sofa aus wiedererkennst.</string>
+    <string name="home_mp_two">Nur 2 Punkte</string>
+    <string name="home_mp_ten">10 Punkte</string>
+    <string name="home_mp_twenty">20 Punkte</string>
+    <string name="home_mp_two_detail">Gain und %1$s</string>
+    <string name="home_mp_ten_detail" formatted="false">10 %, 20 % … 100 %</string>
+    <string name="home_mp_twenty_detail" formatted="false">5 %, 10 % … 100 %</string>
+    <string name="home_usual_for">Üblich bei %1$s</string>
+    <string name="home_mp_not_sure">Weiß nicht: frag mich, wenn es so weit ist</string>
+    <string name="home_cm_rgb">Rot / Grün / Blau</string>
+    <string name="home_cm_off">Kein Farbmenü</string>
+    <string name="home_not_sure">Weiß nicht</string>
+    <string name="home_mq_colour_title">Zuerst: das Farbmenü deines Fernsehers</string>
+    <string name="home_mq_wb_title">Zuerst: das Weißabgleich-Menü deines Fernsehers</string>
+    <string name="home_mq_colour_text">Öffne am Fernseher %1$s. Welche Regler hat jede Farbe?</string>
+    <string name="home_mq_wb_text">Öffne am Fernseher %1$s und such nach einer Option mit 10 oder 20 Punkten. Welche gibt es?</string>
+    <string name="home_continue">Weiter</string>
+
+    <!-- Welcome (WelcomeView.kt) -->
+    <string name="home_welcome">Willkommen</string>
+    <string name="home_get_started">Los geht’s</string>
+    <string name="home_welcome_video_title">Neu beim Kalibrieren? Fang mit dem Video an</string>
+    <string name="home_welcome_video_text">Diese App gehört zu den Videos von Slidebean darüber, was eine Kalibrierung mit dem Bild eines Fernsehers macht – mit einer kompletten Sitzung von Anfang bis Ende. Falls du sie noch nicht gesehen hast: Die paar Minuten lohnen sich.</string>
+    <string name="home_welcome_tv_title">Dein Fernseher, so wie der Film gemacht wurde</string>
+    <string name="home_welcome_tv_text">Die meisten Fernseher sind ab Werk zu blau, zu hell und zu gesättigt. %1$s führt dich durch die Bildeinstellungen deines Fernsehers, bis sie dem Standard entsprechen, für den Filme und Serien gemacht werden.</string>
+    <string name="home_welcome_meter_title">Dein Handy ist das Messgerät</string>
+    <string name="home_welcome_meter_text">Der Fernseher spielt Testvideos vom YouTube-Kanal von Slidebean ab. Die Kamera deines Handys misst jede Farbe, und die App sagt dir, welche Einstellung du wie weit ändern musst. Auf dem Fernseher wird nichts installiert.</string>
+    <string name="home_welcome_meter_bullet1">Starte mit dem genauesten Bildmodus (oft der Filmmaker-Modus) und stimm ihn dann fein ab</string>
+    <string name="home_welcome_meter_bullet2">Ein Schritt nach dem anderen: Weiß, Grautöne, dann Farben</string>
+    <string name="home_welcome_meter_bullet3">Am Ende eine Bewertung für vorher und nachher</string>
+    <string name="home_welcome_need_title">Was du brauchst</string>
+    <string name="home_welcome_need_text">Kein Fernseher zur Hand? Probier die Demo auf dem Startbildschirm aus, um zu sehen, wie es funktioniert.</string>
+    <string name="home_welcome_need_bullet1">Die Fernbedienung deines Fernsehers</string>
+    <string name="home_welcome_need_bullet2">Die YouTube-App auf dem Fernseher</string>
+    <string name="home_welcome_need_bullet3">Etwas, worauf das Handy stehen kann, 15–30 cm vom Bildschirm entfernt</string>
+    <string name="home_welcome_need_bullet4">Einen dunklen Raum</string>
+    <string name="home_video_desc">Auf YouTube ansehen, wie eine TV-Kalibrierung funktioniert</string>
+    <string name="home_video_compact">Neu hier? Sieh dir an, wie es funktioniert</string>
+    <string name="home_video_title">So funktioniert eine TV-Kalibrierung</string>
+    <string name="home_video_source">Slidebean · öffnet YouTube</string>
+
+    <!-- Opening screen (IntroView.kt) -->
+    <string name="home_intro_desc">%1$s, basiert auf TV Calibrator von Slidebean</string>
+
+    <!-- Settings (SettingsView.kt) -->
+    <string name="home_back">Zurück</string>
+    <string name="home_settings_camera_profile">Kameraprofil</string>
+    <string name="home_settings_this_phone">Dieses Handy</string>
+    <string name="home_settings_tvs_matched">Abgeglichene Fernseher</string>
+    <plurals name="home_settings_matched_on">
+        <item quantity="one">An %1$s Fernseher abgeglichen</item>
+        <item quantity="other">An %1$s Fernsehern abgeglichen</item>
+    </plurals>
+    <string name="home_settings_accuracy">Genauigkeit: %1$s</string>
+    <string name="home_settings_de_new">dE %1$s an einem neuen Fernseher</string>
+    <string name="home_settings_de_training">dE %1$s im Training</string>
+    <string name="home_settings_aperture">Blende</string>
+    <string name="home_settings_pattern_videos">Testvideos</string>
+    <string name="home_settings_playlist">%1$s-Playlist</string>
+    <string name="home_settings_patterns">%1$s-Testbilder</string>
+    <string name="home_settings_usb">Download für USB</string>
+    <string name="home_settings_how_calibration">So funktioniert die Kalibrierung</string>
+    <string name="home_settings_slidebean_video">Das Video von Slidebean</string>
+    <string name="home_settings_help">Hilfe und Videos</string>
+    <string name="home_settings_pattern_note">SDR- und HDR10-Testbilder laufen über YouTube in der YouTube-App des Fernsehers. HDR10+- und Dolby-Vision-Testbilder gibt es als Download, abgespielt von einem USB-Stick oder einer Medien-App.</string>
+    <string name="home_settings_notifications">Mitteilungen und Töne</string>
+    <string name="home_settings_sounds">Töne</string>
+    <string name="home_settings_sounds_detail">Ein Signalton, wenn eine Einstellung ihr Ziel erreicht</string>
+    <string name="home_settings_version">Version %1$s · nicht mit Slidebean verbunden</string>
+    <string name="home_settings_based_on">Basiert auf TV Calibrator von Slidebean</string>
+    <string name="home_settings_license">Open Source unter CC BY-NC 4.0. Geändert: auf Android portiert</string>
+    <string name="home_settings_privacy">Messungen bleiben auf diesem Handy.</string>
+</resources>

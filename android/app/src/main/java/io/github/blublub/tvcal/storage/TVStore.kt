@@ -1,5 +1,5 @@
 // Port of TV Calibrator/Storage/TVStore.swift (TV Calibrator by Slidebean,
-// https://github.com/slidebean/tv-calibrator, CC BY-NC 4.0). Changed: translated to Kotlin.
+// https://github.com/slidebean/tv-calibrator, CC BY-NC 4.0). Changed: translated to Kotlin, German labels added.
 package io.github.blublub.tvcal.storage
 
 import android.content.Context
@@ -10,6 +10,7 @@ import io.github.blublub.tvcal.engine.SignalMode
 import io.github.blublub.tvcal.engine.SimTV
 import io.github.blublub.tvcal.engine.Vec3
 import io.github.blublub.tvcal.engine.engineJson
+import io.github.blublub.tvcal.ui.L10n.tr
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -168,14 +169,14 @@ enum class GuideStep(val raw: String) {
 
     val label: String
         get() = when (this) {
-            SETUP -> "Set up"
-            BEFORE -> "Before"
-            BRIGHT -> "Bright end"
-            DARK -> "Dark end"
-            CHECK -> "Check"
-            COLOURS -> "Colours"
-            AFTER -> "After"
-            FINE -> "Fine-tune"
+            SETUP -> tr("Set up", "Einrichten")
+            BEFORE -> tr("Before", "Vorher")
+            BRIGHT -> tr("Bright end", "Helle Töne")
+            DARK -> tr("Dark end", "Dunkle Töne")
+            CHECK -> tr("Check", "Prüfen")
+            COLOURS -> tr("Colours", "Farben")
+            AFTER -> tr("After", "Nachher")
+            FINE -> tr("Fine-tune", "Feinabstimmung")
         }
 
     val next: GuideStep?

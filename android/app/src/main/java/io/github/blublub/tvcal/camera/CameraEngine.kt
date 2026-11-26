@@ -2,6 +2,8 @@
 // Slidebean, https://github.com/slidebean/tv-calibrator, CC BY-NC 4.0). Changed: rewritten for Camera2.
 package io.github.blublub.tvcal.camera
 
+import io.github.blublub.tvcal.ui.L10n
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.ImageFormat
@@ -117,21 +119,21 @@ class CameraEngine(context: Context) {
         inspectProblem = try {
             load()
         } catch (e: Exception) {
-            "Couldn't read the camera's details (${e.message})."
+            L10n.tr("Couldn't read the camera's details (${e.message}).", "Die Kameradaten ließen sich nicht lesen (${e.message}).")
         }
         return if (inspectProblem == null) colorInfo else null
     }
 
     /** Reads everything about the chosen camera. Null when it can be used, else what's missing. */
     private fun load(): String? {
-        val id = choose() ?: return "This phone's camera doesn't give apps RAW photos, which the camera meter needs."
+        val id = choose() ?: return L10n.tr("This phone's camera doesn't give apps RAW photos, which the camera meter needs.", "Die Kamera dieses Handys gibt Apps keine RAW-Fotos, die das Messgerät braucht.")
         val c = manager.getCameraCharacteristics(id)
         val caps = c.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES) ?: intArrayOf()
         manualTemplate = CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_MANUAL_SENSOR in caps
-        if (!manualTemplate) return "This phone's camera doesn't allow manual exposure, which the camera meter needs."
+        if (!manualTemplate) return L10n.tr("This phone's camera doesn't allow manual exposure, which the camera meter needs.", "Die Kamera dieses Handys erlaubt keine manuelle Belichtung, die das Messgerät braucht.")
         val map = c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
         val size = map.getOutputSizes(ImageFormat.RAW_SENSOR)?.maxByOrNull { it.width * it.height }
-            ?: return "This phone's camera has no RAW format."
+            ?: return L10n.tr("This phone's camera has no RAW format.", "Die Kamera dieses Handys hat kein RAW-Format.")
         cameraId = id
         rawSize = size
         cfa = c.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT) ?: -1
@@ -174,14 +176,14 @@ class CameraEngine(context: Context) {
         manager.openCamera(id, executor, object : CameraDevice.StateCallback() {
             override fun onOpened(d: CameraDevice) { opened.complete(d) }
             override fun onDisconnected(d: CameraDevice) {
-                d.close(); if (!opened.isCompleted) opened.complete("disconnected") else onLost("The camera was taken by another app.")
+                d.close(); if (!opened.isCompleted) opened.complete("disconnected") else onLost(L10n.tr("The camera was taken by another app.", "Eine andere App hat die Kamera übernommen."))
             }
             override fun onError(d: CameraDevice, error: Int) {
-                d.close(); if (!opened.isCompleted) opened.complete("error $error") else onLost("The camera stopped (error $error).")
+                d.close(); if (!opened.isCompleted) opened.complete("error $error") else onLost(L10n.tr("The camera stopped (error $error).", "Die Kamera wurde angehalten (Fehler $error)."))
             }
         })
         val d = withTimeoutOrNull(5000) { opened.await() }
-        if (d !is CameraDevice) return@withLock "Couldn't open the camera (${d ?: "timeout"})."
+        if (d !is CameraDevice) return@withLock L10n.tr("Couldn't open the camera (${d ?: "timeout"}).", "Die Kamera ließ sich nicht öffnen (${d ?: "Zeitüberschreitung"}).")
         device = d
         val r = ImageReader.newInstance(size.width, size.height, ImageFormat.RAW_SENSOR, 3)
         r.setOnImageAvailableListener({ rd ->
@@ -202,8 +204,8 @@ class CameraEngine(context: Context) {
 
     /** (Re)creates the capture session for the RAW reader and, when there is one, the preview. */
     private suspend fun configure(): String? {
-        val d = device ?: return "The camera isn't open."
-        val r = reader ?: return "The camera isn't open."
+        val d = device ?: return L10n.tr("The camera isn't open.", "Die Kamera ist nicht geöffnet.")
+        val r = reader ?: return L10n.tr("The camera isn't open.", "Die Kamera ist nicht geöffnet.")
         session?.close()
         session = null
         val outs = mutableListOf(OutputConfiguration(r.surface))
@@ -215,7 +217,7 @@ class CameraEngine(context: Context) {
                 override fun onConfigureFailed(s: CameraCaptureSession) { done.complete(null) }
             }),
         )
-        val s = withTimeoutOrNull(5000) { done.await() } ?: return "Couldn't set up the camera."
+        val s = withTimeoutOrNull(5000) { done.await() } ?: return L10n.tr("Couldn't set up the camera.", "Die Kamera ließ sich nicht einrichten.")
         session = s
         preview?.let { surf ->
             val req = d.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {

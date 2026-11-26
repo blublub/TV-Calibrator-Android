@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
@@ -54,6 +55,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.blublub.tvcal.AppModel
+import io.github.blublub.tvcal.R
 import io.github.blublub.tvcal.engine.Analysis
 import io.github.blublub.tvcal.engine.Report
 import io.github.blublub.tvcal.engine.SignalMode
@@ -62,6 +64,7 @@ import io.github.blublub.tvcal.storage.GuideStep
 import io.github.blublub.tvcal.storage.TVRecord
 import io.github.blublub.tvcal.storage.uuidString
 import io.github.blublub.tvcal.ui.FullSheet
+import io.github.blublub.tvcal.ui.L10n
 import io.github.blublub.tvcal.ui.LocalApp
 import io.github.blublub.tvcal.ui.LocalNav
 import io.github.blublub.tvcal.ui.components.ReportPanel
@@ -153,9 +156,9 @@ fun TVHomeView(app: AppModel, tv: TVRecord) {
         } else null
     }
     val mainTitle = when {
-        done == 0 -> "Start with ${mode.label}"
-        calibrated -> "View ${mode.label} results"
-        else -> "Continue ${mode.label}"
+        done == 0 -> stringResource(R.string.report_start_with, mode.label)
+        calibrated -> stringResource(R.string.report_view_results, mode.label)
+        else -> stringResource(R.string.report_continue, mode.label)
     }
 
     fun choose(m: SignalMode) {
@@ -167,20 +170,21 @@ fun TVHomeView(app: AppModel, tv: TVRecord) {
         Column(Modifier.fillMaxSize().padding(pad)) {
             TVHomeTopBar(screen.name, onBack = { nav.pop() }) {
                 Box {
+                    val optionsLabel = stringResource(R.string.report_screen_options)
                     IconButton(onClick = { menuOpen = true }, modifier = Modifier.semantics {
-                        contentDescription = "Screen options"
+                        contentDescription = optionsLabel
                     }) {
                         Icon(symbol("ellipsis.circle"), contentDescription = null, tint = Theme.tealBright)
                     }
                     // The screen's menu: its settings, its history, delete.
                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                         DropdownMenuItem(
-                            text = { Text("Screen settings") },
+                            text = { Text(stringResource(R.string.report_screen_settings)) },
                             leadingIcon = { Icon(symbol("pencil"), contentDescription = null) },
                             onClick = { menuOpen = false; editing = true },
                         )
                         DropdownMenuItem(
-                            text = { Text("Export history") },
+                            text = { Text(stringResource(R.string.report_export_history)) },
                             leadingIcon = { Icon(symbol("square.and.arrow.up"), contentDescription = null) },
                             onClick = {
                                 menuOpen = false
@@ -191,7 +195,7 @@ fun TVHomeView(app: AppModel, tv: TVRecord) {
                         )
                         HorizontalDivider()
                         DropdownMenuItem(
-                            text = { Text("Delete this screen", color = Theme.red) },
+                            text = { Text(stringResource(R.string.report_delete_this_screen), color = Theme.red) },
                             leadingIcon = { Icon(symbol("trash"), contentDescription = null, tint = Theme.red) },
                             onClick = { menuOpen = false; deleting = true },
                         )
@@ -221,13 +225,14 @@ fun TVHomeView(app: AppModel, tv: TVRecord) {
                 ModeSelector(screen, mode) { m -> choose(m) }
                 if (done > 0 && !calibrated) {
                     // The bar opens "Jump to a step" (the step navigator).
+                    val jumpLabel = stringResource(R.string.report_jump_to_step)
                     Box(Modifier.padding(top = 4.dp)) {
                         StepBar(guided = guided)
                         Box(
                             Modifier
                                 .matchParentSize()
                                 .clickable(role = Role.Button) { navigating = true }
-                                .semantics { contentDescription = "Jump to a step" },
+                                .semantics { contentDescription = jumpLabel },
                         )
                     }
                 }
@@ -265,8 +270,8 @@ fun TVHomeView(app: AppModel, tv: TVRecord) {
     if (deleting) {
         AlertDialog(
             onDismissRequest = { deleting = false },
-            title = { Text("Delete ${screen.name}?") },
-            text = { Text("Its measurements and calibration progress are removed from this phone.") },
+            title = { Text(stringResource(R.string.report_delete_title, screen.name)) },
+            text = { Text(stringResource(R.string.report_delete_text)) },
             confirmButton = {
                 TextButton(onClick = {
                     deleting = false
@@ -274,9 +279,9 @@ fun TVHomeView(app: AppModel, tv: TVRecord) {
                     guided.stopLive()
                     nav.pop()
                     app.delete(doomed)
-                }) { Text("Delete the screen and its history", color = Theme.red) }
+                }) { Text(stringResource(R.string.report_delete_confirm), color = Theme.red) }
             },
-            dismissButton = { TextButton(onClick = { deleting = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { deleting = false }) { Text(stringResource(R.string.report_cancel)) } },
             containerColor = Theme.surface,
             titleContentColor = Color.White,
             textContentColor = Theme.textSecondary,
@@ -293,7 +298,7 @@ private fun TVHomeTopBar(title: String, onBack: (() -> Unit)?, actions: @Composa
     ) {
         if (onBack != null) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Theme.tealBright)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.report_back), tint = Theme.tealBright)
             }
         } else {
             Spacer(Modifier.width(48.dp))
@@ -309,7 +314,7 @@ private fun TVHomeTopBar(title: String, onBack: (() -> Unit)?, actions: @Composa
 private fun TVHomeSheetBar(title: String, onClose: () -> Unit) {
     Box(Modifier.fillMaxWidth().heightIn(min = 52.dp).padding(horizontal = 4.dp), contentAlignment = Alignment.Center) {
         IconButton(onClick = onClose, modifier = Modifier.align(Alignment.CenterStart)) {
-            Icon(symbol("xmark"), contentDescription = "Close", tint = Theme.tealBright)
+            Icon(symbol("xmark"), contentDescription = stringResource(R.string.report_close), tint = Theme.tealBright)
         }
         Text(title, style = Type.headlineBrand, color = Color.White, modifier = Modifier.semantics { heading() })
     }
@@ -319,7 +324,7 @@ private fun TVHomeSheetBar(title: String, onClose: () -> Unit) {
 private fun TVHomeDemoNote() {
     Row(Modifier.padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.Top) {
         Icon(symbol("sparkles"), contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(17.dp))
-        Text("Demo: simulated readings. The on-screen buttons stand in for the TV's remote.",
+        Text(stringResource(R.string.report_demo_note),
             style = Type.captionBrand, color = Theme.textSecondary)
     }
 }
@@ -342,7 +347,7 @@ private fun ScreenReportCard(
     ReportPanel {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically) {
-            Text(if (finished) "CALIBRATED" else "STARTING POINT", style = Type.badge.copy(letterSpacing = 0.8.sp),
+            Text(stringResource(if (finished) R.string.report_calibrated_caps else R.string.report_starting_point_caps), style = Type.badge.copy(letterSpacing = 0.8.sp),
                 color = if (finished) Theme.green else Theme.accent)
             ModeBadge(mode)
             Spacer(Modifier.weight(1f).width(8.dp))
@@ -354,7 +359,7 @@ private fun ScreenReportCard(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(if (finished) "Full results" else "See the starting point", style = Type.captionStrong,
+            Text(stringResource(if (finished) R.string.report_full_results else R.string.report_see_starting_point), style = Type.captionStrong,
                 color = Theme.tealBright)
             Icon(symbol("chevron.right"), contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(14.dp))
         }
@@ -390,8 +395,8 @@ fun ModeSelector(tv: TVRecord, mode: SignalMode, choose: (SignalMode) -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("Advanced", style = Type.captionStrong, color = Color.White)
-            Text("USB files", style = Type.small, color = Theme.textSecondary)
+            Text(stringResource(R.string.report_advanced), style = Type.captionStrong, color = Color.White)
+            Text(stringResource(R.string.report_usb_files), style = Type.small, color = Theme.textSecondary)
             Spacer(Modifier.weight(1f))
             for (m in listOf(SignalMode.HDR10P, SignalMode.DV)) {
                 Box(Modifier
@@ -441,7 +446,8 @@ private fun ModeSelectorCard(m: SignalMode, mode: SignalMode, done: Int, modifie
             )
         }
         BasicText(
-            if (done == 0) "Not started" else if (calibrated) "Calibrated" else "$done of $total steps",
+            if (done == 0) stringResource(R.string.report_not_started) else if (calibrated) stringResource(R.string.report_calibrated)
+            else stringResource(R.string.report_steps_of, done.toString(), total.toString()),
             style = Type.bodyStrong.copy(color = if (calibrated) Theme.green else Color.White),
             maxLines = 1,
             autoSize = TextAutoSize.StepBased(minFontSize = 12.sp, maxFontSize = 15.sp),
@@ -456,15 +462,15 @@ private fun ModeSelectorCard(m: SignalMode, mode: SignalMode, done: Int, modifie
 private fun AdvancedFormatSheet(mode: SignalMode, confirm: () -> Unit, onDismiss: () -> Unit) {
     ScreenWithBottomAction(bottom = {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            PrimaryButton("Calibrate ${mode.label} anyway", onClick = {
+            PrimaryButton(stringResource(R.string.report_calibrate_anyway, mode.label), onClick = {
                 confirm()
                 onDismiss()
             })
-            SecondaryButton("Not now", onClick = onDismiss)
+            SecondaryButton(stringResource(R.string.report_not_now), onClick = onDismiss)
         }
     }) { pad ->
         Column(Modifier.fillMaxSize().padding(pad)) {
-            TVHomeSheetBar("Advanced formats", onDismiss)
+            TVHomeSheetBar(stringResource(R.string.report_advanced_formats), onDismiss)
             Column(
                 Modifier
                     .weight(1f)
@@ -473,7 +479,7 @@ private fun AdvancedFormatSheet(mode: SignalMode, confirm: () -> Unit, onDismiss
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 ModeBadge(mode)
-                Text("${mode.label} needs a USB drive", style = Type.stepTitleStyle)
+                Text(stringResource(R.string.report_needs_usb, mode.label), style = Type.stepTitleStyle)
                 val art: @Composable () -> Unit = {
                     Row(
                         Modifier.fillMaxSize(),
@@ -491,8 +497,7 @@ private fun AdvancedFormatSheet(mode: SignalMode, confirm: () -> Unit, onDismiss
                 }
                 WalkArtPanel(height = 120.dp, content = art)
                 Text(
-                    "YouTube can't play ${mode.label}: download the pattern files, copy them to a USB drive and play them " +
-                        "on the TV. Do SDR and HDR10 first; this builds on those settings.",
+                    stringResource(R.string.report_advanced_body, mode.label),
                     style = Type.bodyBrand.copy(lineHeight = 22.sp), color = Theme.textSecondary,
                 )
             }
@@ -517,13 +522,15 @@ fun StepNavigatorSheet(
     val currentStep = if (guided.progress.step == GuideStep.FINE) GuideStep.CHECK else guided.progress.step
     val target = picked ?: currentStep
 
-    ScreenWithBottomAction(actionTitle = "Go to ${target.label.lowercase()}", onAction = {
+    // German keeps the step's name as it is (nouns are capitalised); English lowercases it ("Go to before").
+    val targetName = if (L10n.german) target.label else target.label.lowercase()
+    ScreenWithBottomAction(actionTitle = stringResource(R.string.report_go_to, targetName), onAction = {
         guided.go(target)
         open()
         onDismiss()
     }) { pad ->
         Column(Modifier.fillMaxSize().padding(pad)) {
-            TVHomeSheetBar("Jump to a step", onDismiss)
+            TVHomeSheetBar(stringResource(R.string.report_jump_to_step), onDismiss)
             Column(
                 Modifier
                     .weight(1f)
@@ -541,7 +548,8 @@ fun StepNavigatorSheet(
                         val done = step in guided.progress.done
                         val isCurrent = step == currentStep
                         val isTarget = step == target
-                        val status = if (isCurrent) "Current" else if (done) "Done" else "Upcoming"
+                        val status = stringResource(if (isCurrent) R.string.report_status_current else if (done) R.string.report_status_done
+                            else R.string.report_status_upcoming)
                         Row(
                             Modifier
                                 .fillMaxWidth()

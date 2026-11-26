@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen home (TVHomeView) -->
+    <string name="report_start_with">Mit %1$s starten</string>
+    <string name="report_view_results">%1$s-Ergebnisse ansehen</string>
+    <string name="report_continue">%1$s fortsetzen</string>
+    <string name="report_screen_options">Optionen für den Fernseher</string>
+    <string name="report_screen_settings">Fernseher-Einstellungen</string>
+    <string name="report_export_history">Verlauf exportieren</string>
+    <string name="report_delete_this_screen">Diesen Fernseher löschen</string>
+    <string name="report_jump_to_step">Zu einem Schritt springen</string>
+    <string name="report_delete_title">%1$s löschen?</string>
+    <string name="report_delete_text">Seine Messungen und der Kalibrierungsfortschritt werden von diesem Handy entfernt.</string>
+    <string name="report_delete_confirm">Fernseher und Verlauf löschen</string>
+    <string name="report_cancel">Abbrechen</string>
+    <string name="report_back">Zurück</string>
+    <string name="report_close">Schließen</string>
+    <string name="report_demo_note">Demo: simulierte Messwerte. Die Tasten auf dem Bildschirm ersetzen die Fernbedienung.</string>
+    <string name="report_calibrated_caps">KALIBRIERT</string>
+    <string name="report_starting_point_caps">AUSGANGSPUNKT</string>
+    <string name="report_full_results">Alle Ergebnisse</string>
+    <string name="report_see_starting_point">Ausgangspunkt ansehen</string>
+    <string name="report_advanced">Erweitert</string>
+    <string name="report_usb_files">USB-Dateien</string>
+    <string name="report_not_started">Nicht begonnen</string>
+    <string name="report_calibrated">Kalibriert</string>
+    <string name="report_steps_of">%1$s von %2$s Schritten</string>
+    <string name="report_calibrate_anyway">%1$s trotzdem kalibrieren</string>
+    <string name="report_not_now">Nicht jetzt</string>
+    <string name="report_advanced_formats">Erweiterte Formate</string>
+    <string name="report_needs_usb">%1$s braucht einen USB-Stick</string>
+    <string name="report_advanced_body">YouTube kann kein %1$s abspielen: Lade die Testbild-Dateien herunter, kopiere sie auf einen USB-Stick und spiele sie am Fernseher ab. Mach zuerst SDR und HDR10 – das hier baut auf diesen Einstellungen auf.</string>
+    <string name="report_go_to">Zu „%1$s“</string>
+    <string name="report_status_current">Aktuell</string>
+    <string name="report_status_done">Erledigt</string>
+    <string name="report_status_upcoming">Offen</string>
+
+    <!-- Results (ResultsView) -->
+    <string name="report_headline_measured">Dein Bild, gemessen.</string>
+    <string name="report_headline_not_there">Noch nicht ganz am Ziel.</string>
+    <string name="report_headline_natural">Ein natürlicheres Bild.</string>
+    <string name="report_share_title">%1$s · Kalibrierungsergebnisse</string>
+    <string name="report_before_after_caps">VORHER → NACHHER</string>
+    <string name="report_measured_caps">GEMESSEN</string>
+    <string name="report_grey_by_grey">Grau für Grau</string>
+    <string name="report_share">Teilen</string>
+    <string name="report_share_before_after_date">Vorher → nachher · %1$s</string>
+    <string name="report_share_measured_date">Gemessen · %1$s</string>
+    <string name="report_based_on">basiert auf TV Calibrator by Slidebean</string>
+    <string name="report_measured_with_phone">Mit dem Handy gemessen</string>
+
+    <!-- Report visuals -->
+    <string name="report_greyscale">Graustufen</string>
+    <string name="report_colours">Farben</string>
+    <string name="report_gamma">Gamma</string>
+    <string name="report_white_point">Weißpunkt</string>
+    <string name="report_gauge_off">Daneben</string>
+    <string name="report_gauge_before">vorher</string>
+    <string name="report_gauge_after">nachher</string>
+    <string name="report_gauge_perfect">Perfekt</string>
+    <string name="report_colours_on_target">%1$s von %2$s Farben im Ziel</string>
+    <string name="report_dot_target">· Ziel %1$s</string>
+
+    <!-- Playback -->
+    <string name="report_usb_file">USB-Datei</string>
+    <string name="report_play_on_tv">Am Fernseher abspielen</string>
+    <string name="report_play_on_tv_from_start">Am Fernseher abspielen, von Anfang an</string>
+    <string name="report_open_on_youtube">Auf YouTube öffnen</string>
+    <string name="report_get_usb_file">USB-Datei holen</string>
+    <string name="report_youtube_on_tv">YouTube · auf deinem Fernseher</string>
+    <string name="report_start_video">Starte das Video am Fernseher</string>
+    <string name="report_waiting_flashes">Warte auf die Blitze des Videos…</string>
+    <string name="report_title_starts_with">Sein Titel beginnt mit %1$s. Werbung ist kein Problem: Die App wartet weiter.</string>
+    <string name="report_file_starts_with">Sein Dateiname beginnt mit %1$s.</string>
+    <string name="report_measuring_patch">%1$s wird gemessen</string>
+    <string name="report_measuring">Messung läuft…</string>
+    <string name="report_patches_of">%1$s von %2$s Testfeldern</string>
+    <string name="report_patches_measured">%1$s von %2$s Testfeldern gemessen</string>
+    <string name="report_camera_sees">Kamera sieht %1$s</string>
+    <string name="report_keep_still">Lass das TV-Menü geschlossen und halte das Handy ruhig.</string>
+
+    <!-- Components -->
+    <string name="report_was">vorher %1$s</string>
+    <string name="report_reading">%1$s: %2$s</string>
+    <string name="report_reading_on_target">%1$s: %2$s, im Ziel</string>
+    <string name="report_too_little">Zu wenig</string>
+    <string name="report_on_target">Im Ziel</string>
+    <string name="report_too_much">Zu viel</string>
+    <string name="report_white_on_target">Weiß liegt im Ziel</string>
+    <string name="report_white_off_target">Weiß liegt nicht im Ziel</string>
+    <string name="report_colour_chart">Farbdiagramm</string>
+    <string name="report_colour_chart_one_on">Farbdiagramm: %1$s liegt im Ziel</string>
+    <string name="report_colour_chart_one_off">Farbdiagramm: %1$s liegt nicht im Ziel</string>
+    <string name="report_colour_chart_many">Farbdiagramm: %1$s von %2$s Farben im Ziel</string>
+    <string name="report_grey_chart_desc">Graustufendiagramm: Rot, Grün und Blau im Vergleich zur Ziellinie</string>
+    <string name="report_percent">%1$s %%</string>
+    <string name="report_target">Ziel %1$s</string>
+    <string name="report_greyscale_range">Graustufen · %1$s–%2$s %%</string>
+    <string name="report_colours_all_six">Farben · alle sechs im Ziel</string>
+    <string name="report_colours_all">Farben · alle im Ziel</string>
+    <string name="report_colours_some">Farben · %1$s von %2$s im Ziel</string>
+    <string name="report_grey_legend_before">Vorher blass · nachher kräftig · flache Ziellinie</string>
+    <string name="report_grey_legend">Die flache Linie ist das Ziel</string>
+    <string name="report_colour_legend_before">Ringe: Ziel · hohl: vorher · Punkte: nachher</string>
+    <string name="report_colour_legend">Ringe: Ziel · Punkte: dein Fernseher</string>
+    <string name="report_de_explainer">Wie weit daneben (dE): Unter 1 ist perfekt. Grautöne unter 2 und Farben unter 3 sind ausgezeichnet; Fernseher treffen selten jede Farbe ganz genau.</string>
+    <string name="report_numbers_mean">Was die Zahlen bedeuten</string>
+
+    <!-- Design system -->
+    <string name="report_page_of">Seite %1$s von %2$s</string>
+</resources>

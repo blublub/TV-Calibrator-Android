@@ -11,15 +11,23 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.time.Instant
+import java.util.Locale
 import java.util.UUID
 
 class StorageTests {
     @get:Rule val tmp = TemporaryFolder()
+
+    // The brand texts follow the language (L10n); the English assertions need an English locale.
+    private var savedLocale: Locale = Locale.getDefault()
+    @Before fun englishLocale() { savedLocale = Locale.getDefault(); Locale.setDefault(Locale.ENGLISH) }
+    @After fun restoreLocale() = Locale.setDefault(savedLocale)
 
     private fun store() = TVStore(tmp.newFolder("files"), tmp.newFolder("cache"))
 
@@ -158,5 +166,29 @@ class StorageTests {
         assertNull(PanelType.UNKNOWN.profileKey)
         assertEquals("woled", PanelType.WOLED.profileKey)
         assertEquals(20, Multipoint.TWENTY.raw)
+    }
+
+    @Test fun brandTextsInGerman() {
+        Locale.setDefault(Locale.GERMAN)
+        for (b in Brand.entries) {
+            assertTrue(b.name, b.whiteBalancePath.isNotBlank() && b.whiteBalanceMenu.isNotBlank())
+            assertTrue(b.name, b.colourMenuPath.isNotBlank() && b.gamutSetting.isNotBlank())
+            for (mode in SignalMode.entries) {
+                val setup = b.setup(mode)
+                assertTrue(setup.first(), setup.first().startsWith("Bildmodus"))
+                assertTrue(setup.all { it.isNotBlank() })
+            }
+        }
+        assertEquals("Bild › Experteneinstellungen › Weißabgleich (2 Punkte)", Brand.SAMSUNG.whiteBalancePath)
+        assertEquals("Calibrated Dark", Brand.VIZIO.pictureMode(SignalMode.HDR10))
+        assertEquals("Movie", Brand.ROKU.pictureMode(SignalMode.SDR))
+        assertEquals("Farbton / Sättigung / Luminanz", Brand.LG.cmsMenuLabel)
+        assertEquals("Einrichten", GuideStep.SETUP.label)
+        assertEquals("Weiß nicht", PanelType.UNKNOWN.label)
+        Locale.setDefault(Locale.ENGLISH)
+        assertEquals("Picture › Advanced Settings › Colour › White Balance", Brand.LG.whiteBalanceMenu)
+        assertEquals(
+            "Picture › Advanced Settings › Colour › White Balance (set it to 2 Point)", Brand.LG.whiteBalancePath,
+        )
     }
 }

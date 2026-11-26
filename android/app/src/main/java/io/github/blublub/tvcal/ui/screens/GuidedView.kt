@@ -76,6 +76,7 @@ import io.github.blublub.tvcal.storage.GuideStep
 import io.github.blublub.tvcal.storage.Multipoint
 import io.github.blublub.tvcal.storage.PanelType
 import io.github.blublub.tvcal.ui.FullSheet
+import io.github.blublub.tvcal.ui.L10n
 import io.github.blublub.tvcal.ui.LocalApp
 import io.github.blublub.tvcal.ui.components.GreyBalanceChart
 import io.github.blublub.tvcal.ui.components.ReportSummary
@@ -133,7 +134,7 @@ fun GuidedView(guided: GuidedController) {
         if (m != null) {
             TipRow(tone = TipTone.limit, text = m)
             if (!guided.tv.isDemo && app.cameraBlocker != null) {
-                SecondaryButton("Set up the camera", onClick = { showingCamera = true })
+                SecondaryButton(stringResource(R.string.guided_setup_camera), onClick = { showingCamera = true })
             }
         }
         key("${guided.mode.raw}-${step.raw}-$restarts") {
@@ -163,6 +164,7 @@ fun GuidedView(guided: GuidedController) {
 @Composable
 fun CameraSetupSheet(onDismiss: () -> Unit) {
     val app = LocalApp.current
+    val closeLabel = stringResource(R.string.guided_close)
     Column(
         Modifier
             .fillMaxSize()
@@ -175,7 +177,7 @@ fun CameraSetupSheet(onDismiss: () -> Unit) {
                     .size(44.dp)
                     .align(Alignment.CenterStart)
                     .clickable(role = Role.Button, onClick = onDismiss)
-                    .semantics { contentDescription = "Close" },
+                    .semantics { contentDescription = closeLabel },
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(symbol("xmark"), contentDescription = null, tint = Theme.tealBright, modifier = Modifier.size(22.dp))
@@ -198,7 +200,7 @@ fun GuidedScreen(guided: GuidedController, onBack: (() -> Unit)? = null) {
     val app = LocalApp.current
     val pinned = remember { PinnedActionHostState() }
     val title = if (guided.progress.step == GuideStep.CHECK && guided.checkReport != null && !guided.runner.running) {
-        "Check and fine-tune"
+        stringResource(R.string.guided_check_and_finetune)
     } else {
         guided.progress.step.label
     }
@@ -221,7 +223,7 @@ fun GuidedScreen(guided: GuidedController, onBack: (() -> Unit)? = null) {
             {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     PinnedActionBar(pinned)
-                    if (running) SecondaryButton("Cancel", onClick = { guided.runner.cancel() })
+                    if (running) SecondaryButton(stringResource(R.string.guided_cancel), onClick = { guided.runner.cancel() })
                 }
             }
         } else {
@@ -248,6 +250,7 @@ fun GuidedScreen(guided: GuidedController, onBack: (() -> Unit)? = null) {
 /** The inline navigation title, with a back arrow when the host gives one. */
 @Composable
 private fun GuidedTopBar(title: String, onBack: (() -> Unit)?) {
+    val backLabel = stringResource(R.string.guided_back)
     Box(Modifier.fillMaxWidth().height(52.dp).padding(horizontal = 8.dp)) {
         if (onBack != null) {
             Box(
@@ -255,7 +258,7 @@ private fun GuidedTopBar(title: String, onBack: (() -> Unit)?) {
                     .size(44.dp)
                     .align(Alignment.CenterStart)
                     .clickable(role = Role.Button, onClick = onBack)
-                    .semantics { contentDescription = "Back" },
+                    .semantics { contentDescription = backLabel },
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = Theme.tealBright,
@@ -279,6 +282,7 @@ private fun GuidedTopBar(title: String, onBack: (() -> Unit)?) {
 @Composable
 private fun GuidedContextHeader(guided: GuidedController, compact: Boolean) {
     var navigating by remember { mutableStateOf(false) }
+    val stepsClickLabel = stringResource(R.string.guided_steps_click_label)
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
             if (compact) {
@@ -291,7 +295,7 @@ private fun GuidedContextHeader(guided: GuidedController, compact: Boolean) {
                         .background(Theme.card, pill)
                         .border(1.dp, Theme.hairline, pill)
                         .clickable(remember { MutableInteractionSource() }, indication = null, role = Role.Button,
-                            onClickLabel = "Shows all the steps, to go back or ahead") { navigating = true }
+                            onClickLabel = stepsClickLabel) { navigating = true }
                         .padding(horizontal = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -331,7 +335,7 @@ object StepBar {
     /** "Step 3 of 7". */
     fun position(of: GuideStep): String {
         val i = max(GuideStep.stepper.indexOf(shown(of)), 0) + 1
-        return "Step $i of ${GuideStep.stepper.size}"
+        return L10n.tr("Step $i of ${GuideStep.stepper.size}", "Schritt $i von ${GuideStep.stepper.size}")
     }
 }
 
@@ -350,6 +354,12 @@ fun StepBar(guided: GuidedController) {
                 val shape = RoundedCornerShape(8.dp)
                 val fill = if (now) Theme.accent else if (done) Theme.tealBright else Theme.card
                 val fg = if (now || done) Theme.background else Theme.textSecondary
+                val a11y = stringResource(
+                    if (now) R.string.guided_step_a11y_current
+                    else if (done) R.string.guided_step_a11y_done
+                    else R.string.guided_step_a11y,
+                    step.label, "${i + 1}",
+                )
                 var m = Modifier
                     .weight(1f)
                     .heightIn(min = 30.dp)
@@ -361,8 +371,7 @@ fun StepBar(guided: GuidedController) {
                             guided.go(step)
                         }
                         .clearAndSetSemantics {
-                            contentDescription = "${step.label}, step ${i + 1}" +
-                                if (now) ", current" else if (done) ", done" else ""
+                            contentDescription = a11y
                         },
                     contentAlignment = Alignment.Center,
                 ) {
@@ -377,7 +386,7 @@ fun StepBar(guided: GuidedController) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(current.label, style = Type.captionBrand, color = Theme.accent)
             Spacer(Modifier.weight(1f).widthIn(min = 8.dp))
-            Text(StepBar.position(guided.progress.step) + " · tap a step to jump", style = Type.small,
+            Text(stringResource(R.string.guided_tap_to_jump, StepBar.position(guided.progress.step)), style = Type.small,
                 color = Theme.textSecondary)
         }
     }
@@ -390,32 +399,32 @@ fun StepBar(guided: GuidedController) {
 fun SetupStep(guided: GuidedController, openCamera: () -> Unit) {
     val mode = guided.mode
     val brand = guided.tv.brand
-    val brandName = if (brand == Brand.OTHER) "TV" else brand.label
+    val brandName = if (brand == Brand.OTHER) stringResource(R.string.guided_generic_tv) else brand.label
 
     val formatText = when (mode) {
-        SignalMode.SDR -> "Start with everyday TV. Each format keeps its own settings on the TV."
-        SignalMode.HDR10 -> "The TV has separate settings for HDR, so it’s calibrated after SDR."
-        SignalMode.HDR10P, SignalMode.DV ->
-            "Advanced: do SDR and HDR10 first. ${mode.label} has its own settings on the TV."
+        SignalMode.SDR -> stringResource(R.string.guided_format_sdr)
+        SignalMode.HDR10 -> stringResource(R.string.guided_format_hdr10)
+        SignalMode.HDR10P, SignalMode.DV -> stringResource(R.string.guided_format_advanced, mode.label)
     }
 
     val pages = buildList {
-        add(WalkPage(symbol = "rectangle.stack", tint = mode.tint, title = "Calibrating ${mode.label}",
+        add(WalkPage(symbol = "rectangle.stack", tint = mode.tint,
+            title = stringResource(R.string.guided_calibrating, mode.label),
             text = formatText, art = { FormatOrderArt(current = mode) }))
         add(WalkPage(
             symbol = if (mode.onYouTube) "play.circle" else "externaldrive", tint = mode.tint,
-            title = if (mode.onYouTube) "The ${mode.label} videos are on YouTube" else "Download the ${mode.label} patterns",
+            title = if (mode.onYouTube) stringResource(R.string.guided_videos_on_youtube, mode.label)
+            else stringResource(R.string.guided_download_patterns_title, mode.label),
             text = "",
             art = { GuidedSourceHero(mode = mode) },
             extra = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     GuidedNoticeCard(
-                        title = if (mode.onYouTube) "Only play videos whose title starts with ‘${mode.packPrefix}’"
-                        else "Only play files whose name starts with ‘${mode.packPrefix}’",
+                        title = if (mode.onYouTube) stringResource(R.string.guided_only_videos_prefix, mode.packPrefix)
+                        else stringResource(R.string.guided_only_files_prefix, mode.packPrefix),
                         titleColour = Theme.accent,
-                        text = (if (mode == SignalMode.SDR) "The TV should show no HDR badge. "
-                        else "The TV should show its ${mode.badge} badge. ") +
-                            "You start each video with the TV's remote.",
+                        text = if (mode == SignalMode.SDR) stringResource(R.string.guided_no_hdr_badge)
+                        else stringResource(R.string.guided_mode_badge, mode.badge),
                     )
                     PatternLinkButton(mode = mode)
                 }
@@ -423,41 +432,42 @@ fun SetupStep(guided: GuidedController, openCamera: () -> Unit) {
         ))
         add(WalkPage(
             symbol = "", tint = Theme.accent,
-            title = if (guided.tv.isDemo) "On a real TV: picture settings" else "Set up the $brandName",
-            text = "On the TV, open Picture and match these.",
+            title = if (guided.tv.isDemo) stringResource(R.string.guided_demo_settings_title)
+            else stringResource(R.string.guided_set_up_brand, brandName),
+            text = stringResource(R.string.guided_open_picture),
             extra = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     GuidedSettingsList(items = brand.setup(mode))
-                    Text("Menu names may vary a little by $brandName model.", style = Type.captionBrand,
+                    Text(stringResource(R.string.guided_menu_names_vary, brandName), style = Type.captionBrand,
                         color = Theme.textSecondary)
                 }
             },
         ))
         add(WalkPage(
-            symbol = "moon", title = "Dim the room", text = "", art = { DarkRoomArt() },
+            symbol = "moon", title = stringResource(R.string.guided_dim_room), text = "", art = { DarkRoomArt() },
             extra = {
                 Text(
-                    "Lights off, curtains closed, and the TV on for 20–30 minutes first: screens shift as they warm up.",
+                    stringResource(R.string.guided_dim_room_text),
                     style = Type.bodyBrand.copy(lineHeight = 22.sp), color = Theme.textSecondary,
                 )
             },
         ))
         add(WalkPage(
-            symbol = "iphone", title = "Place the phone",
-            text = "Keep the yellow box inside the grey patch, and don’t move the phone once you start.",
+            symbol = "iphone", title = stringResource(R.string.guided_place_phone),
+            text = stringResource(R.string.guided_place_phone_text),
             art = { PlacementArt() },
-            lead = "A hand's length (15–30 cm) from the TV, facing its middle, not touching the screen.",
+            lead = stringResource(R.string.guided_place_phone_lead),
         ))
         if (!guided.tv.isDemo) {
             add(WalkPage(
-                symbol = "", title = "Get the camera ready", text = "",
+                symbol = "", title = stringResource(R.string.guided_camera_ready), text = "",
                 extra = {
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         Box(Modifier.clickable(remember { MutableInteractionSource() }, indication = null,
                             role = Role.Button, onClick = openCamera)) {
                             CameraStatusRow()
                         }
-                        Text("Next, the app measures the TV as it is, for your before and after. About two minutes.",
+                        Text(stringResource(R.string.guided_camera_ready_text),
                             style = Type.captionBrand, color = Theme.textSecondary)
                     }
                 },
@@ -466,7 +476,8 @@ fun SetupStep(guided: GuidedController, openCamera: () -> Unit) {
     }
 
     key(mode) {
-        Walkthrough(pages = pages, finishTitle = "Start: measure the TV as it is", section = "Getting ready") {
+        Walkthrough(pages = pages, finishTitle = stringResource(R.string.guided_setup_finish),
+            section = stringResource(R.string.guided_setup_section)) {
             guided.go(GuideStep.BEFORE, markDone = GuideStep.SETUP)
         }
     }
@@ -482,8 +493,8 @@ private fun GuidedSourceHero(mode: SignalMode) {
         Icon(symbol(if (mode.onYouTube) "play.circle" else "externaldrive"), contentDescription = null,
             tint = Theme.tealBright, modifier = Modifier.size(36.dp))
         Text(
-            if (mode.onYouTube) "Play the videos in your TV’s YouTube app, or cast from your phone."
-            else "Copy the ${mode.packFolder} folder to a USB stick and play the files with the TV’s media player.",
+            if (mode.onYouTube) stringResource(R.string.guided_source_youtube)
+            else stringResource(R.string.guided_source_usb, mode.packFolder),
             style = Type.brand(20f, FontWeight.SemiBold),
             color = Color.White,
         )
@@ -543,13 +554,13 @@ fun PatternLinkButton(mode: SignalMode) {
         val url = links.playlist(mode) ?: return
         SecondaryButton(onClick = { openUrl(context, url) }) {
             Icon(symbol("play.rectangle"), contentDescription = null, modifier = Modifier.size(18.dp))
-            Text("Open the ${mode.label} playlist")
+            Text(stringResource(R.string.guided_open_playlist, mode.label))
         }
     } else {
         val url = links.download(mode) ?: return
         SecondaryButton(onClick = { openUrl(context, url) }) {
             Icon(symbol("square.and.arrow.down"), contentDescription = null, modifier = Modifier.size(18.dp))
-            Text("Download the ${mode.label} patterns")
+            Text(stringResource(R.string.guided_download_patterns_button, mode.label))
         }
     }
 }
@@ -561,15 +572,16 @@ fun PatternSourceCard(mode: SignalMode) {
     Card(spacing = 12.dp) {
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
             ModeBadge(mode = mode)
-            Text(if (mode.onYouTube) "Patterns on YouTube" else "Pattern files to download",
+            Text(
+                if (mode.onYouTube) stringResource(R.string.guided_patterns_on_youtube)
+                else stringResource(R.string.guided_pattern_files),
                 style = Type.headlineBrand, color = Color.White)
         }
         Text(
             if (mode.onYouTube) {
-                "Play the ${mode.label} patterns from the TV Calibrator playlist on the Slidebean channel, in the TV’s " +
-                    "YouTube app or cast from your phone, at the highest quality."
+                stringResource(R.string.guided_patterns_youtube_text, mode.label)
             } else {
-                "Copy the ${mode.packFolder} folder to a USB stick and play the files with the TV’s media player."
+                stringResource(R.string.guided_source_usb, mode.packFolder)
             },
             style = Type.captionBrand, color = Theme.textSecondary,
         )
@@ -585,12 +597,12 @@ private fun GuidedQuickReady(title: String, file: String, mode: SignalMode, meas
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(title, style = Type.stepTitleStyle)
         PlayFileCard(file = file, mode = mode, fromStart = true)
-        OrderStrip(steps = listOf("Tap Measure", "Start the video on the TV"))
+        OrderStrip(steps = listOf(stringResource(R.string.guided_tap_measure), stringResource(R.string.guided_start_video)))
         Text(
-            if (mode.onYouTube) "Keep the phone still. Ads are fine: the app waits for the pattern." else "Keep the phone still.",
+            if (mode.onYouTube) stringResource(R.string.guided_keep_still_ads) else stringResource(R.string.guided_keep_still),
             style = Type.captionBrand, color = Theme.textSecondary,
         )
-        PinnedActionOrInline("Measure (about two minutes)", action = measure)
+        PinnedActionOrInline(stringResource(R.string.guided_measure_two_minutes), action = measure)
     }
 }
 
@@ -600,12 +612,13 @@ private fun GuidedQuickReady(title: String, file: String, mode: SignalMode, meas
  */
 @Composable
 private fun GuidedWrongVideo(file: String, mode: SignalMode, why: String, replay: () -> Unit) {
+    val expectedA11y = stringResource(R.string.guided_expected_nothing_saved, mode.label)
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text("Is the ${mode.label} video playing?", style = Type.stepTitleStyle)
+        Text(stringResource(R.string.guided_is_video_playing, mode.label), style = Type.stepTitleStyle)
         Card(spacing = 12.dp) {
             Row(
                 Modifier.fillMaxWidth().clearAndSetSemantics {
-                    contentDescription = "${mode.label} expected. Nothing was saved."
+                    contentDescription = expectedA11y
                 },
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -618,14 +631,14 @@ private fun GuidedWrongVideo(file: String, mode: SignalMode, why: String, replay
                         .background(Theme.limit.copy(alpha = 0.13f), RoundedCornerShape(8.dp))
                         .padding(horizontal = 10.dp, vertical = 5.dp))
                 Spacer(Modifier.weight(1f))
-                Text("Nothing was saved", style = Type.small, color = Theme.textSecondary)
+                Text(stringResource(R.string.guided_nothing_saved), style = Type.small, color = Theme.textSecondary)
             }
-            Text("Replay the ${mode.label} video from the start, then measure again.", style = Type.bodyStrong,
+            Text(stringResource(R.string.guided_replay_then_measure, mode.label), style = Type.bodyStrong,
                 color = Color.White)
             Text(why, style = Type.captionBrand, color = Theme.textSecondary)
         }
         PlayFileCard(file = file, mode = mode, fromStart = true)
-        PinnedActionOrInline("I’ll replay the ${mode.label} video", action = replay)
+        PinnedActionOrInline(stringResource(R.string.guided_ill_replay, mode.label), action = replay)
     }
 }
 
@@ -636,8 +649,12 @@ private val SweepRunner.failure: String?
 // ProfileService yet). The Android profile is always the approximate one (isStandard), so the margin is 3 dE.
 private fun marginNote(app: AppModel, @Suppress("UNUSED_PARAMETER") panel: PanelType): String? {
     if (app.profiles.profile == null) return null
-    return "This phone has no camera profile of its own yet and uses the standard one, so its readings are " +
-        "approximate: differences under about 3 dE may not be real."
+    return L10n.tr(
+        "This phone has no camera profile of its own yet and uses the standard one, so its readings are " +
+            "approximate: differences under about 3 dE may not be real.",
+        "Dieses Handy hat noch kein eigenes Kameraprofil und nutzt das Standardprofil, daher sind seine " +
+            "Messwerte nur ungefähr: Unterschiede unter etwa 3 dE sind vielleicht nicht echt.",
+    )
 }
 
 private fun marginDE(app: AppModel, @Suppress("UNUSED_PARAMETER") panel: PanelType): Double? =
@@ -688,7 +705,8 @@ fun QuickStep(guided: GuidedController, which: QuickWhich) {
             QuickResults(guided, which, result.first, result.second, onMeasureAgain = { remeasure = true })
         } else {
             GuidedQuickReady(
-                title = if (which == QuickWhich.BEFORE) "Measure your starting point" else "One final check",
+                title = if (which == QuickWhich.BEFORE) stringResource(R.string.guided_measure_starting_point)
+                else stringResource(R.string.guided_one_final_check),
                 file = guided.quickFile, mode = guided.mode,
             ) { measure() }
         }
@@ -706,11 +724,11 @@ private fun QuickResults(
     val app = LocalApp.current
     val report = remember(now, guided.hdr) { Analysis.analyse(now, guided.hdr) }
     val limits = guided.progress.limits.filter { it in Patterns.colourIDs }
-        .map { it.lowercase().replaceFirstChar { c -> c.uppercase() } }
+        .map { L10n.colourName(it) }
     val panel = if (guided.tv.isDemo) null else guided.tv.panel
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         if (which == QuickWhich.BEFORE) {
-            Text("Your starting point", style = Type.stepTitleStyle)
+            Text(stringResource(R.string.guided_your_starting_point), style = Type.stepTitleStyle)
             if (!guided.tv.isDemo) {
                 val note = GamutCheck.note(report, guided.mode, guided.tv.brand)
                 if (note != null) TipRow(tone = TipTone.limit, text = note)
@@ -733,13 +751,16 @@ private fun QuickResults(
             }
             if (limits.isNotEmpty()) {
                 TipRow(tone = TipTone.limit,
-                    text = "${limits.joinToString(", ")}: as close as this TV gets (its controls were at their limit).")
+                    text = stringResource(R.string.guided_limits, limits.joinToString(", ")))
             }
         }
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-            LinkButton("Measure again", onClick = onMeasureAgain)
+            LinkButton(stringResource(R.string.guided_measure_again), onClick = onMeasureAgain)
         }
-        PinnedActionOrInline(if (which == QuickWhich.BEFORE) "Next: fix the white balance" else "Start a new session") {
+        PinnedActionOrInline(
+            if (which == QuickWhich.BEFORE) stringResource(R.string.guided_next_white_balance)
+            else stringResource(R.string.guided_new_session),
+        ) {
             if (which == QuickWhich.BEFORE) guided.go(GuideStep.BRIGHT, markDone = GuideStep.BEFORE)
             else guided.newSession()
         }
@@ -776,9 +797,9 @@ fun NewsletterCard() {
             Icon(symbol("envelope.fill"), contentDescription = null, tint = Theme.accent, modifier = Modifier.size(14.dp))
             Text("UNTANGLED BY SLIDEBEAN", style = Type.badge.copy(letterSpacing = 0.8.sp), color = Theme.accent)
         }
-        Text("Access our tools before anyone else", style = Type.section, color = Color.White,
+        Text(stringResource(R.string.guided_newsletter_title), style = Type.section, color = Color.White,
             modifier = Modifier.widthIn(max = 230.dp))
-        PrimaryButton("Subscribe to Untangled", onClick = {
+        PrimaryButton(stringResource(R.string.guided_newsletter_subscribe), onClick = {
             openUrl(context, url)
             opened = true
             prefs.edit().putBoolean("untangled.opened", true).apply()
@@ -794,22 +815,26 @@ object CheckStep {
 
     /** The headline from the average grey dE. */
     fun verdict(average: Double): String {
-        if (!average.isFinite()) return "Here are your greys"
-        if (average < 1) return "On target"
-        if (average < 2) return "A very good result"
-        if (average < 3) return "A good result"
-        return "Some greys need another pass"
+        if (!average.isFinite()) return L10n.tr("Here are your greys", "Hier sind deine Grautöne")
+        if (average < 1) return L10n.tr("On target", "Im Ziel")
+        if (average < 2) return L10n.tr("A very good result", "Ein sehr gutes Ergebnis")
+        if (average < 3) return L10n.tr("A good result", "Ein gutes Ergebnis")
+        return L10n.tr("Some greys need another pass", "Einige Grautöne brauchen noch eine Runde")
     }
 
     fun tip(off: List<GreyResult>, of: Int): String {
-        if (off.isEmpty()) return "Every grey is on target."
+        if (off.isEmpty()) return L10n.tr("Every grey is on target.", "Alle Grautöne sind im Ziel.")
         val ends = mutableListOf<String>()
-        if (off.any { it.level <= 0.4 }) ends.add("dark end")
-        if (off.any { it.level > 0.4 && it.level < 0.55 }) ends.add("middle greys")
-        if (off.any { it.level >= 0.55 }) ends.add("bright end")
-        val which = ends.joinToString(" and the ")
-        if (off.size * 2 <= of) return "Most greys are on target. The $which could be a little closer."
-        return "The $which could be closer: redo it below, or fine-tune."
+        if (off.any { it.level <= 0.4 }) ends.add(L10n.tr("dark end", "dunklen Töne"))
+        if (off.any { it.level > 0.4 && it.level < 0.55 }) ends.add(L10n.tr("middle greys", "mittleren Grautöne"))
+        if (off.any { it.level >= 0.55 }) ends.add(L10n.tr("bright end", "hellen Töne"))
+        val which = ends.joinToString(L10n.tr(" and the ", " und die "))
+        if (off.size * 2 <= of) {
+            return L10n.tr("Most greys are on target. The $which could be a little closer.",
+                "Die meisten Grautöne sind im Ziel. Die $which könnten noch etwas näher dran sein.")
+        }
+        return L10n.tr("The $which could be closer: redo it below, or fine-tune.",
+            "Die $which könnten näher dran sein: Wiederhole sie unten oder nutze die Feinabstimmung.")
     }
 }
 
@@ -820,9 +845,9 @@ fun CheckStep(guided: GuidedController) {
     /** Fine-tuning needs a TV with 10- or 20-point white balance. */
     val canFineTune = !(guided.tv.multipointKnown && guided.tv.multipoint == Multipoint.NONE)
     val fineTuneTitle = if (guided.tv.multipoint != Multipoint.NONE && !guided.finderReady && !guided.finderSkipped) {
-        "Find my TV’s points"
+        stringResource(R.string.guided_find_points)
     } else {
-        "Fine-tune a grey (optional)"
+        stringResource(R.string.guided_finetune_optional)
     }
 
     fun measure() {
@@ -844,13 +869,13 @@ fun CheckStep(guided: GuidedController) {
         } else if (rep != null) {
             CheckSummary(guided, rep, canFineTune, fineTuneTitle, measure = { measure() })
         } else {
-            GuidedQuickReady(title = "Check the greys", file = guided.quickFile, mode = guided.mode) { measure() }
+            GuidedQuickReady(title = stringResource(R.string.guided_check_greys), file = guided.quickFile, mode = guided.mode) { measure() }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (canFineTune) {
                     LinkButton(fineTuneTitle, onClick = { guided.go(GuideStep.FINE) }, style = Type.captionStrong)
                 }
                 Spacer(Modifier.weight(1f).widthIn(min = 8.dp))
-                LinkButton("Next: colours", onClick = { guided.go(GuideStep.COLOURS, markDone = GuideStep.CHECK) },
+                LinkButton(stringResource(R.string.guided_next_colours), onClick = { guided.go(GuideStep.COLOURS, markDone = GuideStep.CHECK) },
                     style = Type.captionStrong)
             }
         }
@@ -883,12 +908,15 @@ private fun CheckSummary(
         Card(spacing = 0.dp) {
             val heading = Type.tiny.copy(color = Theme.textSecondary)
             GridTable(columns = 5, horizontalSpacing = 6.dp, minWidths = listOf(43.dp, 48.dp, 48.dp, 40.dp, 0.dp)) {
-                listOf("Grey", "Red", "Blue", "dE", "").forEach {
+                listOf(
+                    stringResource(R.string.guided_col_grey), stringResource(R.string.guided_col_red),
+                    stringResource(R.string.guided_col_blue), "dE", "",
+                ).forEach {
                     Text(it, style = heading, modifier = Modifier.padding(bottom = 4.dp))
                 }
                 greys.forEach { g ->
                     Box(Modifier.heightIn(min = 42.dp), contentAlignment = Alignment.CenterStart) {
-                        Text(shortName(g.name), style = cell)
+                        Text(shortNameShown(g.name), style = cell)
                     }
                     Text(typographicMinus(signed(g.redVsGreen * 100)), style = cell)
                     Text(typographicMinus(signed(g.blueVsGreen * 100)), style = cell)
@@ -898,29 +926,30 @@ private fun CheckSummary(
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            LinkButton("Measure again", onClick = measure, style = Type.captionStrong)
+            LinkButton(stringResource(R.string.guided_measure_again), onClick = measure, style = Type.captionStrong)
             Spacer(Modifier.weight(1f).widthIn(min = 8.dp))
             if (canFineTune) {
                 LinkButton(fineTuneTitle, onClick = { guided.go(GuideStep.FINE) }, style = Type.captionStrong)
             }
         }
         ScoreInfo(marginNote = if (guided.tv.isDemo) null else marginNote(app, guided.tv.panel))
-        PinnedActionOrInline("Continue to colours") { guided.go(GuideStep.COLOURS, markDone = GuideStep.CHECK) }
+        PinnedActionOrInline(stringResource(R.string.guided_continue_colours)) { guided.go(GuideStep.COLOURS, markDone = GuideStep.CHECK) }
     }
 }
 
 @Composable
 private fun GreyAction(guided: GuidedController, g: GreyResult) {
     if (CheckStep.onTarget(g)) {
+        val onTarget = stringResource(R.string.guided_on_target)
         Text("✓", style = Type.tiny, color = Theme.tealBright,
-            modifier = Modifier.semantics { stateDescription = "On target"; contentDescription = "On target" })
+            modifier = Modifier.semantics { stateDescription = onTarget; contentDescription = onTarget })
     } else {
         val target = if (g.level >= 0.55) GuideStep.BRIGHT else if (g.level <= 0.4) GuideStep.DARK else GuideStep.FINE
         LinkButton(
             when (target) {
-                GuideStep.BRIGHT -> "Redo bright end"
-                GuideStep.DARK -> "Redo dark end"
-                else -> "Fine-tune"
+                GuideStep.BRIGHT -> stringResource(R.string.guided_redo_bright)
+                GuideStep.DARK -> stringResource(R.string.guided_redo_dark)
+                else -> stringResource(R.string.guided_finetune)
             },
             onClick = { guided.go(target) },
             style = Type.tiny.copy(fontWeight = FontWeight.SemiBold),
@@ -968,7 +997,11 @@ private fun GridTable(
 /** "-1.1" -> "−1.1" (a real minus sign). */
 private fun typographicMinus(s: String): String = s.replace("-", "−")
 
-/** "50% GREY" -> "50%", "PQ 50% GREY (92 nits)" -> "50% (92 nits)". */
+/** "50% GREY" -> "50%", "PQ 50% GREY (92 nits)" -> "50% (92 nits)". English; see [shortNameShown] for display. */
 fun shortName(name: String): String =
     name.replace("PQ ", "").replace(" GREY", "")
         .replace("100% WHITE", "100%").replace("100 nit WHITE", "100 nits")
+
+/** [shortName] in the app's language: "50 %", "50 % (92 Nits)" in German. */
+private fun shortNameShown(name: String): String =
+    if (L10n.german) L10n.patchNameDe(shortName(name)) else shortName(name)

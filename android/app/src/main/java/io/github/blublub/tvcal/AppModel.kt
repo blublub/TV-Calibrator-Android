@@ -3,6 +3,8 @@
 // Compose snapshot state, so screens recompose when it changes (like @Published).
 package io.github.blublub.tvcal
 
+import io.github.blublub.tvcal.ui.L10n
+
 import android.content.Context
 import android.media.MediaPlayer
 import androidx.compose.runtime.getValue
@@ -76,7 +78,7 @@ class AppModel(context: Context) {
     fun addDemoTV(): TVRecord {
         val n = tvs.count { it.isDemo }
         val tv = TVRecord(
-            name = if (n == 0) "Demo Screen" else "Demo Screen ${n + 1}", brand = Brand.SAMSUNG,
+            name = L10n.tr("Demo Screen", "Demo-Fernseher").let { if (n == 0) it else "$it ${n + 1}" }, brand = Brand.SAMSUNG,
             multipoint = Multipoint.TWENTY, colourMenu = ColourMenu.RGB_SLIDERS, isDemo = true,
         )
         add(tv)
@@ -112,8 +114,8 @@ class AppModel(context: Context) {
     val cameraBlocker: String?
         get() {
             if (profiles.profile == null) return profiles.summary
-            if (!camera.running.value) return "Start the camera (Camera setup)."
-            if (camera.dark.value == null) return "Measure the camera's darkness once (Camera setup)."
+            if (!camera.running.value) return L10n.tr("Start the camera (Camera setup).", "Starte die Kamera (Kamera einrichten).")
+            if (camera.dark.value == null) return L10n.tr("Measure the camera's darkness once (Camera setup).", "Miss einmal die Dunkelheit der Kamera (Kamera einrichten).")
             return null
         }
 

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Live steps: shared parts -->
+    <string name="live_jitter">Die Messwerte dieses Fernsehers schwanken um etwa ±%1$s %%, darum zeigen die Balken einen Mittelwert.</string>
+    <plurals name="live_average_of">
+        <item quantity="one">Mittelwert aus %1$s Messwert</item>
+        <item quantity="other">Mittelwert aus %1$s Messwerten</item>
+    </plurals>
+    <string name="live_average_needs">(ab %1$s gilt er als stabil)</string>
+    <string name="live_average_latest">zuletzt %1$s cd/m²</string>
+    <string name="live_restart">Neu starten</string>
+    <string name="live_restart_hint">Nach dem Ändern einer Einstellung nutzen, um die Wirkung schneller zu sehen</string>
+    <string name="live_on_target">Im Ziel</string>
+    <string name="live_percent_word">Prozent</string>
+    <string name="live_too_little">Zu wenig</string>
+    <string name="live_too_much">Zu viel</string>
+    <string name="live_demo_title">Demo · simulierte Messwerte</string>
+    <string name="live_demo_hint">Probier die Fernbedienungstasten unten aus.</string>
+    <string name="live_waiting">Starte das Video auf dem Fernseher: Die Messwerte erscheinen, sobald die Kamera es sieht.</string>
+
+    <!-- White balance -->
+    <string name="live_adjust_rb">Rot- und Blau-%1$s einstellen</string>
+    <string name="live_adjust_fine_control">Rot und Blau am %1$s-%%-Regler einstellen</string>
+    <string name="live_adjust_fine_nearest">Rot und Blau am Regler einstellen, der diesem Grau am nächsten ist</string>
+    <string name="live_ten_or_twenty_point">10 oder 20 Punkte</string>
+    <string name="live_fine_eyebrow">Feinabstimmung %1$s</string>
+    <string name="live_until_line">Bis beide Balken auf der Linie liegen. Lass Grün, wie es ist.</string>
+    <string name="live_mismatch">%1$s Läuft die richtige Datei, und zeigt die Kamera auf die Mitte?</string>
+    <string name="live_cant_get_closer">Näher geht\'s nicht</string>
+    <string name="live_back_to_check">Zurück zur Prüfung</string>
+    <string name="live_tv_menu">TV-Menü: %1$s</string>
+    <string name="live_still_notice">Die Balken haben sich seit einer Minute nicht bewegt. Falls du gerade einstellst, ist es vielleicht der falsche Regler: Probier den eine Stufe darüber oder darunter, und wenn du ihn gefunden hast, wähle ihn unter „Der Regler, der dieses Grau bewegt“ aus.</string>
+    <string name="live_next_dark">Weiter: Dunkle Töne</string>
+    <string name="live_next_check">Weiter: Prüfen</string>
+    <string name="live_next_grey">Nächstes Grau</string>
+    <string name="live_white_target">Weißpunkt-Ziel</string>
+    <string name="live_de_from_d65">dE %1$s zu D65</string>
+    <string name="live_in_ring">Im Ring. Halt still …</string>
+    <string name="live_bring_dot">Bring den Punkt in den Ring</string>
+
+    <!-- Colours -->
+    <string name="live_chip_limit">%1$s, näher kommt dieser Fernseher nicht</string>
+    <string name="live_chip_done">%1$s, fertig</string>
+    <string name="live_bring_colour">Bring %1$s auf seinen Ring</string>
+    <string name="live_run_before_first">Mach zuerst die Vorher-Prüfung, damit die Helligkeit am eigenen Weiß dieses Fernsehers beurteilt werden kann.</string>
+    <string name="live_no_colour_controls">Für diesen Fernseher sind keine Farbregler eingestellt: Prüf einfach die Farben oder wähle sein Farbmenü in den Fernseher-Einstellungen.</string>
+    <string name="live_tv_menu_colour">TV-Menü: %1$s › %2$s</string>
+    <string name="live_finish_colours">Farben abschließen</string>
+    <string name="live_next_colour">Nächste Farbe</string>
+    <string name="live_not_on_target_title">%1$s ist noch nicht im Ziel</string>
+    <string name="live_not_on_target_body">Wenn die Regler den Punkt nicht mehr näher an seinen Ring bringen, ist der Fernseher bei dieser Farbe am Limit. Das ist häufig, und die App vermerkt es in deinen Ergebnissen.</string>
+    <string name="live_move_on">Weiter: Näher kommt dieser Fernseher nicht</string>
+    <string name="live_keep_adjusting">Weiter einstellen</string>
+    <string name="live_ring_legend">Ring: Ziel · Punkt: jetzt · dE %1$s</string>
+    <string name="live_too_much_lower">Zu viel: senken</string>
+    <string name="live_too_little_raise">Zu wenig: anheben</string>
+    <string name="live_estimated">Geschätzt: Die Vorher-Prüfung hat nicht alle drei Grundfarben erfasst.</string>
+    <string name="live_leans_toward">Neigt zu %1$s: Stell %2$s einen Klick weiter und mach in der Richtung weiter, in der der Balken kürzer wird</string>
+    <string name="live_a_neighbour">einer Nachbarfarbe</string>
+    <string name="live_too_strong_lower">Zu stark: %1$s senken</string>
+    <string name="live_too_weak_raise">Zu schwach: %1$s anheben</string>
+    <string name="live_too_bright_lower">Zu hell: %1$s senken</string>
+    <string name="live_too_dim_raise">Zu dunkel: %1$s anheben</string>
+    <string name="live_colour_on_target">%1$s ist im Ziel. Super.</string>
+    <string name="live_nothing_to_adjust">An diesem Fernseher gibt es nichts einzustellen; notier dir einfach die Werte.</string>
+    <string name="live_rgb_needs_before">Mach zuerst die Vorher-Prüfung: Die Hinweise für Rot/Grün/Blau brauchen das Weiß dieses Fernsehers als Bezug.</string>
+    <string name="live_out_of_reach">**Außer Reichweite:** Für eine genaue Übereinstimmung bräuchte %1$s %2$s unter null. %1$s liegt außerhalb dessen, was %3$s dieses Fernsehers mischen können, darum hilft der Regler nicht mehr, sobald er bei null ist. Besser als etwa **dE %4$s** wird diese Farbe nicht. Wenn du so weit bist, tipp auf **Näher geht\'s nicht**.</string>
+    <string name="live_close_enough">Nah genug – warte auf stabile Werte …</string>
+
+    <!-- Fine-tune and the point finder -->
+    <string name="live_fine_title">Feinabstimmung</string>
+    <string name="live_only_two_point">Dieser Fernseher hat nur einen 2-Punkt-Weißabgleich (Fernseher-Einstellungen), darum gibt es über die hellen und dunklen Töne hinaus nichts fein abzustimmen.</string>
+    <string name="live_greys">Graustufen</string>
+    <string name="live_control_that_moves">Der Regler, der dieses Grau bewegt</string>
+    <string name="live_pick_remembered">Wenn du einen wählst, wird er für diesen Fernseher gespeichert, und die Vorschläge für benachbarte Grautöne passen sich an.</string>
+    <string name="live_run_finder_again">Punktsuche noch einmal starten</string>
+    <string name="live_try_step_lower">Wenn sich die Balken nicht bewegen, probier den Regler eine Stufe tiefer oder höher.</string>
+    <string name="live_tv_percent_measured">TV %1$s %% (gemessen)</string>
+    <string name="live_measured">Gemessen</string>
+    <string name="live_tv_percent">TV %1$s %%</string>
+    <string name="live_done">Fertig</string>
+    <string name="live_waiting_state">Wartet</string>
+    <string name="live_finder_use_points">Mit diesen Punkten fein abstimmen</string>
+    <string name="live_finder_made_changes">Vier Änderungen gemacht – messen</string>
+    <string name="live_finder_measure">Messen (etwa 2½ Minuten)</string>
+    <string name="live_finder_result_title">Das bewegt jeder Regler</string>
+    <string name="live_finder_result_header">TV-Regler → bewegt das Grau bei</string>
+    <string name="live_finder_level">→ %1$s %%</string>
+    <string name="live_finder_shift">Verschiebung %1$s</string>
+    <string name="live_finder_put_back">**Jetzt wieder zurückstellen.** Stell diese vier Regler vor der Feinabstimmung wieder auf ihren alten Wert (jeweils −10).</string>
+    <string name="live_finder_finding">Die Punkte deines Fernsehers werden gesucht</string>
+    <string name="live_finder_find">Finde die Regler deines Fernsehers</string>
+    <string name="live_finder_optional">Optional · etwa 6 Minuten</string>
+    <string name="live_finder_step">Schritt %1$s von 3</string>
+    <string name="live_finder_step1">Miss die Grautöne so, wie sie sind. Tipp auf „Messen“ und spiel dann **%1$s** auf dem Fernseher ab.</string>
+    <string name="live_finder_nudge_intro">Verstell vier Regler im Mehrpunkt-Menü, genau wie aufgelistet:</string>
+    <string name="live_finder_tv_control">TV-Regler %1$s %%</string>
+    <string name="live_finder_then_again">Miss dann noch einmal mit demselben Video. Die App vergleicht beide Messungen und findet jeden Regler.</string>
+    <string name="live_finder_again">Miss noch einmal mit demselben Video. Die App vergleicht beide Messungen und findet jeden Regler.</string>
+    <string name="live_finder_explain" formatted="false">Der „40 %“-Regler eines Fernsehers bewegt oft ein anderes Grau. Hier findest du heraus, wo jeder Regler wirklich wirkt.</string>
+    <string name="live_finder_row1">Grautöne so messen, wie sie sind</string>
+    <string name="live_finder_row2">Vier Regler verstellen (jeweils +%1$s)</string>
+    <string name="live_finder_row3">Noch einmal messen und jeden Regler finden</string>
+    <string name="live_cancel">Abbrechen</string>
+    <string name="live_finder_skip">Überspringen: ohne Punktsuche fein abstimmen</string>
+    <string name="live_demo_down">%1$s verringern</string>
+    <string name="live_demo_up">%1$s erhöhen</string>
+
+    <!-- Camera setup -->
+    <string name="live_back">Zurück</string>
+    <string name="live_done_profile_locked">✓ Profil · ✓ Kamera fixiert</string>
+    <string name="live_done_locked">✓ Kamera fixiert</string>
+    <string name="live_raw_size">, RAW-Fotos %1$sx%2$s</string>
+    <string name="live_locked_text">Fixiert: Hauptkamera hinten, ISO %1$s, Fokus auf kürzeste Distanz%2$s</string>
+    <string name="live_locked_summary">Einstellungen fixiert · ISO %1$s · Fokus fest</string>
+    <string name="live_checks_all">Alle 4 Einrichtungsschritte erledigt</string>
+    <string name="live_checks_some">%1$s von 4 Einrichtungsschritten erledigt</string>
+    <string name="live_measure_dark_again">Dunkelmessung wiederholen</string>
+    <string name="live_measure_dark">Dunkelheit messen</string>
+    <string name="live_no_reading">Kein Messwert. Zeigt der Fernseher im Kästchen etwas Helles?</string>
+    <string name="live_start_camera">Kamera starten</string>
+    <string name="live_test_reading">Testmessung</string>
+    <string name="live_set_up_camera">Kamera einrichten</string>
+    <string name="live_blurry">Absichtlich unscharf: So mitteln sich die Pixel des Fernsehers</string>
+    <string name="live_using_approx">Es wird das Näherungsprofil aus den eigenen Farbdaten der Kamera verwendet: Die Messwerte sind ungefähr.</string>
+    <string name="live_step_profile">1 · Kameraprofil</string>
+    <string name="live_check_again">Erneut prüfen</string>
+    <string name="live_step_start">2 · Kamera starten</string>
+    <string name="live_stay_locked">Belichtung und Fokus bleiben nach dem Start fixiert.</string>
+    <string name="live_next_darkness">Weiter: Dunkelmessung</string>
+    <string name="live_then_stand">Dann stell dein Handy auf einen Ständer</string>
+    <string name="live_step_darkness">3 · Dunkelmessung</string>
+    <string name="live_darkness_help">Dafür braucht es **völlige Dunkelheit**: Leg das Handy mit dem Display nach oben auf einen Tisch, sodass die Kamera flach aufliegt. Ein Finger reicht nicht.</string>
+    <string name="live_keep_last">Letzte Messung behalten</string>
+    <string name="live_step_place">4 · Handy aufstellen</string>
+    <string name="live_place_help">Eine Handlänge (15–30 cm) vor dem Fernseher, gerade davor, auf Höhe der Mitte. Das graue Testfeld sollte das gelbe Kästchen mit etwas Rand ausfüllen.</string>
+    <string name="live_test_received">Testmesswert erhalten</string>
+    <string name="live_uneven">Das Kästchen ist nicht gleichmäßig hell: Geh näher ran, damit das Testfeld es ausfüllt.</string>
+    <string name="live_darkness_measured">✓ Dunkelheit gemessen</string>
+    <string name="live_placement_checked">✓ Position des Handys geprüft</string>
+    <string name="live_ready_keep_still">Bereit zum Messen. Halte das Handy ruhig.</string>
+    <string name="live_shown">Eingeblendet</string>
+    <string name="live_hidden">Ausgeblendet</string>
+    <string name="live_camera_log">Kamera-Log</string>
+    <string name="live_test_again">Erneut testen</string>
+    <string name="live_stop_camera">Kamera stoppen</string>
+    <string name="live_darkness_illustration">Das Handy liegt mit dem Display nach oben auf einem Tisch, die Kamera auf der Rückseite liegt flach auf</string>
+    <string name="live_screen_up">Display nach oben</string>
+    <string name="live_placement_illustration">Das Handy auf einem Ständer, 15 bis 30 Zentimeter vor dem Fernseher, auf die Bildmitte gerichtet</string>
+    <string name="live_placement_label">15–30 cm · auf die Mitte</string>
+
+    <!-- Live meter -->
+    <string name="live_meter_title">Live-Messung</string>
+    <string name="live_targets">Ziele</string>
+    <string name="live_eyebrow_grey">Live · Graustufen</string>
+    <string name="live_white_point">Weißpunkt</string>
+    <string name="live_d65_target">D65-Ziel · dE %1$s</string>
+    <string name="live_eyebrow_colour">Live · Farbe · %1$s</string>
+    <string name="live_hue">Farbton</string>
+    <string name="live_saturation">Sättigung</string>
+    <string name="live_reading_progress">Messe …</string>
+    <string name="live_point_box">Richte das Messkästchen auf ein einfarbiges Feld. Die Messwerte bleiben auf diesem Handy.</string>
+
+    <!-- Camera check (test screen) -->
+    <string name="live_camtest_title">Kameratest</string>
+    <string name="live_camtest_permission">Die Kamera ist das Messgerät. Erlaube den Zugriff, um fortzufahren.</string>
+    <string name="live_camtest_allow">Kamera erlauben</string>
+    <string name="live_camtest_dark">Dunkelheit messen</string>
+    <string name="live_camtest_dark_again">Dunkelheit erneut messen</string>
+    <string name="live_camtest_stop">Stopp</string>
+    <string name="live_camtest_live">Live messen</string>
+    <string name="live_camtest_approx">Näherungsprofil aus den eigenen Farbdaten dieses Handys, nicht mit einem Colorimeter abgeglichen.</string>
+    <string name="live_camtest_log">Log</string>
+</resources>
