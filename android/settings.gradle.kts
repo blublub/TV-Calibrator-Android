@@ -14,4 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TV Calibrator Android"
 include(":engine")
+include(":app")
 include(":probe")
