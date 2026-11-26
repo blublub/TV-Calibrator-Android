@@ -35,3 +35,37 @@ push-worker/wrangler.toml
 
 # Wrangler's local cache (holds the Cloudflare account id)
 .wrangler/
+
+# ---- Android (TV Calibrator Android) ----
+# Gradle / build output
+.gradle/
+**/build/
+*.apk
+*.aab
+*.ap_
+*.dex
+captures/
+.externalNativeBuild/
+.cxx/
+# local.properties holds the local SDK path (includes the Windows user name)
+local.properties
+# Signing keys and secrets never belong in the repo
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+google-services.json
+secrets.properties
+.env
+.env.*
+# IDE
+.idea/
+*.iml
+.vscode/
+# Device logs, screenshots and recordings from testing
+*.logcat
+logcat*.txt
+bugreport*.zip
+device-screenshots/
+# Local Claude Code settings
+.claude/settings.local.json
