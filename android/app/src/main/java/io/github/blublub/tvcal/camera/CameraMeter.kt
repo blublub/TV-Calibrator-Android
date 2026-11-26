@@ -88,6 +88,7 @@ class CameraMeter(context: Context) {
     }
 
     fun log(line: String) {
+        android.util.Log.i("TVCAL", line)
         val stamp = SimpleDateFormat("HH:mm:ss", Locale.ROOT).format(Date())
         _logLines.value = (_logLines.value + "$stamp  $line").takeLast(200)
     }

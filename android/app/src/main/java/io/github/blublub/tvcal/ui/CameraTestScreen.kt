@@ -133,7 +133,6 @@ fun CameraTestScreen(meter: CameraMeter, hasPermission: Boolean, requestPermissi
             }
         }
     }
-    LaunchedEffect(logLines.size) { logLines.lastOrNull()?.let { Log.i("TVCAL", it) } }
     LaunchedEffect(live) {
         while (live && isActive) {
             val (r, problem) = meter.measure()
