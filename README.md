@@ -8,6 +8,8 @@ The Slidebean name, logo and app icon are Slidebean's and are not part of this p
 > **Status: early, not yet validated on a real TV.** The calibration engine passes the original's test suite,
 > the camera meter works on an OPPO Find X8, and the full guided flow runs with the built-in demo TV. Readings
 > have **not** been compared with a colorimeter yet. The Android code is in [`android/`](android).
+>
+> **Download:** test version (APK, Android 10+) on the [Releases page](https://github.com/blublub/TV-Calibrator-Android/releases). Read the limitations below first.
 
 ## ⚠️ Read this first: Android is less accurate than the iPhone app
 

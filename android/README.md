@@ -31,6 +31,10 @@ cd android
 ./gradlew :probe:assembleDebug    # the probe app
 ```
 
+Release builds (`./gradlew :app:assembleRelease`) are minified and signed with a key kept outside the
+repository, in `~/.tvcal-signing/signing.properties` (`storeFile`, `storePassword`, `keyAlias`, `keyPassword`).
+Without that file the release APK is unsigned. Never commit the key or its passwords.
+
 The engine tests read the same fixtures as the Swift tests, straight from
 `CalibrationKit/Tests/CalibrationKitTests/Fixtures` (recorded from the original Python engine), and
 check every number against them.
