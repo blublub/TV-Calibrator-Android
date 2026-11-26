@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -18,12 +20,34 @@ android {
         // The app ships English (the original) and German.
         androidResources.localeFilters += listOf("en", "de")
         versionCode = 1
-        versionName = "0.1"
+        versionName = "0.1.0-alpha"
+    }
+
+    // Release signing key: kept OUTSIDE the repository, in ~/.tvcal-signing/signing.properties
+    // (storeFile, storePassword, keyAlias, keyPassword). Without it, release builds are unsigned.
+    val signingProps = File(System.getProperty("user.home"), ".tvcal-signing/signing.properties")
+    signingConfigs {
+        if (signingProps.exists()) {
+            create("release") {
+                val p = Properties().apply { signingProps.inputStream().use { load(it) } }
+                storeFile = File(signingProps.parentFile, p.getProperty("storeFile"))
+                storePassword = p.getProperty("storePassword")
+                keyAlias = p.getProperty("keyAlias")
+                keyPassword = p.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
+        debug {
+            // Debug and release builds can be installed side by side.
+            applicationIdSuffix = ".debug"
+        }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
 
