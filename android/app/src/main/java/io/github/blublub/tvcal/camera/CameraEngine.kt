@@ -106,18 +106,32 @@ class CameraEngine(context: Context) {
     private fun mat(t: ColorSpaceTransform?): Mat3? =
         t?.let { m -> List(3) { r -> List(3) { c -> m.getElement(c, r).toDouble() } } }
 
-    /** Sets up the back main camera for RAW capture with focus, ISO and exposure locked. Null when ready. */
-    @SuppressLint("MissingPermission")
-    suspend fun start(): String? = lock.withLock {
-        if (device != null) return@withLock null
-        val id = choose() ?: return@withLock "This phone's camera doesn't give apps RAW photos, which the camera meter needs."
+    /** Why `inspect()` found nothing usable, in words. */
+    var inspectProblem: String? = null; private set
+
+    /**
+     * Picks the camera and reads its locked settings and colour data without opening it. Returns the
+     * colour data, or null (and `inspectProblem` says why).
+     */
+    fun inspect(): CameraColorInfo? {
+        inspectProblem = try {
+            load()
+        } catch (e: Exception) {
+            "Couldn't read the camera's details (${e.message})."
+        }
+        return if (inspectProblem == null) colorInfo else null
+    }
+
+    /** Reads everything about the chosen camera. Null when it can be used, else what's missing. */
+    private fun load(): String? {
+        val id = choose() ?: return "This phone's camera doesn't give apps RAW photos, which the camera meter needs."
         val c = manager.getCameraCharacteristics(id)
         val caps = c.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES) ?: intArrayOf()
         manualTemplate = CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_MANUAL_SENSOR in caps
-        if (!manualTemplate) return@withLock "This phone's camera doesn't allow manual exposure, which the camera meter needs."
+        if (!manualTemplate) return "This phone's camera doesn't allow manual exposure, which the camera meter needs."
         val map = c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
         val size = map.getOutputSizes(ImageFormat.RAW_SENSOR)?.maxByOrNull { it.width * it.height }
-            ?: return@withLock "This phone's camera has no RAW format."
+            ?: return "This phone's camera has no RAW format."
         cameraId = id
         rawSize = size
         cfa = c.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT) ?: -1
@@ -143,6 +157,17 @@ class CameraEngine(context: Context) {
             illuminant2 = c.get(CameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT2)?.toInt(),
             black = blackLevel, white = whiteLevel, aperture = aperture, iso = iso.toDouble(),
         )
+        if (colorInfo?.colorTransform1 == null && colorInfo?.colorTransform2 == null) colorInfo = null
+        return null
+    }
+
+    /** Sets up the back main camera for RAW capture with focus, ISO and exposure locked. Null when ready. */
+    @SuppressLint("MissingPermission")
+    suspend fun start(): String? = lock.withLock {
+        if (device != null) return@withLock null
+        load()?.let { return@withLock it }
+        val id = cameraId!!
+        val size = rawSize!!
         log("Camera $id: RAW ${size.width}x${size.height}, CFA $cfa, white ${whiteLevel.toInt()}, black ${fixed(blackLevel, 1)}, ISO $iso, f/${fixed(aperture, 2)}, ${fixed(focalLength, 2)} mm")
 
         val opened = CompletableDeferred<Any>()

@@ -14,9 +14,11 @@ gamma, not for fine calibration.
 | Module | What it is |
 |---|---|
 | `engine` | The calibration engine (`CalibrationKit` in Kotlin, no Android dependencies). |
+| `app` | The Android app: Camera2 RAW meter, approximate camera profile from the phone's own colour data, TV brands and menu paths, guided calibration, results, demo TV. Jetpack Compose. |
 | `probe` | A diagnostic app: dumps the phone's Camera2 characteristics and takes manual RAW test frames. |
 
-Not ported yet: `AutoCalibration` (not used by the iPhone app either), the camera meter and the UI.
+Not ported yet: `AutoCalibration` (not used by the iPhone app either), notifications (recheck reminders),
+the Lab mode and the profile server. The app is in English, like the original.
 
 ## Building
 
